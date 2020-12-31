@@ -8,3 +8,5 @@ This is the challenge we pose in e-Yantra Robotics Competition (eYRC 2020-21) in
 Challenges in this theme include: 2D mapping, 3D mapping, Autonomous Navigation, Perception, Pick and Place.
 
 After simulating the robot, we need to navigate it in the lab and move objects from their initial position to the goal location which is a box. The team that performs the task fastest with minimal penalties as per rules will be the winner. We believe this theme to be a novel way to get e-Yantra students to explore the field of mobile robotics and robotic manipulators.
+
+![alt text](https://github.com/NEEHITGOYAL/Sahayak-Bot/blob/main/theme_sb.png?raw=true)
