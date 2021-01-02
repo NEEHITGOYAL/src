@@ -24,8 +24,8 @@
 
 		
 <!-- include moveit launch file and node for pick and place using perception feedback-->
-	
 
+<include file="$(find ebot_ur5)/launch/ur5_bringup_moveit.launch" />
 
 <!-- recording bag file -->
 <arg name="rec_name" default="task4.bag"/>
