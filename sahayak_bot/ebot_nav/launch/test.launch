@@ -1,0 +1,8 @@
+<launch>
+<include file="$(find ebot_description)/launch/ebot_visualize.launch"/>
+<arg name="map_file" default="$(find ebot_nav)/map/SB#1223.yaml"/>
+<node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+<include file="$(find ebot_nav)/launch/amcl.launch" /> 
+<include file="$(find ebot_nav)/launch/nav.launch"/>
+<node pkg="ebot_nav" name="nav_test" type="SB#1223.py" > </node>
+</launch>
