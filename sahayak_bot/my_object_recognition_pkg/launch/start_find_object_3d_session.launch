@@ -1,0 +1,20 @@
+<launch>
+    <node name="find_object_3d" pkg="find_object_2d" type="find_object_2d" output="screen" >
+        <param name="gui" value="true" type="bool"/>
+        <param name="setting_path" value="~/.ros/find_object_2d.ini" type="str" />
+        <param name="subscribe_depth" value="true" type="bool" />
+        <param name="session_path" value="$(find my_object_recognition_pkg)/saved_pictures/all_session_7.bin" type="str" />
+        <param name="objects_path" value=" " type="str" />
+        <param name="object_prefix" value="object" type="str" />
+	    <param name="approx_sync" value="true" type="bool"/>
+	    <param name="pnp" value="true" type="bool"/>
+        <remap from="rgb/image_rect_color" to="/camera/color/image_raw2" />
+        <remap from="depth_registered/image_raw" to="/camera/depth/image_raw2" />
+        <remap from="depth_registered/camera_info" to="/camera/depth/camera_info2" />
+    </node>
+
+    <node name="tf_example" pkg="find_object_2d" type="tf_example" output="screen" >
+        <param name="map_frame" value="/odom" type="string" />
+        <param name="object_prefix" value="object" type="str" />
+    </node>
+</launch>

@@ -37,21 +37,54 @@
         <joint name="wrist_2_joint" value="-0.0347" />
         <joint name="wrist_3_joint" value="-0.1235" />
     </group_state>
+    <group_state name="object2" group="arm_planning_group">
+        <joint name="elbow_joint" value="0.0521" />
+        <joint name="shoulder_lift_joint" value="-0.2417" />
+        <joint name="shoulder_pan_joint" value="0.1736" />
+        <joint name="wrist_1_joint" value="-2.0987" />
+        <joint name="wrist_2_joint" value="-0.4996" />
+        <joint name="wrist_3_joint" value="1.8398" />
+    </group_state>
+    <group_state name="object3" group="arm_planning_group">
+        <joint name="elbow_joint" value="-1" />
+        <joint name="shoulder_lift_joint" value="0" />
+        <joint name="shoulder_pan_joint" value="0" />
+        <joint name="wrist_1_joint" value="-4.25" />
+        <joint name="wrist_2_joint" value="0.8" />
+        <joint name="wrist_3_joint" value="-1.6" />
+    </group_state>
+    <group_state name="object4" group="arm_planning_group">
+        <joint name="elbow_joint" value="-0.4339" />
+        <joint name="shoulder_lift_joint" value="-0.5207" />
+        <joint name="shoulder_pan_joint" value="-0.0547" />
+        <joint name="wrist_1_joint" value="5.1723" />
+        <joint name="wrist_2_joint" value="-0.7433" />
+        <joint name="wrist_3_joint" value="-4.6169" />
+    </group_state>
+    <group_state name="object5" group="arm_planning_group">
+        <joint name="elbow_joint" value="-1.2323" />
+        <joint name="shoulder_lift_joint" value="-0.0047" />
+        <joint name="shoulder_pan_joint" value="-0.3818" />
+        <joint name="wrist_1_joint" value="-3.6449" />
+        <joint name="wrist_2_joint" value="0.9373" />
+        <joint name="wrist_3_joint" value="-1.9092" />
+    </group_state>
+    <group_state name="object6" group="arm_planning_group">
+        <joint name="elbow_joint" value="-1.3364" />
+        <joint name="shoulder_lift_joint" value="0.4513" />
+        <joint name="shoulder_pan_joint" value="1.4232" />
+        <joint name="wrist_1_joint" value="0.7984" />
+        <joint name="wrist_2_joint" value="1.7704" />
+        <joint name="wrist_3_joint" value="0" />
+    </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
-    <end_effector name="ebot_ur5" parent_link="wrist_3_link" group="grip_planning_group" />
-    <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
-    <virtual_joint name="camera" type="fixed" parent_frame="camera_link" child_link="ebot_base" />
-    <virtual_joint name="ebot" type="fixed" parent_frame="ebot_link" child_link="ebot_base" />
+    <end_effector name="ebot_ur5" parent_link="gripper_base_link" group="grip_planning_group" />
     <!--PASSIVE JOINT: Purpose: this element is used to mark joints that are not actuated-->
     <passive_joint name="gripper_finger1_inner_knuckle_joint" />
     <passive_joint name="gripper_finger1_finger_tip_joint" />
     <passive_joint name="gripper_finger2_inner_knuckle_joint" />
     <passive_joint name="gripper_finger2_finger_tip_joint" />
     <passive_joint name="gripper_finger2_joint" />
-    <passive_joint name="FWLJ" />
-    <passive_joint name="FWRJ" />
-    <passive_joint name="RWLJ" />
-    <passive_joint name="RWRJ" />
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="FUS1" link2="FUS2" reason="Never" />
     <disable_collisions link1="FUS1" link2="FUS3" reason="Never" />
