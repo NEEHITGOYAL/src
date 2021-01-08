@@ -78,7 +78,7 @@
         <joint name="wrist_3_joint" value="0" />
     </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
-    <end_effector name="ebot_ur5" parent_link="gripper_base_link" group="grip_planning_group" />
+    <end_effector name="ebot_ur5" parent_link="wrist_3_link" group="grip_planning_group" />
     <!--PASSIVE JOINT: Purpose: this element is used to mark joints that are not actuated-->
     <passive_joint name="gripper_finger1_inner_knuckle_joint" />
     <passive_joint name="gripper_finger1_finger_tip_joint" />

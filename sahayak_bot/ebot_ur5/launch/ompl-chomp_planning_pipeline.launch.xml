@@ -1,0 +1,10 @@
+<launch>
+  <!-- load OMPL planning pipeline, but add the CHOMP planning adapter. -->
+  <include file="$(find ebot_ur5)/launch/ompl_planning_pipeline.launch.xml">
+
+  </include>
+  <!-- load chomp config -->
+  <rosparam command="load" file="$(find ebot_ur5)/config/chomp_planning.yaml"/>
+  <!-- override trajectory_initialization_method -->
+  <param name="trajectory_initialization_method" value="fillTrajectory"/>
+</launch>
