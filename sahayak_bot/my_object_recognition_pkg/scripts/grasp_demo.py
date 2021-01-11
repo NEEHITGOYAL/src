@@ -21,13 +21,14 @@ hand_group = moveit_commander.MoveGroupCommander("grip_planning_group")
 
 arm_group.set_named_target("photo")
 plan1 = arm_group.go()
-
+hand_group.set_named_target("open")
+plan1 = hand_group.go()
 
 t = TransformListener()
 
-t.waitForTransform("/ebot_base", "/object_112", rospy.Time(), rospy.Duration(4.0))
+t.waitForTransform("/ebot_base", "/object_110", rospy.Time(), rospy.Duration(4.0))
 #if t.frameExists("odom") and t.frameExists("object_101"):
-(translation,rotation) = t.lookupTransform("/ebot_base", "/object_112", rospy.Time())
+(translation,rotation) = t.lookupTransform("/ebot_base", "/object_110", rospy.Time())
 
 #var_handle_pub.publish('glue','translation')
 pose_target = geometry_msgs.msg.Pose()
@@ -58,7 +59,8 @@ arm_group.set_pose_target(pose_target)
                
 plan4 = arm_group.go()
 
-
+hand_group.set_named_target("close1")
+plan1 = hand_group.go()
 
 
 
