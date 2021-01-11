@@ -4,7 +4,7 @@
        It is assumed that all planning pipelines are named XXX_planning_pipeline.launch 
        ompl-chomp  -->
 
-  <arg name="pipeline" default="ompl-chomp" />
+  <arg name="pipeline" default="ompl" />
 
   <include file="$(find ebot_ur5)/launch/$(arg pipeline)_planning_pipeline.launch.xml" />
 
