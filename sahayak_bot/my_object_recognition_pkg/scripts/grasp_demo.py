@@ -42,7 +42,7 @@ pose_target.position.y = translation[1]-0.350
 pose_target.position.z = translation[2]+0.02
 print("x={},y={},z={}".format(translation[0],translation[1],translation[2]))
 arm_group.set_pose_target(pose_target)
-               
+arm_group.set_goal_tolerance(0.02)              
 plan4 = arm_group.go()
 
 pose_target = geometry_msgs.msg.Pose()
@@ -52,9 +52,10 @@ pose_target.orientation.y = 1.0
 pose_target.orientation.z = 0.0
 #pose_target.position = translation 
 pose_target.position.x = translation[0] -0.02
-pose_target.position.y = translation[1] - 0.19
+pose_target.position.y = translation[1] - 0.20
 pose_target.position.z = translation[2] 
 print("x={},y={},z={}".format(translation[0],translation[1],translation[2]))
+arm_group.set_goal_tolerance(0.02)  
 arm_group.set_pose_target(pose_target)
                
 plan4 = arm_group.go()
