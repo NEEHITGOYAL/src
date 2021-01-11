@@ -14,4 +14,4 @@ initial:  # Define initial robot poses.
   - group: arm_planning_group
     pose: frontup
   - group: grip_planning_group
-    pose: close1
+    pose: close_coke
