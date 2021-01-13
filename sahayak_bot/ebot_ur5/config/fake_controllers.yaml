@@ -12,6 +12,6 @@ controller_list:
       - gripper_finger1_joint
 initial:  # Define initial robot poses.
   - group: arm_planning_group
-    pose: frontup
+    pose: photo
   - group: grip_planning_group
     pose: close_coke

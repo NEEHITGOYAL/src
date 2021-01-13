@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 import sys
+import os
 import rospy
 import moveit_commander
 import geometry_msgs.msg
@@ -29,12 +30,9 @@ while(plan1==False):
 
 t = TransformListener()
 
-try:
-    t.waitForTransform("/ebot_base", "/object_105", rospy.Time(), rospy.Duration(4.0))
-    (coke,rotation1) = t.lookupTransform("/ebot_base", "/object_105", rospy.Time())
-except:
-    t.waitForTransform("/ebot_base", "/object_110", rospy.Time(), rospy.Duration(4.0))
-    (coke,rotation1) = t.lookupTransform("/ebot_base", "/object_110", rospy.Time())    
+
+t.waitForTransform("/ebot_base", "/object_110", rospy.Time(), rospy.Duration(4.0))
+(coke,rotation1) = t.lookupTransform("/ebot_base", "/object_110", rospy.Time())
 try:
     t.waitForTransform("/ebot_base", "/object_109", rospy.Time(), rospy.Duration(4.0))
     (battery,rotation2) = t.lookupTransform("/ebot_base", "/object_109", rospy.Time())
@@ -44,18 +42,20 @@ except:
 t.waitForTransform("/ebot_base", "/object_106", rospy.Time(), rospy.Duration(4.0))
 #if t.frameExists("odom") and t.frameExists("object_101"):
 (glue,rotation3) = t.lookupTransform("/ebot_base", "/object_106", rospy.Time())
+os.system("rosnode kill "+ '/find_object_3d')
+os.system("rosnode kill "+ '/tf_example')
 plan4=False
 #var_handle_pub.publish('glue','translation')
 while(plan4==False):
     pose_target = geometry_msgs.msg.Pose()
     pose_target.orientation.w = 0.0
     pose_target.orientation.x = 0.0
-    pose_target.orientation.y = 1.0
-    pose_target.orientation.z = 0.0
+    pose_target.orientation.y = -0.972
+    pose_target.orientation.z = 0.234
     #pose_target.position = translation 
-    pose_target.position.x = coke[0] -0.01
-    pose_target.position.y = coke[1] -0.208
-    pose_target.position.z = coke[2] +0.07
+    pose_target.position.x = coke[0] 
+    pose_target.position.y = coke[1] -0.4
+    pose_target.position.z = coke[2] +0.1
     arm_group.set_pose_target(pose_target)
     arm_group.set_goal_tolerance(0.01)              
     plan4 = arm_group.go()
@@ -65,12 +65,12 @@ while(plan4==False):
     pose_target = geometry_msgs.msg.Pose()
     pose_target.orientation.w = 0.0
     pose_target.orientation.x = 0.0
-    pose_target.orientation.y = 1.0
-    pose_target.orientation.z = 0.0
+    pose_target.orientation.y = -0.972
+    pose_target.orientation.z = 0.234
     #pose_target.position = translation 
-    pose_target.position.x = coke[0] -0.01
-    pose_target.position.y = coke[1] -0.208
-    pose_target.position.z = coke[2] +0.008
+    pose_target.position.x = coke[0] 
+    pose_target.position.y = coke[1] -0.1836
+    pose_target.position.z = coke[2] +0.1
     arm_group.set_goal_tolerance(0.01)  
     arm_group.set_pose_target(pose_target)              
     plan4 = arm_group.go()
@@ -84,11 +84,11 @@ while(plan4==False):
     pose_target = geometry_msgs.msg.Pose()
     pose_target.orientation.w = 0.0
     pose_target.orientation.x = 0.0
-    pose_target.orientation.y = 1.0
-    pose_target.orientation.z = 0.0
+    pose_target.orientation.y = -0.972
+    pose_target.orientation.z = 0.234
     #pose_target.position = translation 
-    pose_target.position.x = coke[0] -0.01
-    pose_target.position.y = coke[1] -0.210
+    pose_target.position.x = coke[0] 
+    pose_target.position.y = coke[1] -0.40
     pose_target.position.z = coke[2] +0.1
     arm_group.set_goal_tolerance(0.01)  
     arm_group.set_pose_target(pose_target)
@@ -105,6 +105,15 @@ while(plan1==False):
     hand_group.set_named_target("open")
     plan1 = hand_group.go()
 
+plan1=False
+while(plan1==False):
+    hand_group.set_named_target("close")
+    plan1 = hand_group.go()
+
+plan1=False
+while(plan1==False):
+    hand_group.set_named_target("open")
+    plan1 = hand_group.go()    
 #arm_group.set_named_target("photo")
 #plan1 = arm_group.go()
 plan4=False
@@ -112,14 +121,14 @@ while(plan4==False):
     pose_target = geometry_msgs.msg.Pose()
     pose_target.orientation.w = 0.0
     pose_target.orientation.x = 0.0
-    pose_target.orientation.y = 1.0
-    pose_target.orientation.z = 0.0
+    pose_target.orientation.y = -0.972
+    pose_target.orientation.z = 0.234
     #pose_target.position = translation 
-    pose_target.position.x = battery[0] -0.01
-    pose_target.position.y = battery[1] -0.210
-    pose_target.position.z = battery[2] +0.07
+    pose_target.position.x = battery[0] -0.005
+    pose_target.position.y = battery[1] -0.40
+    pose_target.position.z = battery[2] +0.09
     arm_group.set_pose_target(pose_target)
-    arm_group.set_goal_tolerance(0.02)              
+    arm_group.set_goal_tolerance(0.01)              
     plan4 = arm_group.go()
     print("x={},y={},z={},plan1={}".format(battery[0],battery[1],battery[2],plan4))
 plan4=False
@@ -127,12 +136,12 @@ while(plan4==False):
     pose_target = geometry_msgs.msg.Pose()
     pose_target.orientation.w = 0.0
     pose_target.orientation.x = 0.0
-    pose_target.orientation.y = 1.0
-    pose_target.orientation.z = 0.0
+    pose_target.orientation.y = -0.972
+    pose_target.orientation.z = 0.234
     #pose_target.position = translation 
-    pose_target.position.x = battery[0] -0.01
-    pose_target.position.y = battery[1] -0.21
-    pose_target.position.z = battery[2] +0.008
+    pose_target.position.x = battery[0] -0.005
+    pose_target.position.y = battery[1] -0.184
+    pose_target.position.z = battery[2] +0.09
     arm_group.set_goal_tolerance(0.01)  
     arm_group.set_pose_target(pose_target)              
     plan4 = arm_group.go()
@@ -147,12 +156,12 @@ while(plan4==False):
     pose_target = geometry_msgs.msg.Pose()
     pose_target.orientation.w = 0.0
     pose_target.orientation.x = 0.0
-    pose_target.orientation.y = 1.0
-    pose_target.orientation.z = 0.0
+    pose_target.orientation.y = -0.972
+    pose_target.orientation.z = 0.234
     #pose_target.position = translation 
-    pose_target.position.x = battery[0] -0.01
-    pose_target.position.y = battery[1] -0.21
-    pose_target.position.z = battery[2] + 0.1
+    pose_target.position.x = battery[0] -0.005
+    pose_target.position.y = battery[1] -0.40
+    pose_target.position.z = battery[2] + 0.09
     arm_group.set_goal_tolerance(0.01)  
     arm_group.set_pose_target(pose_target)
     plan4 = arm_group.go()
@@ -166,21 +175,31 @@ plan1=False
 while(plan1==False):
     hand_group.set_named_target("open")
     plan1 = hand_group.go()
+plan1=False
+while(plan1==False):
+    hand_group.set_named_target("close")
+    plan1 = hand_group.go()
+
+plan1=False
+while(plan1==False):
+    hand_group.set_named_target("open")
+    plan1 = hand_group.go()    
+           
 plan4=False
 
-#arm_group.set_named_target("photo")
-#plan1 = arm_group.go()
+# #arm_group.set_named_target("photo")
+# #plan1 = arm_group.go()
 
 while(plan4==False):
     pose_target = geometry_msgs.msg.Pose()
     pose_target.orientation.w = 0.0
     pose_target.orientation.x = 0.0
-    pose_target.orientation.y = 1.0
-    pose_target.orientation.z = 0.0
+    pose_target.orientation.y = -0.972
+    pose_target.orientation.z = 0.234
     #pose_target.position = translation 
-    pose_target.position.x = glue[0] -0.01
-    pose_target.position.y = glue[1] -0.21
-    pose_target.position.z = glue[2] +0.075
+    pose_target.position.x = glue[0] -0.005
+    pose_target.position.y = glue[1] -0.40
+    pose_target.position.z = glue[2] +0.1
     arm_group.set_pose_target(pose_target)
     arm_group.set_goal_tolerance(0.01)              
     plan4 = arm_group.go()
@@ -190,12 +209,12 @@ while(plan4==False):
     pose_target = geometry_msgs.msg.Pose()
     pose_target.orientation.w = 0.0
     pose_target.orientation.x = 0.0
-    pose_target.orientation.y = 1.0
-    pose_target.orientation.z = 0.0
+    pose_target.orientation.y = -0.972
+    pose_target.orientation.z = 0.234
     #pose_target.position = translation 
-    pose_target.position.x = glue[0] -0.01
-    pose_target.position.y = glue[1] -0.21
-    pose_target.position.z = glue[2] +0.009
+    pose_target.position.x = glue[0] -0.005
+    pose_target.position.y = glue[1] -0.185
+    pose_target.position.z = glue[2] +0.1
     arm_group.set_goal_tolerance(0.01)  
     arm_group.set_pose_target(pose_target)              
     plan4 = arm_group.go()
@@ -210,11 +229,11 @@ while(plan4==False):
     pose_target = geometry_msgs.msg.Pose()
     pose_target.orientation.w = 0.0
     pose_target.orientation.x = 0.0
-    pose_target.orientation.y = 1.0
-    pose_target.orientation.z = 0.0
+    pose_target.orientation.y = -0.972
+    pose_target.orientation.z = 0.234
     #pose_target.position = translation 
-    pose_target.position.x = glue[0] -0.01
-    pose_target.position.y = glue[1] -0.21
+    pose_target.position.x = glue[0] -0.005
+    pose_target.position.y = glue[1] -0.270
     pose_target.position.z = glue[2] +0.1
     arm_group.set_goal_tolerance(0.01)  
     arm_group.set_pose_target(pose_target)
@@ -230,6 +249,16 @@ plan1=False
 while(plan1==False):  
     hand_group.set_named_target("open")
     plan1 = hand_group.go()
+
+plan1=False
+while(plan1==False):
+    hand_group.set_named_target("close")
+    plan1 = hand_group.go()
+
+plan1=False
+while(plan1==False):
+    hand_group.set_named_target("open")
+    plan1 = hand_group.go()        
 
 rospy.sleep(5)
 moveit_commander.roscpp_shutdown()

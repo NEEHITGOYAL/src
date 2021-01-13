@@ -1,4 +1,4 @@
 <launch>
     <include file="$(find my_object_recognition_pkg)/launch/start_find_object_3d_session.launch" />
-    <node name="grasp_demo" pkg="my_object_recognition_pkg" type="grasp_demo.py" />
+    <node name="grasp_demo" pkg="my_object_recognition_pkg" type="grasp_demo_2.py" />
 </launch>
