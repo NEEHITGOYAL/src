@@ -41,13 +41,13 @@
         <joint name="wrist_3_joint" value="-3.1589" />
     </group_state>
     <group_state name="close_coke" group="grip_planning_group">
-        <joint name="gripper_finger1_joint" value="0.2518" />
+        <joint name="gripper_finger1_joint" value="0.25" />
     </group_state>
     <group_state name="close_glue" group="grip_planning_group">
-        <joint name="gripper_finger1_joint" value="0.2987" />
+        <joint name="gripper_finger1_joint" value="0.35" />
     </group_state>
     <group_state name="close_battery" group="grip_planning_group">
-        <joint name="gripper_finger1_joint" value="0.2964" />
+        <joint name="gripper_finger1_joint" value="0.2864" />
     </group_state>
     <group_state name="close" group="grip_planning_group">
         <joint name="gripper_finger1_joint" value="0.7" />

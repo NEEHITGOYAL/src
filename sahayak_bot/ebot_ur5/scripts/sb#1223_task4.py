@@ -134,15 +134,15 @@ def control_loop():
     armPlanner(coke_target)
     
     # Tune cordinates
-    coke_target[0] = coke[0]
-    coke_target[1] = coke[1] - 0.1836
+    coke_target[0] = coke[0] 
+    coke_target[1] = coke[1] - 0.183
     coke_target[2] = coke[2] + 0.1
     # Move arm to grab coke
     armPlanner(coke_target)
     
     # Move gripper to close_coke pose
     gripperPose("close_coke")
-
+    rospy.sleep(1)
     # Tune cordinates
     coke_target[0] = coke[0]
     coke_target[1] = coke[1] - 0.40
@@ -157,14 +157,14 @@ def control_loop():
     gripperPose("open")
 
     # Tune cordinates
-    battery_target[0] = battery[0] - 0.005
+    battery_target[0] = battery[0] 
     battery_target[1] = battery[1] - 0.40
     battery_target[2] = battery[2] + 0.09
     # Move arm in front of battery
     armPlanner(battery_target)
 
     # Tune cordinates
-    battery_target[0] = battery[0] - 0.005
+    battery_target[0] = battery[0] 
     battery_target[1] = battery[1] - 0.184
     battery_target[2] = battery[2] + 0.09
     # Move arm to grab battery
@@ -172,9 +172,9 @@ def control_loop():
 
     # Move gripper to close_battery pose
     gripperPose("close_battery")
-
+    rospy.sleep(1)
     # Tune cordinates
-    battery_target[0] = battery[0] - 0.005
+    battery_target[0] = battery[0] 
     battery_target[1] = battery[1] - 0.40
     battery_target[2] = battery[2] + 0.2
     # Move arm back
@@ -187,14 +187,14 @@ def control_loop():
     gripperPose("open")
 
     # Tune cordinates
-    glue_target[0] = glue[0] - 0.008
+    glue_target[0] = glue[0] 
     glue_target[1] = glue[1] - 0.40
     glue_target[2] = glue[2] + 0.1
     # Move arm in front of glue
     armPlanner(glue_target)
     
     # Tune cordinates
-    glue_target[0] = glue[0] - 0.008
+    glue_target[0] = glue[0] 
     glue_target[1] = glue[1] - 0.195
     glue_target[2] = glue[2] + 0.1
     # Move arm to grab glue
@@ -202,11 +202,11 @@ def control_loop():
 
     # Move gripper to close_glue pose
     gripperPose("close_glue")
-
+    rospy.sleep(1)
     # Tune cordinates
-    glue_target[0] = glue[0] - 0.008
+    glue_target[0] = glue[0] 
     glue_target[1] = glue[1] - 0.195
-    glue_target[2] = glue[2] + 0.2
+    glue_target[2] = glue[2] + 0.1
     # Move arm back
     armPlanner(glue_target)
 
