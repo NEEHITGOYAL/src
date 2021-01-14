@@ -146,7 +146,7 @@ def control_loop():
     # Tune cordinates
     coke_target[0] = coke[0]
     coke_target[1] = coke[1] - 0.40
-    coke_target[2] = coke[2] + 0.1
+    coke_target[2] = coke[2] + 0.2
     # Move arm back
     armPlanner(coke_target)
 
@@ -176,7 +176,7 @@ def control_loop():
     # Tune cordinates
     battery_target[0] = battery[0] - 0.005
     battery_target[1] = battery[1] - 0.40
-    battery[2] = battery[2] + 0.09
+    battery[2] = battery[2] + 0.09 + 0.2
     # Move arm back
     armPlanner(battery_target)
 
@@ -187,15 +187,15 @@ def control_loop():
     gripperPose("open")
 
     # Tune cordinates
-    glue_target[0] = glue[0] - 0.005
+    glue_target[0] = glue[0] - 0.008
     glue_target[1] = glue[1] - 0.40
     glue_target[2] = glue[2] + 0.1
     # Move arm in front of glue
     armPlanner(glue_target)
     
     # Tune cordinates
-    glue_target[0] = glue[0] - 0.005
-    glue_target[1] = glue[1] - 0.185
+    glue_target[0] = glue[0] - 0.008
+    glue_target[1] = glue[1] - 0.195
     glue_target[2] = glue[2] + 0.1
     # Move arm to grab glue
     armPlanner(glue_target)
@@ -204,8 +204,8 @@ def control_loop():
     gripperPose("close_glue")
 
     # Tune cordinates
-    glue_target[0] = glue[0] - 0.005
-    glue_target[1] = glue[1] - 0.270
+    glue_target[0] = glue[0] - 0.008
+    glue_target[1] = glue[1] - 0.195
     glue_target[2] = glue[2] + 0.1
     # Move arm back
     armPlanner(glue_target)
