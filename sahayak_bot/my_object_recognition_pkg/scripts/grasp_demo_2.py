@@ -89,7 +89,7 @@ while(plan4==False):
     #pose_target.position = translation 
     pose_target.position.x = coke[0] 
     pose_target.position.y = coke[1] -0.40
-    pose_target.position.z = coke[2] +0.1
+    pose_target.position.z = coke[2] +0.2
     arm_group.set_goal_tolerance(0.01)  
     arm_group.set_pose_target(pose_target)
     plan4 = arm_group.go()
@@ -161,7 +161,7 @@ while(plan4==False):
     #pose_target.position = translation 
     pose_target.position.x = battery[0] -0.005
     pose_target.position.y = battery[1] -0.40
-    pose_target.position.z = battery[2] + 0.09
+    pose_target.position.z = battery[2] + 0.2
     arm_group.set_goal_tolerance(0.01)  
     arm_group.set_pose_target(pose_target)
     plan4 = arm_group.go()
@@ -197,7 +197,7 @@ while(plan4==False):
     pose_target.orientation.y = -0.972
     pose_target.orientation.z = 0.234
     #pose_target.position = translation 
-    pose_target.position.x = glue[0] -0.005
+    pose_target.position.x = glue[0] -0.008
     pose_target.position.y = glue[1] -0.40
     pose_target.position.z = glue[2] +0.1
     arm_group.set_pose_target(pose_target)
@@ -212,8 +212,8 @@ while(plan4==False):
     pose_target.orientation.y = -0.972
     pose_target.orientation.z = 0.234
     #pose_target.position = translation 
-    pose_target.position.x = glue[0] -0.005
-    pose_target.position.y = glue[1] -0.185
+    pose_target.position.x = glue[0] -0.008
+    pose_target.position.y = glue[1] -0.195
     pose_target.position.z = glue[2] +0.1
     arm_group.set_goal_tolerance(0.01)  
     arm_group.set_pose_target(pose_target)              
@@ -233,8 +233,8 @@ while(plan4==False):
     pose_target.orientation.z = 0.234
     #pose_target.position = translation 
     pose_target.position.x = glue[0] -0.005
-    pose_target.position.y = glue[1] -0.270
-    pose_target.position.z = glue[2] +0.1
+    pose_target.position.y = glue[1] -0.40
+    pose_target.position.z = glue[2] +0.2
     arm_group.set_goal_tolerance(0.01)  
     arm_group.set_pose_target(pose_target)
     plan4 = arm_group.go()
