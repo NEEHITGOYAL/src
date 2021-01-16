@@ -1,7 +1,7 @@
 <sdf version='1.6'>
   <world name='default'>
     <light name='sun' type='directional'>
-      <cast_shadows>0</cast_shadows>
+      <cast_shadows>1</cast_shadows>
       <pose frame=''>0 0 10 0 -0 0</pose>
       <diffuse>0.8 0.8 0.8 1</diffuse>
       <specular>0.2 0.2 0.2 1</specular>
@@ -219,7 +219,7 @@
             <emissive>0 0 0 1</emissive>
           </material>
           <transparency>0</transparency>
-          <cast_shadows>0</cast_shadows>
+          <cast_shadows>1</cast_shadows>
         </visual>
         <collision name='collision'>
           <laser_retro>0</laser_retro>
@@ -318,7 +318,7 @@
             <emissive>0 0 0 1</emissive>
           </material>
           <transparency>0</transparency>
-          <cast_shadows>0</cast_shadows>
+          <cast_shadows>1</cast_shadows>
         </visual>
         <collision name='collision'>
           <laser_retro>0</laser_retro>
@@ -413,7 +413,7 @@
             </script>
           </material>
           <transparency>0</transparency>
-          <cast_shadows>0</cast_shadows>
+          <cast_shadows>1</cast_shadows>
         </visual>
         <collision name='collision'>
           <laser_retro>0</laser_retro>
@@ -508,7 +508,7 @@
             </script>
           </material>
           <transparency>0</transparency>
-          <cast_shadows>0</cast_shadows>
+          <cast_shadows>1</cast_shadows>
         </visual>
         <collision name='collision'>
           <laser_retro>0</laser_retro>
@@ -603,7 +603,7 @@
             </script>
           </material>
           <transparency>0</transparency>
-          <cast_shadows>0</cast_shadows>
+          <cast_shadows>1</cast_shadows>
         </visual>
         <collision name='collision'>
           <laser_retro>0</laser_retro>
