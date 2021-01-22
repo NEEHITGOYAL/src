@@ -7,11 +7,13 @@
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
 
 <!--runnning rviz node-->
-    <node name="rviz" pkg="rviz" type="rviz" />
+    <!-- <node name="rviz" pkg="rviz" type="rviz" /> -->
 
 <!--saving rviz configurations in a rviz folder-->
 
-    <!--<node name="rviz" pkg="rviz" type="rviz"   args=" -d $(find ebot_description)/rviz/visualize.rviz" />-->
+    <!-- <node name="rviz" pkg="rviz" type="rviz"   args=" -d $(find ebot_description)/rviz/visualize.rviz" /> -->
+
+    <node name="rviz" pkg="rviz" type="rviz"   args=" -d $(find ebot_description)/rviz/bot.rviz" />
     
 <!--finds all of the non-fixed joints and publishes a JointState message-->
     <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" >
