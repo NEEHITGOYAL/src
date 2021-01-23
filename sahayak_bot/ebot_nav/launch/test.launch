@@ -4,7 +4,8 @@
 <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 <include file="$(find ebot_nav)/launch/amcl.launch" /> 
 <include file="$(find ebot_nav)/launch/nav.launch"/>
-<node name="task4_1223" pkg="ebot_ur5" type="sb#1223_task4.py" />
+<!-- <node name="task4_1223" pkg="ebot_ur5" type="sb#1223_task4.py" /> -->
+<node pkg="ebot_nav" name="nav_test" type="SB#1223.py" > </node>
 <!-- <node name="nav_test" pkg="ebot_ur5" type="dropbox1_task5.py" /> -->
 <!-- <node name="nav_test" pkg="ebot_nav" type="dropbox2_task5.py" /> -->
 </launch>
