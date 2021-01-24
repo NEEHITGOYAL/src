@@ -20,7 +20,7 @@
 
 		
 <!-- include the moveit launch file and node for pick and place using perception-->
-	
+	<include file="$(find ebot_ur5)/launch/ur5_bringup_moveit.launch" />
 
   
 </launch>

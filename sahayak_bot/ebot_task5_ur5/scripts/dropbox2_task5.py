@@ -14,13 +14,13 @@ moveit_commander.roscpp_initialize(sys.argv)
 robot = moveit_commander.RobotCommander()
 hand_group = moveit_commander.MoveGroupCommander("grip_planning_group")
 arm_group = moveit_commander.MoveGroupCommander("arm_planning_group")
-#arm_group.set_named_target("travel")
-#plan1 = arm_group.go()
+arm_group.set_named_target("travel2")
+plan1 = arm_group.go()
 
 def bot_driver():
 
     # Initializes the ROS node for the process.
-    rospy.init_node('nav_test', anonymous=False)
+    rospy.init_node('nav', anonymous=False)
     # Make an object of GoToPose
     navigator = GoToPose()
     

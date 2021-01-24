@@ -26,10 +26,10 @@ args="spawn arm_controller gripper_controller" respawn="false" output="screen"/>
 <include file="$(find ebot_ur5)/launch/move_group.launch">
     <arg name="publish_monitored_planning_scene" value="true" />
  </include>
-<include file="$(find ebot_ur5)/launch/moveit_rviz.launch">
+<!-- <include file="$(find ebot_ur5)/launch/moveit_rviz.launch">
   <arg name="rviz_config" value="$(find ebot_ur5)/launch/moveit.rviz"/>
   <arg name="debug" value="false"/>
-</include>  
+</include>   -->
 
 <!-- <arg name ="scene_file" default="$(find ebot_description)/scenes/task4jugaad.scene"/>
 <node name="moveit_publish_scene_from_text" pkg="moveit_ros_planning" type="moveit_publish_scene_from_text" args="$(arg scene_file)" /> -->
