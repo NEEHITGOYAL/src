@@ -14,7 +14,7 @@ moveit_commander.roscpp_initialize(sys.argv)
 robot = moveit_commander.RobotCommander()
 hand_group = moveit_commander.MoveGroupCommander("grip_planning_group")
 arm_group = moveit_commander.MoveGroupCommander("arm_planning_group")
-arm_group.set_named_target("travel2")
+arm_group.set_named_target("travel1")
 plan1 = arm_group.go()
 
 def bot_driver():
@@ -26,8 +26,8 @@ def bot_driver():
     
     rospy.sleep(1)
     # Cordinates of Waypoint 1 
-    position = {'x': 13.216002, 'y' :-0.861678}
-    quaternion = {'r1' : 0.000, 'r2' : 0.000, 'r3' : -0.707, 'r4' : 0.707}
+    position = {'x': 6.99, 'y' :2.87}
+    quaternion = {'r1' : 0.000, 'r2' : 0.000, 'r3' : 0.994575708175, 'r4' : -0.104015194607}
     frequency = 60
 
     # Print Cordinates to Console
