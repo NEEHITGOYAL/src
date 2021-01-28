@@ -6,9 +6,50 @@
 	<arg name="p" default="0"/>
 	<arg name="ya" default="-1.57079"/>	
 2.
-   	<arg name="x" default="11.31183"/>
+   	<arg name="x" default="11.41183"/>
 	<arg name="y" default="-1.457573"/>
 	<arg name="z" default="0"/>
 	<arg name="r" default="0"/>
 	<arg name="p" default="0"/>
 	<arg name="ya" default="1.57079"/>	
+3.
+
+<arg name="x" default="7.00"/>
+<arg name="y" default="2.6"/>
+<arg name="z" default="0.17"/>
+<arg name="r" default="0"/>
+<arg name="p" default="0"/>
+<arg name="ya" default="0"/>		        
+
+4.
+
+<arg name="x" default="7.66"/>
+<arg name="y" default="2.6"/>
+<arg name="z" default="0.17"/>
+<arg name="r" default="0"/>
+<arg name="p" default="0"/>
+<arg name="ya" default="0"/>		
+
+5.
+<arg name="x" default="10.9"/>
+<arg name="y" default="9.43"/>
+<arg name="z" default="0.17"/>
+<arg name="r" default="0"/>
+<arg name="p" default="0"/>
+<arg name="ya" default="1.57079"/>	
+
+6.
+<arg name="x" default="25.921013"/>
+<arg name="y" default="-2.823172"/>
+<arg name="z" default="0.17"/>
+<arg name="r" default="0"/>
+<arg name="p" default="0"/>
+<arg name="ya" default="-0.573944"/>	
+
+7.
+<arg name="x" default="5.61"/>
+<arg name="y" default="-0.694539"/>
+<arg name="z" default="0.17"/>
+<arg name="r" default="0"/>
+<arg name="p" default="0"/>
+<arg name="ya" default="0"/>		
