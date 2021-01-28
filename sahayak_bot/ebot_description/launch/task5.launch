@@ -7,12 +7,12 @@
 <!--   ur5 world -->
 	<include file="$(find ebot_gazebo)/launch/packaging_assist.launch" />
 
-	<arg name="x" default="0"/>
-	<arg name="y" default="0"/>
+	<arg name="x" default="11.31183"/>
+	<arg name="y" default="-1.457573"/>
 	<arg name="z" default="0"/>
 	<arg name="r" default="0"/>
 	<arg name="p" default="0"/>
-	<arg name="ya" default="0"/>		
+	<arg name="ya" default="1.57079"/>		
 
 <!-- Spawn the ur5 robot model -->
 	<node name="mybot_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" 
@@ -21,6 +21,7 @@
 		
 <!-- include the moveit launch file and node for pick and place using perception-->
 	<include file="$(find ebot_ur5)/launch/ur5_bringup_moveit.launch" />
+	<!-- <node pkg="ebot_task5_ur5" name="brakes" type="brake.py"></node> -->
 
   
 </launch>
