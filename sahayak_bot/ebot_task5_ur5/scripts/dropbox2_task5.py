@@ -46,7 +46,7 @@ def bot_driver():
     result = navigator.goto(position, quaternion, frequency)
     handle_result(result, position)
 
-    #rospy.sleep(1)
+    rospy.sleep(1)
 
 def handle_result(result,position):
     # If bot reached destination then print the cordinates of bot 
