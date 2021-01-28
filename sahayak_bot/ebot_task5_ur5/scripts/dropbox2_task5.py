@@ -24,7 +24,7 @@ def bot_driver():
     # Make an object of GoToPose
     navigator = GoToPose()
     
-    rospy.sleep(10)
+    rospy.sleep(5)
     # Cordinates of Waypoint 1 
     position = {'x': 13.01, 'y' :-0.870855}
     quaternion = {'r1' : 0.000, 'r2' : 0.000, 'r3' : -0.7645, 'r4' : 0.644}
