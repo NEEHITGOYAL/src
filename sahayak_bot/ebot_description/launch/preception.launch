@@ -1,5 +1,5 @@
 <launch>
-    <include file="$(find my_object_recognition_pkg)/launch/start_find_object_3d_session.launch" />
-    <include file="$(find ebot_nav)/launch/test.launch" />
+    <include file="$(find my_object_recognition_pkg)/launch/start_find_object_2d.launch" />
+    <!--<include file="$(find ebot_nav)/launch/test.launch" />-->
     
 </launch>
