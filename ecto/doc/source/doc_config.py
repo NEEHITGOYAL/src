@@ -1,15 +1,15 @@
 version=''
-commithash='2ec25e2d75de9e5b02679d8a418caec39d3f9009'
+commithash='5b118836238efb9fedc9a951cd02736983b37917'
 gittag_short=''
-gittag_long='2ec25e2-dirty'
-git_lastmod='Thu, 28 Jan 2021 13:57:52 +0530'
+gittag_long='5b11883-dirty'
+git_lastmod='Mon, 25 Jan 2021 12:57:57 +0530'
 github_url='https://github.com/plasmodic/ecto'
 
 breathe_default_project = 'ecto'
-breathe_projects = dict(ecto='/home/neehit/catkin_ws/build/ecto/doc/../api/xml')
+breathe_projects = dict(ecto='/home/narayan/catkin_ws/build/ecto/doc/../api/xml')
 
 # for debug: this is only if you build everything locally
-#ecto_module_url_root = '/home/neehit/catkin_ws/build/ecto/doc/../../doc/html/'
+#ecto_module_url_root = '/home/narayan/catkin_ws/build/ecto/doc/../../doc/html/'
 # for release
 ecto_module_url_root = 'http://plasmodic.github.com/'
 

@@ -14,7 +14,7 @@ moveit_commander.roscpp_initialize(sys.argv)
 robot = moveit_commander.RobotCommander()
 hand_group = moveit_commander.MoveGroupCommander("grip_planning_group")
 arm_group = moveit_commander.MoveGroupCommander("arm_planning_group")
-arm_group.set_named_target("travel1")
+arm_group.set_named_target("test")
 plan1 = arm_group.go()
 
 def bot_driver():
@@ -24,11 +24,21 @@ def bot_driver():
     # Make an object of GoToPose
     navigator = GoToPose()
     
-    rospy.sleep(1)
+    rospy.sleep(5)
     # Cordinates of Waypoint 1 
-    position = {'x': 6.99, 'y' :2.87}
-    quaternion = {'r1' : 0.000, 'r2' : 0.000, 'r3' : 0.994575708175, 'r4' : -0.104015194607}
-    frequency = 60
+    position = {'x': 13.01, 'y' :-0.870855}
+    quaternion = {'r1' : 8.115398003068665e-06, 'r2' : 3.923049228434639e-06, 'r3' : -0.704144434970934, 'r4' : 0.7100567685884096}
+    frequency = 120
+
+    # Print Cordinates to Console
+    rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
+    # Bot reached destination or not
+    result = navigator.goto(position, quaternion, frequency)
+    handle_result(result, position)
+    #rospy.sleep(3)
+    position = {'x': 6.990000, 'y' :2.761418}
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.999991164579, 'r4' : -0.00420366082469}
+    frequency = 120
 
     # Print Cordinates to Console
     rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
@@ -76,6 +86,7 @@ class GoToPose():
 
         if success and state == GoalStatus.SUCCEEDED:
             result = True
+            print("GOAL SUCCEED")
         else:
             self.move_base.cancel_goal()
 
