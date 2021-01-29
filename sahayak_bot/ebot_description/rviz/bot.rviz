@@ -917,11 +917,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-<<<<<<< HEAD
       Distance: 21.729537963867188
-=======
-      Distance: 30.528438568115234
->>>>>>> 2c8a915107c1f0eb99eb07f817f10f4ae05cc401
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
