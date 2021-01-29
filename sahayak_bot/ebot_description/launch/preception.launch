@@ -1,5 +1,10 @@
 <launch>
+<<<<<<< HEAD
     <include file="$(find my_object_recognition_pkg)/launch/start_find_object_2d.launch" />
     <!--<include file="$(find ebot_nav)/launch/test.launch" />-->
     
+=======
+    <include file="$(find my_object_recognition_pkg)/launch/start_find_object_3d_session.launch" />
+    <node pkg="ebot_ur5" name="grasp_demo" type="sb#1223_task4.py"></node>
+>>>>>>> 2c8a915107c1f0eb99eb07f817f10f4ae05cc401
 </launch>
