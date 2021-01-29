@@ -5,9 +5,11 @@ NavfnROS:
   default_tolerance: 0.2
 TrajectoryPlannerROS:
   max_vel_x: 2.0
-  min_vel_x: 0.0
-  max_vel_theta: 4.5
-  min_vel_theta: -4.5
+
+  min_vel_x: 0.05
+  max_vel_theta: 3.0
+  min_vel_theta: -3.0
+
   min_in_place_vel_theta: 10.0
   acc_lim_theta: 5.0
   acc_lim_x: 5.0
