@@ -1,8 +1,8 @@
 version=''
-commithash='d44512c8053269b5b4c41518e31bc7379b58112f'
+commithash='69d821f5c93491872ef35b4fadbb250f63a8f005'
 gittag_short=''
-gittag_long='d44512c-dirty'
-git_lastmod='Fri, 29 Jan 2021 12:50:25 +0530'
+gittag_long='69d821f'
+git_lastmod='Fri, 29 Jan 2021 22:32:45 +0530'
 github_url='https://github.com/plasmodic/ecto'
 
 breathe_default_project = 'ecto'

@@ -19,7 +19,7 @@
 
 		
 <!-- include the moveit launch file and node for pick and place using perception-->
-    <!-- <node pkg="ebot_task5_ur5" name="brakes" type="test.py" output="screen"/> -->
+    <node pkg="ebot_task5_ur5" name="brakes" type="test.py" output="screen"/>
 	<!-- <include file="$(find my_object_recognition_pkg)/launch/start_find_object_2d.launch" /> -->
 
 	<include file="$(find ebot_ur5)/launch/ur5_bringup_moveit.launch" />
