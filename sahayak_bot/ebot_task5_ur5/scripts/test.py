@@ -12,7 +12,7 @@ from geometry_msgs.msg import Pose, Point, Quaternion
 from gazebo_ros_link_attacher.srv import Attach, AttachRequest, AttachResponse
 
 if __name__ == '__main__':   
-        rospy.sleep(5)   
+        rospy.sleep(6)   
         print("start") 
         rospy.init_node('task4_gazebo_sim')
         attach_srv = rospy.ServiceProxy('/link_attacher_node/attach', Attach)
