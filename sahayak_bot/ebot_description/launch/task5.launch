@@ -6,8 +6,9 @@
 
 <!--   ur5 world -->
 	<include file="$(find ebot_gazebo)/launch/packaging_assist.launch" />
-<arg name="x" default="25.921013"/>
-<arg name="y" default="-2.823172"/>
+
+<arg name="x" default="0.0"/>
+<arg name="y" default="0.0"/>
 <arg name="z" default="0.17"/>
 <arg name="r" default="0"/>
 <arg name="p" default="0"/>
