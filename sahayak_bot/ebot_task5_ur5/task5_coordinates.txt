@@ -1,6 +1,6 @@
 1.	
     <arg name="x" default="14.558803"/>
-	<arg name="y" default="-0.642476"/>
+	<arg name="y" default="-0.62476"/>
 	<arg name="z" default="0"/>
 	<arg name="r" default="0"/>
 	<arg name="p" default="0"/>
