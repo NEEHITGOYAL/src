@@ -42,6 +42,7 @@ add_message_files(
    FILES
    Object.msg
    ObjectPose.msg
+   Tracker.msg
 )
 
 
