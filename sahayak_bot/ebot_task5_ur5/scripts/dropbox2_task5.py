@@ -3,6 +3,7 @@ import rospy
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 import actionlib
 import sys
+import os
 import moveit_commander
 import geometry_msgs.msg
 from actionlib_msgs.msg import *
@@ -24,29 +25,116 @@ def bot_driver():
     # Make an object of GoToPose
     navigator = GoToPose()
     
-    rospy.sleep(5)
+    rospy.sleep(1)
     # Cordinates of Waypoint 1 
     position = {'x': 13.01, 'y' :-0.870855}
-    quaternion = {'r1' : 8.115398003068665e-06, 'r2' : 3.923049228434639e-06, 'r3' : -0.704144434970934, 'r4' : 0.7100567685884096}
-    frequency = 120
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : -0.7071045443232221, 'r4' : 0.7071090180427968}
+    frequency = 60
 
     # Print Cordinates to Console
     rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
     # Bot reached destination or not
     result = navigator.goto(position, quaternion, frequency)
     handle_result(result, position)
+
+    ###############################################################################
+
+                                 # PICK OBJECT
+
+    ###############################################################################
+
+    position = {'x': 13.01, 'y' :-0.870855}
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.7023450278590759, 'r4' : 0.7118366820006073}
+    frequency = 60
+
+    # Print Cordinates to Console
+    rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
+    # Bot reached destination or not
+    result = navigator.goto(position, quaternion, frequency)
+    handle_result(result, position)
+
+    os.system('rosservice call /move_base/clear_costmaps "{}"')
+
+    #######    Moving to drop BOX 
+    position = {'x': 7.00, 'y' : 2.681765}
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.999988965231997, 'r4' : 0.004697809515074247}
+    frequency = 60
+
+    # Print Cordinates to Console
+    rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
+    # Bot reached destination or not
+    result = navigator.goto(position, quaternion, frequency)
+    handle_result(result, position)
+
+    ###############################################################################
+
+                        #  DROP OBJECT
+
+    ###############################################################################
+
+    position = {'x': 7.00, 'y' : 2.681765}
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.0, 'r4' : 1.0}
+    frequency = 60
+
+    # Print Cordinates to Console
+    rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
+    # Bot reached destination or not
+    result = navigator.goto(position, quaternion, frequency)
+    handle_result(result, position)
+    os.system('rosservice call /move_base/clear_costmaps "{}"')
+
+
+    ################################################################################
+
+                    #  PICK OBJECT
+
+    ################################################################################
+    
+    position = {'x': 10.9, 'y' : 9.43}
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.7071045443232221, 'r4' : 0.7071090180427968}
+    frequency = 60
+
+    # Print Cordinates to Console
+    rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
+    # Bot reached destination or not
+    result = navigator.goto(position, quaternion, frequency)
+    handle_result(result, position)
+
+
+    position = {'x': 10.9, 'y' : 9.43}
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : -0.703534947165817, 'r4' : 0.7106606631271996}
+    frequency = 60
+
+    # Print Cordinates to Console
+    rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
+    # Bot reached destination or not
+    result = navigator.goto(position, quaternion, frequency)
+    handle_result(result, position)
+    os.system('rosservice call /move_base/clear_costmaps "{}"')
+
+
+    position = {'x': 25.921013, 'y' : -2.823172}
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : -0.2830493561676561, 'r4' : 0.9591053445649624}
+    frequency = 60
+
+    # Print Cordinates to Console
+    rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
+    # Bot reached destination or not
+    result = navigator.goto(position, quaternion, frequency)
+    handle_result(result, position)
+
     #rospy.sleep(3)
-    position = {'x': 6.990000, 'y' :2.761418}
-    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.999991164579, 'r4' : -0.00420366082469}
-    frequency = 120
+    # position = {'x': 6.990000, 'y' :2.761418}
+    # quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.999991164579, 'r4' : -0.00420366082469}
+    # frequency = 120
 
-    # Print Cordinates to Console
-    rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
-    # Bot reached destination or not
-    result = navigator.goto(position, quaternion, frequency)
-    handle_result(result, position)
+    # # Print Cordinates to Console
+    # rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
+    # # Bot reached destination or not
+    # result = navigator.goto(position, quaternion, frequency)
+    # handle_result(result, position)
 
-    rospy.sleep(1)
+    #rospy.sleep(1)
 
 def handle_result(result,position):
     # If bot reached destination then print the cordinates of bot 
