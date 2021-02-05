@@ -21,13 +21,13 @@ class cvBridgeDemo():
          try:
              frame = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
          except CvBridgeError, e:
-             print(e)
-         os.chdir("/home/dark/catkin_ws/src/sahayak_bot/detect_open/obj")
+             print(e) 
+         new_path=os.path.join(os.getcwd() + "/sahayak_bot/detect_open/obj")
          threshold=0.70
          main_image=frame
          test_image= cv2.cvtColor(main_image, cv2.COLOR_BGR2GRAY)
-         for file_name in os.listdir("/home/dark/catkin_ws/src/sahayak_bot/detect_open/obj"):
-             sub_dir_path = '/home/dark/catkin_ws/src/sahayak_bot/detect_open/obj' + '/' + file_name
+         for file_name in os.listdir(new_path):
+             sub_dir_path = new_path + '/' + file_name
              if (os.path.isdir(sub_dir_path)):
                  for image_name in os.listdir(sub_dir_path):
                     image = cv2.imread(sub_dir_path+"/"+image_name,0)
