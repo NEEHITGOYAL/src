@@ -7,11 +7,11 @@
     <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
     <param name="base_global_planner" value="$(arg base_global_planner)"/>
 
-    <rosparam file="$(find ebot_nav)/config/trajectory_planner.yaml" command="load" />
-    <rosparam file="$(find ebot_nav)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
-    <rosparam file="$(find ebot_nav)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
-    <rosparam file="$(find ebot_nav)/config/local_costmap_params.yaml" command="load" ns="local_costmap" />
-    <rosparam file="$(find ebot_nav)/config/global_costmap_params.yaml" command="load" ns="global_costmap" unless="$(arg no_static_map)"/>
+    <rosparam file="$(find ebot_task5_ur5)/config/trajectory_planner.yaml" command="load" />
+    <rosparam file="$(find ebot_task5_ur5)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find ebot_task5_ur5)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find ebot_task5_ur5)/config/local_costmap_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find ebot_task5_ur5)/config/global_costmap_params.yaml" command="load" ns="global_costmap" unless="$(arg no_static_map)"/>
     
 
   </node>
