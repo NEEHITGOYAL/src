@@ -35,7 +35,7 @@ args="spawn arm_controller gripper_controller" respawn="false" output="screen"/>
  <!-- <arg name="debug" value="false"/> -->
 </include> 
 
-<arg name="scene_file" default="$(find pkg_t2_example)/config/rviz/ur5_with_scene.scene"/>
+
 <node name = "moveit_publish_scene_from_text" pkg="moveit_ros_planning" type="moveit_publish_scene_from_text" args= "$(arg scene_file)"/>
 
 </launch>

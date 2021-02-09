@@ -124,6 +124,14 @@
         <joint name="wrist_2_joint" value="3.0895" />
         <joint name="wrist_3_joint" value="3.5755" />
     </group_state>
+    <group_state name="left_side" group="arm_planning_group">
+        <joint name="elbow_joint" value="-1.4059" />
+        <joint name="shoulder_lift_joint" value="0.7984" />
+        <joint name="shoulder_pan_joint" value="1.4232" />
+        <joint name="wrist_1_joint" value="3.2978" />
+        <joint name="wrist_2_joint" value="4.6863" />
+        <joint name="wrist_3_joint" value="3.0805" />
+    </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="ebot_ur5" parent_link="wrist_3_link" group="grip_planning_group" />
     <!--PASSIVE JOINT: Purpose: this element is used to mark joints that are not actuated-->

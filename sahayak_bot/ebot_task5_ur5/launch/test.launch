@@ -1,6 +1,7 @@
 <launch>
 <include file="$(find ebot_description)/launch/ebot_visualize.launch"/>
 <arg name="map_file" default="$(find ebot_task5_ur5)/map/SB#1223.yaml"/>
+<arg name="scene_file" default="$(find ebot_task5_ur5)/rviz/coke_bench.scene"/>
 <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 <include file="$(find ebot_task5_ur5)/launch/amcl.launch" /> 
 <include file="$(find ebot_task5_ur5)/launch/nav.launch"/>
