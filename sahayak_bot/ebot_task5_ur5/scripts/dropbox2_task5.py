@@ -41,7 +41,7 @@ def bot_driver():
 
     os.system('rosservice call /move_base/clear_costmaps "{}"')
 
-    position = {'x': 14.476580, 'y' : -0.722696}
+    position = {'x': 14.494563, 'y' : -0.749365}
     quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : -0.7199102499944642, 'r4' : 0.6940671667446228}
     frequency = 60
 
@@ -52,23 +52,76 @@ def bot_driver():
     handle_result(result, position)
 
     os.system('rosservice call /move_base/clear_costmaps "{}"')
+##################################################################################
 
-    arm_group.set_named_target("photo")
-    plan1 = arm_group.go()
+                    ###  COKE GRIP
+
+    plan1 = False
+    while(plan1 == False):
+        arm_group.set_named_target("photo")
+        plan1 = arm_group.go()
     t = TransformListener()
     rospy.sleep(2)
     #t.waitForTransform("/ebot_base", "/object_139", rospy.Time(), rospy.Duration(4.0)) ###COKE
-    if t.frameExists("object_139"):
-        (coke,rotation) = t.lookupTransform("/ebot_base", "/object_139", rospy.Time())
-        arm_group.set_named_target("test")
-        plan1 = arm_group.go()
+    if t.frameExists("object_143"):
+        t.waitForTransform("/ebot_base", "/object_143", rospy.Time(), rospy.Duration(4.0))
+        (coke,rotation) = t.lookupTransform("/ebot_base", "/object_143", rospy.Time())
+        plan4 = False
+        # Try to planning until successfull
+        while(plan4 == False):
+            pose_target = geometry_msgs.msg.Pose()
+            # Fixed object orientation
+            pose_target.orientation.w = 0.0
+            pose_target.orientation.x = 0.0
+            pose_target.orientation.y = -0.972
+            pose_target.orientation.z = 0.234
+            # Target object position
+            pose_target.position.x = coke[0]
+            pose_target.position.y = coke[1] - 0.25
+            pose_target.position.z = coke[2] + 0.2
+            arm_group.set_pose_target(pose_target)
+            arm_group.set_goal_tolerance(0.01)
+            # Check if planning was successfull              
+            plan4 = arm_group.go()
+            # print the cordinates of object
+            print("x = {},y = {},z = {},plan = {}".format(coke[0], coke[1], coke[2], plan4))
+        
+        plan4 = False
+        while(plan4 == False):
+            pose_target = geometry_msgs.msg.Pose()
+            # Fixed object orientation
+            pose_target.orientation.w = 0.0
+            pose_target.orientation.x = 0.0
+            pose_target.orientation.y = -0.972
+            pose_target.orientation.z = 0.234
+            # Target object position
+            pose_target.position.x = coke[0]
+            pose_target.position.y = coke[1] - 0.1836
+            pose_target.position.z = coke[2] + 0.1
+            arm_group.set_pose_target(pose_target)
+            arm_group.set_goal_tolerance(0.01)
+            # Check if planning was successfull              
+            plan4 = arm_group.go()
+            # print the cordinates of object
+            print("x = {},y = {},z = {},plan = {}".format(coke[0], coke[1], coke[2], plan4))
+
+        plan1 = False
+        while(plan1 == False):
+            hand_group.set_named_target("close_coke")
+            plan1 = hand_group.go()
+
+        plan1 = False
+        while(plan1 == False):
+            arm_group.set_named_target("test")
+            plan1 = arm_group.go()
+
     else :
         plan1 = False
         while(plan1 == False):
             arm_group.set_named_target("test")
             plan1 = arm_group.go()
         t = TransformListener()
-        position = {'x': 11.356116, 'y' : -0.686386}
+        position = {'x': 11.402280 , 'y' : -0.995208}
         quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.6985381175068214, 'r4' : 0.7155728462008786}
         frequency = 60
 
@@ -81,6 +134,57 @@ def bot_driver():
         os.system('rosservice call /move_base/clear_costmaps "{}"')
         arm_group.set_named_target("photo")
         plan1 = arm_group.go()
+        t.waitForTransform("/ebot_base", "/object_143", rospy.Time(), rospy.Duration(4.0))
+        (coke,rotation) = t.lookupTransform("/ebot_base", "/object_143", rospy.Time())
+        plan4 = False
+        while(plan4 == False):
+            pose_target = geometry_msgs.msg.Pose()
+            # Fixed object orientation
+            pose_target.orientation.w = 0.0
+            pose_target.orientation.x = 0.0
+            pose_target.orientation.y = -0.972
+            pose_target.orientation.z = 0.234
+            # Target object position
+            pose_target.position.x = coke[0]
+            pose_target.position.y = coke[1] - 0.4
+            pose_target.position.z = coke[2] - 0.1
+            arm_group.set_pose_target(pose_target)
+            arm_group.set_goal_tolerance(0.01)
+            # Check if planning was successfull              
+            plan4 = arm_group.go()
+            # print the cordinates of object
+            print("x = {},y = {},z = {},plan = {}".format(coke[0], coke[1], coke[2], plan4))
+
+        plan4 = False
+        while(plan4 == False):
+            pose_target = geometry_msgs.msg.Pose()
+            # Fixed object orientation
+            pose_target.orientation.w = 0.0
+            pose_target.orientation.x = 0.0
+            pose_target.orientation.y = -0.972
+            pose_target.orientation.z = 0.234
+            # Target object position
+            pose_target.position.x = coke[0]
+            pose_target.position.y = coke[1] - 0.1836
+            pose_target.position.z = coke[2] + 0.1
+            arm_group.set_pose_target(pose_target)
+            arm_group.set_goal_tolerance(0.01)
+            # Check if planning was successfull              
+            plan4 = arm_group.go()
+            # print the cordinates of object
+            print("x = {},y = {},z = {},plan = {}".format(coke[0], coke[1], coke[2], plan4))
+
+        plan1 = False
+        while(plan1 == False):
+            hand_group.set_named_target("close_coke")
+            plan1 = hand_group.go()
+
+        plan1 = False
+        while(plan1 == False):
+            arm_group.set_named_target("test")
+            plan1 = arm_group.go()
+
+###################################################################################
     
     
     
