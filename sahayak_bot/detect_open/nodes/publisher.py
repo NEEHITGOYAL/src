@@ -20,9 +20,9 @@ class cvBridgeDemo():
     def image_callback(self, ros_image):
          try:
              frame = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
-         except CvBridgeError, e:
-             print(e) 
-         new_path=os.path.join(os.getcwd() + "/sahayak_bot/detect_open/obj")
+         except CvBridgeError:
+            print("Error") 
+         new_path="/home/neehit/catkin_ws/src/sahayak_bot/detect_open/obj"
          threshold=0.70
          main_image=frame
          test_image= cv2.cvtColor(main_image, cv2.COLOR_BGR2GRAY)
@@ -39,6 +39,7 @@ class cvBridgeDemo():
                     if np.amax(result)>threshold:
                         cv2.rectangle(main_image,top_left, bottom_right,255, 2)
                         cv2.putText(main_image ,file_name,top_left,cv2.FONT_HERSHEY_SIMPLEX,0.75,(255,0,0),2,cv2.LINE_AA)
+                        rospy.loginfo("{} detected".format(file_name))
                         break
          cv2.imshow('Result',main_image)
          self.keystroke = cv2.waitKey(5)
@@ -48,14 +49,14 @@ class cvBridgeDemo():
                  # The user has press the q key, so exit
                  rospy.signal_shutdown("User hit q key to quit.")
     def cleanup(self):
-        print "Shutting down vision node."
+        print ("Shutting down vision node.")
         cv2.destroyAllWindows()   
 def main(args):       
     try:
         cvBridgeDemo()
         rospy.spin()
     except KeyboardInterrupt:
-        print "Shutting down vision node."
+        print ("Shutting down vision node.")
         cv2.DestroyAllWindows()
 if __name__ == '__main__':
     main(sys.argv)
