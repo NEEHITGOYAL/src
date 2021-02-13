@@ -140,6 +140,8 @@ def bot_driver():
     rospy.init_node('nav', anonymous=False)
     # Make an object of GoToPose
     navigator = GoToPose()
+   
+    rospy.loginfo("Started Run!")
     moveit_commander.roscpp_initialize(sys.argv)
     robot = moveit_commander.RobotCommander()
     hand_group = moveit_commander.MoveGroupCommander("grip_planning_group")
@@ -167,6 +169,7 @@ def bot_driver():
         arm_group.set_named_target("photo")
         plan1 = arm_group.go()
     t = TransformListener()  
+    rospy.loginfo("Pantry Reached")
     rospy.sleep(2)
     #t.waitForTransform("/ebot_base", "/object_139", rospy.Time(), rospy.Duration(4.0)) ###COKE
     if t.frameExists("object_139") or t.frameExists("object_133"):
@@ -196,6 +199,8 @@ def bot_driver():
         
         # Move gripper to close_coke pose
         gripperPose("close_coke")
+        
+        rospy.loginfo("Coke Picked")
         # Tune cordinates
         coke_target[0] = coke[0]
         coke_target[1] = coke[1] - 0.40
@@ -254,6 +259,8 @@ def bot_driver():
         
         # Move gripper to close_coke pose
         gripperPose("close_coke") 
+
+        rospy.loginfo("Coke Picked")
         # Tune cordinates
         coke_target[0] = coke[0]
         coke_target[1] = coke[1] - 0.40
@@ -280,7 +287,11 @@ def bot_driver():
     while(plan1==False):
         arm_group.set_named_target("drop_right")
         plan1 = arm_group.go()  
-    gripperPose("open")  
+    gripperPose("open")
+
+    rospy.loginfo("Meeting Room Reached")  
+    
+    rospy.loginfo("Coke Dropped in DropBox2")  
     plan1 = False
     while(plan1==False):
         arm_group.set_named_target("test")
@@ -325,6 +336,8 @@ def bot_driver():
     # Move gripper to close_glue pose
     gripperPose("close_glue")
 
+    rospy.loginfo("Glue Picked")
+
     # Tune cordinates
     glue_target[0] = glue[0] - 0.008
     glue_target[1] = glue[1] - 0.195
@@ -352,6 +365,9 @@ def bot_driver():
         arm_group.set_named_target("drop_left")
         plan1 = arm_group.go()  
     gripperPose("open")
+
+    rospy.loginfo("Research Lab Reached")  
+    rospy.loginfo("Glue Dropped in DropBox3")
               
 
 
