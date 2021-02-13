@@ -41,7 +41,7 @@
         <joint name="wrist_3_joint" value="-3.1589" />
     </group_state>
     <group_state name="close_coke" group="grip_planning_group">
-        <joint name="gripper_finger1_joint" value="0.2518" />
+        <joint name="gripper_finger1_joint" value="0.2354" />
     </group_state>
     <group_state name="close_glue" group="grip_planning_group">
         <joint name="gripper_finger1_joint" value="0.2987" />
@@ -109,10 +109,10 @@
         <joint name="wrist_3_joint" value="3.14" />
     </group_state>
     <group_state name="drop_left" group="arm_planning_group">
-        <joint name="elbow_joint" value="-3.0721" />
-        <joint name="shoulder_lift_joint" value="0" />
+        <joint name="elbow_joint" value="-2.8985" />
+        <joint name="shoulder_lift_joint" value="-0.243" />
         <joint name="shoulder_pan_joint" value="1.57079" />
-        <joint name="wrist_1_joint" value="-1.57079" />
+        <joint name="wrist_1_joint" value="-1.7009" />
         <joint name="wrist_2_joint" value="1.5707" />
         <joint name="wrist_3_joint" value="3.14" />
     </group_state>
