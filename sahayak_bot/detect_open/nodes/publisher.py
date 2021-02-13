@@ -49,14 +49,14 @@ class cvBridgeDemo():
                  # The user has press the q key, so exit
                  rospy.signal_shutdown("User hit q key to quit.")
     def cleanup(self):
-        print "Shutting down vision node."
+        print ("Shutting down vision node.")
         cv2.destroyAllWindows()   
 def main(args):       
     try:
         cvBridgeDemo()
         rospy.spin()
     except KeyboardInterrupt:
-        print "Shutting down vision node."
+        print ("Shutting down vision node.")
         cv2.DestroyAllWindows()
 if __name__ == '__main__':
     main(sys.argv)
