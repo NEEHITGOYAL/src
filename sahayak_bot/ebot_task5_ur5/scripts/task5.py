@@ -10,7 +10,6 @@ from actionlib_msgs.msg import *
 from trajectory_msgs.msg import *
 from visualization_msgs.msg import *
 from geometry_msgs.msg import Pose, Point, Quaternion
-from gazebo_ros_link_attacher.srv import Attach, AttachRequest, AttachResponse
 from tf import TransformListener
 
 global coke_target,fgpa_target,glue_target,arm_group,hand_group
@@ -150,12 +149,12 @@ def bot_driver():
     rospy.sleep(5)
     plan1 = False
     while(plan1==False):
-        arm_group.set_named_target("test")
+        arm_group.set_named_target("travel2")
         plan1 = arm_group.go()
     # Cordinates of Waypoint 1
-    position = {'x': 14.434563, 'y' : -0.749365}
-    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : -0.7199102499944642, 'r4' : 0.6940671667446228}
-    frequency = 100
+    position = {'x': 14.6558803, 'y' : -0.762476}
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : -0.707, 'r4' : 0.707}
+    frequency = 200
 
     # Print Cordinates to Console
     rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
@@ -209,16 +208,16 @@ def bot_driver():
         armPlanner(coke_target) 
         plan1 = False
         while(plan1==False):
-            arm_group.set_named_target("test")
+            arm_group.set_named_target("travel2")
             plan1 = arm_group.go() 
     else:        
         plan1 = False
         while(plan1==False):
-            arm_group.set_named_target("test")
+            arm_group.set_named_target("travel2")
             plan1 = arm_group.go()
         # Cordinates of Waypoint 1
-        position = {'x': 11.402280 , 'y' : -0.995208}
-        quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.6985381175068214, 'r4' : 0.7155728462008786}
+        position = {'x': 11.21183 , 'y' : -1.307573}
+        quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.707, 'r4' : 0.707}
         frequency = 60
         # Print Cordinates to Console
         rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
@@ -269,12 +268,12 @@ def bot_driver():
         armPlanner(coke_target)
         plan1 = False
         while(plan1==False):
-            arm_group.set_named_target("test")
+            arm_group.set_named_target("travel2")
             plan1 = arm_group.go() 
     # Cordinates of Waypoint 1
     position = {'x': 7.00, 'y' : 2.6}
-    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.004697809515074247, 'r4' :0.999988965231997 }############ TO DO
-    frequency = 100
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.001697809515074247, 'r4' :0.999988965231997 }############ TO DO
+    frequency = 200
 
     # Print Cordinates to Console
     rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
@@ -294,12 +293,12 @@ def bot_driver():
     rospy.loginfo("Coke Dropped in DropBox2")  
     plan1 = False
     while(plan1==False):
-        arm_group.set_named_target("test")
+        arm_group.set_named_target("travel2")
         plan1 = arm_group.go()  
     # Cordinates of Waypoint 2
-    position = {'x': 7.66, 'y' : 2.6}
-    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.004697809515074247, 'r4' :0.999988965231997 }  
-    frequency = 100
+    position = {'x': 7.76, 'y' : 2.3}
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.001697809515074247, 'r4' :0.999988965231997 }  
+    frequency = 200
 
     # Print Cordinates to Console
     rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
@@ -346,13 +345,13 @@ def bot_driver():
     armPlanner(glue_target)
     plan1 = False
     while(plan1==False):
-        arm_group.set_named_target("test")
+        arm_group.set_named_target("travel2")
         plan1 = arm_group.go()
     # Cordinates of Waypoint 2
-    position = {'x': 10.9, 'y' : 9.43}
-    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.6985381175068214, 'r4' : 0.7155728462008786}
-    frequency = 100
-
+    position = {'x': 10.9, 'y' : 9.73}
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.707, 'r4' : 0.707}
+    frequency = 200
+    os.system('rosservice call /move_base/clear_costmaps "{}"')
     # Print Cordinates to Console
     rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
     # Bot reached destination or not
@@ -374,6 +373,7 @@ def bot_driver():
 
 # Python Main
 if __name__ == '__main__':
+    rospy.sleep(5)
     try:
         moveit_commander.roscpp_initialize(sys.argv)
         robot = moveit_commander.RobotCommander()

@@ -47,10 +47,10 @@ def armPlanner2(object_position):
     while(plan4 == False):
         pose_target = geometry_msgs.msg.Pose()
         # Fixed object orientation
-        pose_target.orientation.w = 0.653
-        pose_target.orientation.x = -0.653
-        pose_target.orientation.y = 0.272
-        pose_target.orientation.z = -0.272
+        pose_target.orientation.w = 0.5
+        pose_target.orientation.x = -0.5
+        pose_target.orientation.y = 0.5
+        pose_target.orientation.z = -0.5
         # Target object position
         pose_target.position.x = object_position[0]
         pose_target.position.y = object_position[1]
@@ -103,9 +103,9 @@ if __name__ == '__main__':
         arm_group = moveit_commander.MoveGroupCommander("arm_planning_group")
         plan1 = False
         while(plan1==False):
-            arm_group.set_named_target("photo")
+            arm_group.set_named_target("photo5")
             plan1 = arm_group.go()
-#         t = TransformListener()    
+        t = TransformListener()    
 # ##############################################################################################################################################################################        
 #         #  #Detect and assign coke cordinates using two possible object orientations
 #         # try:
@@ -189,45 +189,45 @@ if __name__ == '__main__':
 #         # gripperPose("close")
 
 # ########################################################################################################################################################################
-#         t.waitForTransform("/ebot_base", "/object_131", rospy.Time(), rospy.Duration(4.0))
-#         (fgpa,rotation3) = t.lookupTransform("/ebot_base", "/object_131", rospy.Time())
+        t.waitForTransform("/ebot_base", "/object_131", rospy.Time(), rospy.Duration(4.0))
+        (fgpa,rotation3) = t.lookupTransform("/ebot_base", "/object_131", rospy.Time())
 
-#         # Kill object detection nodes after successfull detection
-#         os.system("rosnode kill "+ '/find_object_3d')
-#         os.system("rosnode kill "+ '/tf_example') 
+        # Kill object detection nodes after successfull detection
+        # os.system("rosnode kill "+ '/find_object_3d')
+        # os.system("rosnode kill "+ '/tf_example') 
 
-#         # Tune cordinates
-#         fgpa_target[0] = fgpa[0] - 0.008
-#         fgpa_target[1] = fgpa[1] - 0.195
-#         fgpa_target[2] = fgpa[2] + 0.3
-#         # Move arm in front of glue
-#         armPlanner2(fgpa_target)
+        # Tune cordinates
+        fgpa_target[0] = fgpa[0] 
+        fgpa_target[1] = fgpa[1] 
+        fgpa_target[2] = fgpa[2] 
+        # Move arm in front of glue
+        armPlanner2(fgpa_target)
         
-#         # Tune cordinates
-#         fgpa_target[0] = fgpa[0] - 0.008
-#         fgpa_target[1] = fgpa[1] - 0.195
-#         fgpa_target[2] = fgpa[2] + 0.1
-#         # Move arm to grab glue
-#         armPlanner2(fgpa_target)
+        # Tune cordinates
+        fgpa_target[0] = fgpa[0] - 0.008
+        fgpa_target[1] = fgpa[1] - 0.195
+        fgpa_target[2] = fgpa[2] + 0.1
+        # Move arm to grab glue
+        armPlanner2(fgpa_target)
 
-#         # Move gripper to close_glue pose
-#         gripperPose("close_fgpa")
+        # Move gripper to close_glue pose
+        gripperPose("close_fgpa")
 
-#         # Tune cordinates
-#         fgpa_target[0] = fgpa[0] - 0.008
-#         fgpa_target[1] = fgpa[1] - 0.195
-#         fgpa_target[2] = fgpa[2] + 0.3
-#         # Move arm back
-#         armPlanner2(fgpa_target)
+        # Tune cordinates
+        fgpa_target[0] = fgpa[0] - 0.008
+        fgpa_target[1] = fgpa[1] - 0.195
+        fgpa_target[2] = fgpa[2] + 0.3
+        # Move arm back
+        armPlanner2(fgpa_target)
 
-#         # Move arm to drop pose
-#         armPose("drop")
+        # Move arm to drop pose
+        armPose("drop")
 
-#         # Move gripper to open pose
-#         gripperPose("open")  
-#         gripperPose("close")
+        # Move gripper to open pose
+        gripperPose("open")  
+        gripperPose("close")
 
-# ########################################################################################################################################################################
+########################################################################################################################################################################
 
-#         rospy.sleep(5)
-#         moveit_commander.roscpp_shutdown()      
+        rospy.sleep(5)
+        moveit_commander.roscpp_shutdown()      
