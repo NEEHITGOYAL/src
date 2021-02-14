@@ -199,10 +199,10 @@ if __name__ == '__main__':
         # Tune cordinates
         fgpa_target[0] = fgpa[0] 
         fgpa_target[1] = fgpa[1] 
-        fgpa_target[2] = fgpa[2] 
+        fgpa_target[2] = fgpa[2] +0.15
         # Move arm in front of glue
         armPlanner2(fgpa_target)
-        
+        print("done")
         # Tune cordinates
         fgpa_target[0] = fgpa[0] - 0.008
         fgpa_target[1] = fgpa[1] - 0.195
