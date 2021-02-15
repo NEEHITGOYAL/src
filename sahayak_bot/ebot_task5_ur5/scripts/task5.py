@@ -464,7 +464,7 @@ def bot_driver():
 
 # Python Main
 if __name__ == '__main__':
-    rospy.sleep(5)
+    rospy.sleep(10)
     try:
         moveit_commander.roscpp_initialize(sys.argv)
         robot = moveit_commander.RobotCommander()

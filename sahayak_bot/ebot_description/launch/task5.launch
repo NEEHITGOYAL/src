@@ -9,7 +9,7 @@
 
 <arg name="x" default="0"/>
 	<arg name="y" default="0"/>
-	<arg name="z" default="0.17"/>
+	<arg name="z" default="0"/>
 	<arg name="r" default="0"/>
 	<arg name="p" default="0"/>
 	<arg name="ya" default="0"/>					
@@ -19,11 +19,12 @@
 
 		
 <!-- include the moveit launch file and node for pick and place using perception-->
-    <!-- <node pkg="ebot_task5_ur5" name="task5" type="task5.py" output="screen"/> -->
+    
 	<include file="$(find ebot_ur5)/launch/ur5_bringup_moveit.launch" />
     <include file="$(find my_object_recognition_pkg)/launch/start_find_object_3d_session.launch" />
     <include file="$(find ebot_task5_ur5)/launch/test.launch" />	
     <!-- <node pkg="detect_open" name="image" type="publisher.py" output="screen"/> -->
+    <!-- <node pkg="ebot_task5_ur5" name="task5" type="task5.py" output="screen"/> -->
 
   
 </launch>
