@@ -20,7 +20,7 @@ glue_target=[0.0,0.0,0.0]
 def gripperPose(config):
     plan1 = False
     # Put the grip in the start position
-    # hand_group = moveit_commander.MoveGroupCommander("grip_planning_group")
+    hand_group = moveit_commander.MoveGroupCommander("grip_planning_group")
     # Try to planning until successfull
     while(plan1 == False):
         # Set Hand to given pose configuration
@@ -31,7 +31,7 @@ def gripperPose(config):
 def armPose(config):
     plan1 = False
     # Put the arm in the start position
-    # arm_group = moveit_commander.MoveGroupCommander("arm_planning_group")
+    arm_group = moveit_commander.MoveGroupCommander("arm_planning_group")
     # Try to planning until successfull
     while(plan1 == False):
         # Set Arm to given pose configuration
@@ -42,6 +42,7 @@ def armPose(config):
 
 def armPlanner2(object_position):
     plan4 = False
+    arm_group = moveit_commander.MoveGroupCommander("arm_planning_group")
     # Try to planning until successfull
     while(plan4 == False):
         pose_target = geometry_msgs.msg.Pose()
@@ -64,6 +65,7 @@ def armPlanner2(object_position):
 
 def armPlanner(object_position):
     plan4 = False
+    arm_group = moveit_commander.MoveGroupCommander("arm_planning_group")
     # Try to planning until successfull
     while(plan4 == False):
         pose_target = geometry_msgs.msg.Pose()
@@ -387,7 +389,7 @@ def bot_driver():
     rospy.loginfo("Store Room Reached") 
     plan1 = False
     while(plan1==False):
-        arm_group.set_named_target("photo")
+        arm_group.set_named_target("photo6")
         plan1 = arm_group.go()
     rospy.sleep(1)
     t.waitForTransform("/ebot_base", "/object_131", rospy.Time(), rospy.Duration(4.0))
@@ -464,12 +466,12 @@ def bot_driver():
 
 # Python Main
 if __name__ == '__main__':
-    rospy.sleep(10)
+    rospy.sleep(4)
     try:
-        moveit_commander.roscpp_initialize(sys.argv)
-        robot = moveit_commander.RobotCommander()
-        hand_group = moveit_commander.MoveGroupCommander("grip_planning_group")
-        arm_group = moveit_commander.MoveGroupCommander("arm_planning_group")
+        # moveit_commander.roscpp_initialize(sys.argv)
+        # robot = moveit_commander.RobotCommander()
+        # hand_group = moveit_commander.MoveGroupCommander("grip_planning_group")
+        # arm_group = moveit_commander.MoveGroupCommander("arm_planning_group")
         bot_driver()
     except rospy.ROSInterruptException:
         rospy.loginfo("Ctrl-C Quit")
