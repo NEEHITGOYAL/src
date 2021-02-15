@@ -22,7 +22,7 @@ class cvBridgeDemo():
              frame = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
          except CvBridgeError:
             print("Error") 
-         new_path=os.path.join(os.getcwd()+"/catkin_ws/src/sahayak_bot/detect_open/obj")
+         new_path="/home/neehit/catkin_ws/src/sahayak_bot/detect_open/obj"
          threshold=0.70
          main_image=frame
          test_image= cv2.cvtColor(main_image, cv2.COLOR_BGR2GRAY)

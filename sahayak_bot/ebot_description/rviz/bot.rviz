@@ -8,6 +8,7 @@ Panels:
         - /Status1
         - /Path2
         - /Path3
+        - /Map3
       Splitter Ratio: 0.5
     Tree Height: 707
   - Class: rviz/Selection
@@ -363,6 +364,16 @@ Visualization Manager:
       Unreliable: false
       Use Timestamp: false
       Value: true
+    - Alpha: 0.699999988079071
+      Class: rviz/Map
+      Color Scheme: costmap
+      Draw Behind: false
+      Enabled: true
+      Name: Map
+      Topic: /move_base/global_costmap/costmap
+      Unreliable: false
+      Use Timestamp: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -391,7 +402,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 19.34889030456543
+      Distance: 16.3019962310791
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -409,7 +420,7 @@ Visualization Manager:
       Pitch: 1.134795904159546
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.215406894683838
+      Yaw: 3.205406904220581
     Saved: ~
 Window Geometry:
   Displays:

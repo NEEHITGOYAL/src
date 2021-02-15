@@ -46,10 +46,10 @@ def armPlanner2(object_position):
     while(plan4 == False):
         pose_target = geometry_msgs.msg.Pose()
         # Fixed object orientation
-        pose_target.orientation.w = 0.653
-        pose_target.orientation.x = -0.653
-        pose_target.orientation.y = 0.272
-        pose_target.orientation.z = -0.272
+        pose_target.orientation.w = -0.033
+        pose_target.orientation.x = 0.206
+        pose_target.orientation.y = 0.940
+        pose_target.orientation.z = -0.269
         # Target object position
         pose_target.position.x = object_position[0]
         pose_target.position.y = object_position[1]
@@ -146,13 +146,13 @@ def bot_driver():
     hand_group = moveit_commander.MoveGroupCommander("grip_planning_group")
     arm_group = moveit_commander.MoveGroupCommander("arm_planning_group")
     
-    rospy.sleep(5)
+    # rospy.sleep(5)
     plan1 = False
     while(plan1==False):
         arm_group.set_named_target("travel2")
         plan1 = arm_group.go()
     # Cordinates of Waypoint 1
-    position = {'x': 14.6558803, 'y' : -0.762476}
+    position = {'x': 14.6058803, 'y' : -0.802476}
     quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : -0.707, 'r4' : 0.707}
     frequency = 200
 
@@ -166,7 +166,8 @@ def bot_driver():
     plan1 = False
     while(plan1==False):
         arm_group.set_named_target("photo")
-        plan1 = arm_group.go() 
+        plan1 = arm_group.go()     
+    rospy.sleep(1)    
     rospy.loginfo("Pantry Reached")
     #t.waitForTransform("/ebot_base", "/object_139", rospy.Time(), rospy.Duration(4.0)) ###COKE
     if t.frameExists("object_139") or t.frameExists("object_133"):
@@ -196,7 +197,7 @@ def bot_driver():
         
         # Move gripper to close_coke pose
         gripperPose("close_coke")
-        
+        rospy.sleep(1) 
         rospy.loginfo("Coke Picked")
         # Tune cordinates
         coke_target[0] = coke[0]
@@ -215,7 +216,7 @@ def bot_driver():
             plan1 = arm_group.go()
         # Cordinates of Waypoint 1
         position = {'x': 11.21183 , 'y' : -1.307573}
-        quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.754, 'r4' : 0.657}
+        quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.739, 'r4' : 0.674}
         frequency = 60
         # Print Cordinates to Console
         rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
@@ -229,7 +230,7 @@ def bot_driver():
         while(plan1==False):
             arm_group.set_named_target("photo")
             plan1 = arm_group.go()
-
+        rospy.sleep(1) 
         #Detect and assign coke cordinates using two possible object orientations
         try:
             t.waitForTransform("/ebot_base", "/object_139", rospy.Time(), rospy.Duration(4.0))
@@ -253,10 +254,10 @@ def bot_driver():
         coke_target[2] = coke[2] + 0.1
         # Move arm to grab coke
         armPlanner(coke_target)
-        
+         
         # Move gripper to close_coke pose
         gripperPose("close_coke") 
-
+        rospy.sleep(1)
         rospy.loginfo("Coke Picked")
         # Tune cordinates
         coke_target[0] = coke[0]
@@ -270,7 +271,7 @@ def bot_driver():
             plan1 = arm_group.go() 
     # Cordinates of Waypoint 1
     position = {'x': 7.00, 'y' : 2.6}
-    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.081, 'r4' :0.997 }############ TO DO
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.043, 'r4' :0.999 }############ TO DO
     frequency = 200
 
     # Print Cordinates to Console
@@ -285,7 +286,7 @@ def bot_driver():
         arm_group.set_named_target("drop_right")
         plan1 = arm_group.go()  
     gripperPose("open")
-
+    rospy.sleep(1)
     rospy.loginfo("Meeting Room Reached")  
     
     rospy.loginfo("Coke Dropped in DropBox2")  
@@ -294,8 +295,8 @@ def bot_driver():
         arm_group.set_named_target("travel2")
         plan1 = arm_group.go()  
     # Cordinates of Waypoint 2
-    position = {'x': 7.76, 'y' : 2.3}
-    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.081, 'r4' :0.997}  
+    position = {'x': 7.76, 'y' : 2.4}
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.043, 'r4' :0.999}  
     frequency = 200
 
     # Print Cordinates to Console
@@ -308,7 +309,8 @@ def bot_driver():
     plan1 = False
     while(plan1==False):
         arm_group.set_named_target("photo")
-        plan1 = arm_group.go()   
+        plan1 = arm_group.go()
+    rospy.sleep(1)        
     t.waitForTransform("/ebot_base", "/object_132", rospy.Time(), rospy.Duration(4.0))
     (glue,rotation2) = t.lookupTransform("/ebot_base", "/object_132", rospy.Time())
 
@@ -332,20 +334,21 @@ def bot_driver():
 
     # Move gripper to close_glue pose
     gripperPose("close_glue")
-
+    rospy.sleep(1)
     rospy.loginfo("Glue Picked")
 
     # Tune cordinates
     glue_target[0] = glue[0] - 0.008
     glue_target[1] = glue[1] - 0.195
     glue_target[2] = glue[2] + 0.2
+    os.system('rosservice call /move_base/clear_costmaps "{}"')
     # Move arm back
     armPlanner(glue_target)
     plan1 = False
     while(plan1==False):
         arm_group.set_named_target("travel2")
         plan1 = arm_group.go()
-    os.system('rosservice call /move_base/clear_costmaps "{}"')    
+    # os.system('rosservice call /move_base/clear_costmaps "{}"')    
     # Cordinates of Waypoint 2
     position = {'x': 10.9, 'y' : 9.73}
     quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.707, 'r4' : 0.707}
@@ -362,7 +365,7 @@ def bot_driver():
         arm_group.set_named_target("drop_left")
         plan1 = arm_group.go()  
     gripperPose("open")
-
+    rospy.sleep(1)
     rospy.loginfo("Research Lab Reached")  
     rospy.loginfo("Glue Dropped in DropBox3")
 
@@ -371,8 +374,8 @@ def bot_driver():
         arm_group.set_named_target("travel2")
         plan1 = arm_group.go()    
     # Cordinates of Waypoint 2
-    position = {'x': 25.921013, 'y' : -2.823172}
-    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : -0.283, 'r4' : 0.959}
+    position = {'x': 25.948754, 'y' : -3.002912}
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : -0.894, 'r4' : 0.449}
     frequency = 200
     # Print Cordinates to Console
     rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
@@ -384,10 +387,79 @@ def bot_driver():
     rospy.loginfo("Store Room Reached") 
     plan1 = False
     while(plan1==False):
-        arm_group.set_named_target("photo5")
+        arm_group.set_named_target("photo")
         plan1 = arm_group.go()
-              
+    rospy.sleep(1)
+    t.waitForTransform("/ebot_base", "/object_131", rospy.Time(), rospy.Duration(4.0))
+    (fgpa,rotation3) = t.lookupTransform("/ebot_base", "/object_131", rospy.Time())
 
+    # Kill object detection nodes after successfull detection
+    # os.system("rosnode kill "+ '/find_object_3d')
+    # os.system("rosnode kill "+ '/tf_example') 
+
+    # Tune cordinates
+    fgpa_target[0] = fgpa[0] -0.13
+    fgpa_target[1] = fgpa[1] -0.2
+    fgpa_target[2] = fgpa[2] +0.2
+    # Move arm in front of glue
+    armPlanner2(fgpa_target)
+    print("done")
+    # Tune cordinates
+    fgpa_target[0] = fgpa[0] - 0.13
+    fgpa_target[1] = fgpa[1] - 0.18
+    fgpa_target[2] = fgpa[2] + 0.1
+    # Move arm to grab glue
+    armPlanner2(fgpa_target)
+
+    # Move gripper to close_glue pose
+    gripperPose("close_fgpa")
+    rospy.sleep(1)
+    # # Tune cordinates
+    # fgpa_target[0] = fgpa[0] - 0.008
+    # fgpa_target[1] = fgpa[1] - 0.195
+    # fgpa_target[2] = fgpa[2] + 0.3
+    # # Move arm back
+    # armPlanner2(fgpa_target)     
+    rospy.loginfo("FPGA board picked")
+    ######################
+    #######################
+    plan1 = False
+    while(plan1==False):
+        arm_group.set_named_target("travel2")
+        plan1 = arm_group.go()
+    # Cordinates of Waypoint 2
+    position = {'x': 5.61, 'y' : -0.574539}
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.081, 'r4' : 0.997}
+    frequency = 200
+    # Print Cordinates to Console
+    rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
+    # Bot reached destination or not
+    result = navigator.goto(position, quaternion, frequency)
+    handle_result(result, position)
+
+    os.system('rosservice call /move_base/clear_costmaps "{}"')
+    plan1 = False
+    while(plan1==False):
+        arm_group.set_named_target("drop_left")
+        plan1 = arm_group.go()  
+    gripperPose("open")
+    rospy.loginfo("Conference Room Reached");
+    rospy.loginfo("FPGA board dropped in Dropbox1")     
+    
+    plan1 = False
+    while(plan1==False):
+        arm_group.set_named_target("travel2")
+        plan1 = arm_group.go()
+    # Cordinates of Waypoint 2
+    position = {'x': 0.01, 'y' : 0.01}
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.081, 'r4' : 0.997}
+    frequency = 200
+    # Print Cordinates to Console
+    rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
+    # Bot reached destination or not
+    result = navigator.goto(position, quaternion, frequency)
+    handle_result(result, position)
+    rospy.loginfo("Mission Accomplished!");
 
 
 # Python Main

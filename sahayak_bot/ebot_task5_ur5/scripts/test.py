@@ -103,7 +103,7 @@ if __name__ == '__main__':
         arm_group = moveit_commander.MoveGroupCommander("arm_planning_group")
         plan1 = False
         while(plan1==False):
-            arm_group.set_named_target("photo5")
+            arm_group.set_named_target("photo")
             plan1 = arm_group.go()
         t = TransformListener()    
 # ##############################################################################################################################################################################        
