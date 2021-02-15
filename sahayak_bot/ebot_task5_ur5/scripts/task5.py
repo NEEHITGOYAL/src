@@ -167,7 +167,7 @@ def bot_driver():
     while(plan1==False):
         arm_group.set_named_target("photo")
         plan1 = arm_group.go()     
-    rospy.sleep(1)    
+    rospy.sleep(20)    
     rospy.loginfo("Pantry Reached")
     #t.waitForTransform("/ebot_base", "/object_139", rospy.Time(), rospy.Duration(4.0)) ###COKE
     if t.frameExists("object_143") :
@@ -230,7 +230,7 @@ def bot_driver():
         while(plan1==False):
             arm_group.set_named_target("photo")
             plan1 = arm_group.go()
-        rospy.sleep(1) 
+        rospy.sleep(20) 
         #Detect and assign coke cordinates using two possible object orientations
         try:
             t.waitForTransform("/ebot_base", "/object_145", rospy.Time(), rospy.Duration(4.0))
@@ -310,7 +310,7 @@ def bot_driver():
     while(plan1==False):
         arm_group.set_named_target("photo")
         plan1 = arm_group.go()
-    rospy.sleep(1)        
+    rospy.sleep(20)        
     t.waitForTransform("/ebot_base", "/object_149", rospy.Time(), rospy.Duration(4.0))
     (glue,rotation2) = t.lookupTransform("/ebot_base", "/object_149", rospy.Time())
 
@@ -389,7 +389,7 @@ def bot_driver():
     while(plan1==False):
         arm_group.set_named_target("photo")
         plan1 = arm_group.go()
-    rospy.sleep(1)
+    rospy.sleep(20)
     t.waitForTransform("/ebot_base", "/object_155", rospy.Time(), rospy.Duration(4.0))
     (fgpa,rotation3) = t.lookupTransform("/ebot_base", "/object_155", rospy.Time())
 
