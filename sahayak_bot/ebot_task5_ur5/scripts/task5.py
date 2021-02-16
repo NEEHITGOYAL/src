@@ -162,8 +162,9 @@ def bot_driver():
     plan1 = False
     while(plan1==False):
         arm_group.set_named_target("photo")
-        plan1 = arm_group.go()     
-    rospy.sleep(0.1)    
+        plan1 = arm_group.go()   
+    os.system("gnome-terminal -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")      
+    rospy.sleep(1)    
     rospy.loginfo("Pantry Reached")
     #t.waitForTransform("/ebot_base", "/object_139", rospy.Time(), rospy.Duration(4.0)) ###COKE
     # if t.frameExists("object_139") or t.frameExists("object_133"):
@@ -171,6 +172,9 @@ def bot_driver():
     try:
         t.waitForTransform("/ebot_base", "/object_139", rospy.Time(), rospy.Duration(1.0))
         (coke,rotation1) = t.lookupTransform("/ebot_base", "/object_139", rospy.Time())
+        # Kill object detection nodes after successfull detection
+        os.system("rosnode kill "+ '/find_object_3d')
+        os.system("rosnode kill "+ '/tf_example') 
         coke_target[0] = coke[0]
         coke_target[1] = coke[1] - 0.4
         coke_target[2] = coke[2] + 0.1
@@ -203,8 +207,8 @@ def bot_driver():
             t.waitForTransform("/ebot_base", "/object_133", rospy.Time(), rospy.Duration(1.0))
             (coke,rotation1) = t.lookupTransform("/ebot_base", "/object_133", rospy.Time())    
             # Kill object detection nodes after successfull detection
-            # os.system("rosnode kill "+ '/find_object_3d')
-            # os.system("rosnode kill "+ '/tf_example')    
+            os.system("rosnode kill "+ '/find_object_3d')
+            os.system("rosnode kill "+ '/tf_example')    
                 # Tune cordinates
             coke_target[0] = coke[0]
             coke_target[1] = coke[1] - 0.4
@@ -233,7 +237,9 @@ def bot_driver():
             while(plan1==False):
                 arm_group.set_named_target("travel2")
                 plan1 = arm_group.go() 
-        except:        
+        except:   
+            os.system("rosnode kill "+ '/find_object_3d')
+            os.system("rosnode kill "+ '/tf_example')     
             plan1 = False
             while(plan1==False):
                 arm_group.set_named_target("travel2")
@@ -252,7 +258,9 @@ def bot_driver():
             while(plan1==False):
                 arm_group.set_named_target("photo")
                 plan1 = arm_group.go()
-            rospy.sleep(0.1) 
+            os.system("gnome-terminal -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")    
+            rospy.sleep(1)
+
             #Detect and assign coke cordinates using two possible object orientations
             try:
                 t.waitForTransform("/ebot_base", "/object_139", rospy.Time(), rospy.Duration(1.0))
@@ -261,8 +269,8 @@ def bot_driver():
                 t.waitForTransform("/ebot_base", "/object_133", rospy.Time(), rospy.Duration(4.0))
                 (coke,rotation1) = t.lookupTransform("/ebot_base", "/object_133", rospy.Time())    
             # Kill object detection nodes after successfull detection
-            # os.system("rosnode kill "+ '/find_object_3d')
-            # os.system("rosnode kill "+ '/tf_example')    
+            os.system("rosnode kill "+ '/find_object_3d')
+            os.system("rosnode kill "+ '/tf_example')    
                 # Tune cordinates
             coke_target[0] = coke[0]
             coke_target[1] = coke[1] - 0.4
@@ -292,7 +300,7 @@ def bot_driver():
                 arm_group.set_named_target("travel2")
                 plan1 = arm_group.go() 
     # Cordinates of Waypoint 1
-    position = {'x': 7.00, 'y' : 2.6}
+    position = {'x': 7.00, 'y' : 2.55}
     quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.043, 'r4' :0.999 }############ TO DO
     frequency = 200
 
@@ -328,13 +336,14 @@ def bot_driver():
     while(plan1==False):
         arm_group.set_named_target("photo")
         plan1 = arm_group.go()
-    rospy.sleep(0.1)        
+    os.system("gnome-terminal -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")    
+    rospy.sleep(1)        
     t.waitForTransform("/ebot_base", "/object_132", rospy.Time(), rospy.Duration(4.0))
     (glue,rotation2) = t.lookupTransform("/ebot_base", "/object_132", rospy.Time())
 
     # Kill object detection nodes after successfull detection
-    # os.system("rosnode kill "+ '/find_object_3d')
-    # os.system("rosnode kill "+ '/tf_example') 
+    os.system("rosnode kill "+ '/find_object_3d')
+    os.system("rosnode kill "+ '/tf_example') 
 
     # Tune cordinates
     glue_target[0] = glue[0] - 0.008
@@ -403,13 +412,14 @@ def bot_driver():
     while(plan1==False):
         arm_group.set_named_target("photo6")
         plan1 = arm_group.go()
-    rospy.sleep(0.1)
+    os.system("gnome-terminal -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")    
+    rospy.sleep(1)
     t.waitForTransform("/ebot_base", "/object_131", rospy.Time(), rospy.Duration(4.0))
     (fgpa,rotation3) = t.lookupTransform("/ebot_base", "/object_131", rospy.Time())
 
     # Kill object detection nodes after successfull detection
-    # os.system("rosnode kill "+ '/find_object_3d')
-    # os.system("rosnode kill "+ '/tf_example') 
+    os.system("rosnode kill "+ '/find_object_3d')
+    os.system("rosnode kill "+ '/tf_example') 
 
     # Tune cordinates
     fgpa_target[0] = fgpa[0] -0.15
@@ -476,10 +486,10 @@ def bot_driver():
 if __name__ == '__main__':
     rospy.sleep(1)
     try:
-        # moveit_commander.roscpp_initialize(sys.argv)
-        # robot = moveit_commander.RobotCommander()
-        # hand_group = moveit_commander.MoveGroupCommander("grip_planning_group")
-        # arm_group = moveit_commander.MoveGroupCommander("arm_planning_group")
+        moveit_commander.roscpp_initialize(sys.argv)
+        robot = moveit_commander.RobotCommander()
+        hand_group = moveit_commander.MoveGroupCommander("grip_planning_group")
+        arm_group = moveit_commander.MoveGroupCommander("arm_planning_group")
         bot_driver()
     except rospy.ROSInterruptException:
         rospy.loginfo("Ctrl-C Quit")

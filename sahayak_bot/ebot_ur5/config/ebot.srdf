@@ -125,7 +125,7 @@
         <joint name="wrist_3_joint" value="3.5755" />
     </group_state>
     <group_state name="close_fgpa" group="grip_planning_group">
-        <joint name="gripper_finger1_joint" value="0.15" />
+        <joint name="gripper_finger1_joint" value="0.2" />
     </group_state>
     <group_state name="photo6" group="arm_planning_group">
         <joint name="elbow_joint" value="-1.7877" />
