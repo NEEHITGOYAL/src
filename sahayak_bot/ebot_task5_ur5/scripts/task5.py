@@ -139,7 +139,7 @@ def bot_driver():
     rospy.init_node('nav', anonymous=False)
     # Make an object of GoToPose
     navigator = GoToPose()
-    t = TransformListener() 
+    
     rospy.loginfo("Started Run!")
     moveit_commander.roscpp_initialize(sys.argv)
     robot = moveit_commander.RobotCommander()
@@ -154,7 +154,7 @@ def bot_driver():
     # Cordinates of Waypoint 1
     position = {'x': 14.6058803, 'y' : -0.802476}
     quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : -0.707, 'r4' : 0.707}
-    frequency = 200
+    frequency = 120
 
     # Print Cordinates to Console
     rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
@@ -166,8 +166,9 @@ def bot_driver():
     plan1 = False
     while(plan1==False):
         arm_group.set_named_target("photo")
-        plan1 = arm_group.go()     
-    rospy.sleep(25)    
+        plan1 = arm_group.go()    
+    t = TransformListener()  
+    rospy.sleep(2)   
     rospy.loginfo("Pantry Reached")
     #t.waitForTransform("/ebot_base", "/object_139", rospy.Time(), rospy.Duration(4.0)) ###COKE
     if t.frameExists("object_143") :
@@ -217,7 +218,7 @@ def bot_driver():
         # Cordinates of Waypoint 1
         position = {'x': 11.21183 , 'y' : -1.307573}
         quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.739, 'r4' : 0.674}
-        frequency = 60
+        frequency = 120
         # Print Cordinates to Console
         rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
         # Bot reached destination or not
@@ -230,7 +231,7 @@ def bot_driver():
         while(plan1==False):
             arm_group.set_named_target("photo")
             plan1 = arm_group.go()
-        rospy.sleep(20) 
+        rospy.sleep(25) 
         #Detect and assign coke cordinates using two possible object orientations
         try:
             t.waitForTransform("/ebot_base", "/object_145", rospy.Time(), rospy.Duration(4.0))
@@ -272,7 +273,7 @@ def bot_driver():
     # Cordinates of Waypoint 1
     position = {'x': 7.00, 'y' : 2.6}
     quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.043, 'r4' :0.999 }############ TO DO
-    frequency = 200
+    frequency = 120
 
     # Print Cordinates to Console
     rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
@@ -297,7 +298,7 @@ def bot_driver():
     # Cordinates of Waypoint 2
     position = {'x': 7.76, 'y' : 2.4}
     quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.043, 'r4' :0.999}  
-    frequency = 200
+    frequency = 120
 
     # Print Cordinates to Console
     rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
@@ -352,7 +353,7 @@ def bot_driver():
     # Cordinates of Waypoint 2
     position = {'x': 10.9, 'y' : 9.73}
     quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.707, 'r4' : 0.707}
-    frequency = 200
+    frequency = 120
     # Print Cordinates to Console
     rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
     # Bot reached destination or not
@@ -376,7 +377,7 @@ def bot_driver():
     # Cordinates of Waypoint 2
     position = {'x': 25.948754, 'y' : -3.002912}
     quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : -0.894, 'r4' : 0.449}
-    frequency = 200
+    frequency = 120
     # Print Cordinates to Console
     rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
     # Bot reached destination or not
@@ -430,7 +431,7 @@ def bot_driver():
     # Cordinates of Waypoint 2
     position = {'x': 5.61, 'y' : -0.574539}
     quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.081, 'r4' : 0.997}
-    frequency = 200
+    frequency = 120
     # Print Cordinates to Console
     rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
     # Bot reached destination or not
@@ -450,10 +451,21 @@ def bot_driver():
     while(plan1==False):
         arm_group.set_named_target("travel2")
         plan1 = arm_group.go()
+    
+    position = {'x': 5.61, 'y' : -0.574539}
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.997, 'r4' : 0.081}
+    frequency = 120
+    # Print Cordinates to Console
+    rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
+    # Bot reached destination or not
+    result = navigator.goto(position, quaternion, frequency)
+    handle_result(result, position)
+
+    os.system('rosservice call /move_base/clear_costmaps "{}"')
     # Cordinates of Waypoint 2
     position = {'x': 0.01, 'y' : 0.01}
     quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.081, 'r4' : 0.997}
-    frequency = 200
+    frequency = 120
     # Print Cordinates to Console
     rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
     # Bot reached destination or not
