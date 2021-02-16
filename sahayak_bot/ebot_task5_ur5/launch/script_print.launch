@@ -1,0 +1,4 @@
+<launch>
+<node pkg="detect_open" name="image" type="publisher.py" output="screen" />
+<node pkg="ebot_task5_ur5" name="task5" type="task5.py" output="screen" />
+</launch>
