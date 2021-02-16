@@ -170,8 +170,9 @@ def bot_driver():
     # if t.frameExists("object_139") or t.frameExists("object_133"):
         #Detect and assign coke cordinates using two possible object orientations
     try:
-        t.waitForTransform("/ebot_base", "/object_139", rospy.Time(), rospy.Duration(1.0))
+        t.waitForTransform("/ebot_base", "/object_139", rospy.Time(), rospy.Duration(4.0))
         (coke,rotation1) = t.lookupTransform("/ebot_base", "/object_139", rospy.Time())
+        rospy.loginfo("Coke detected")
         # Kill object detection nodes after successfull detection
         os.system("rosnode kill "+ '/find_object_3d')
         os.system("rosnode kill "+ '/tf_example') 
@@ -204,8 +205,9 @@ def bot_driver():
             plan1 = arm_group.go()
     except:
         try:      
-            t.waitForTransform("/ebot_base", "/object_133", rospy.Time(), rospy.Duration(1.0))
-            (coke,rotation1) = t.lookupTransform("/ebot_base", "/object_133", rospy.Time())    
+            t.waitForTransform("/ebot_base", "/object_133", rospy.Time(), rospy.Duration(4.0))
+            (coke,rotation1) = t.lookupTransform("/ebot_base", "/object_133", rospy.Time())
+            rospy.loginfo("Coke detected")    
             # Kill object detection nodes after successfull detection
             os.system("rosnode kill "+ '/find_object_3d')
             os.system("rosnode kill "+ '/tf_example')    
@@ -263,11 +265,13 @@ def bot_driver():
 
             #Detect and assign coke cordinates using two possible object orientations
             try:
-                t.waitForTransform("/ebot_base", "/object_139", rospy.Time(), rospy.Duration(1.0))
+                t.waitForTransform("/ebot_base", "/object_139", rospy.Time(), rospy.Duration(4.0))
                 (coke,rotation1) = t.lookupTransform("/ebot_base", "/object_139", rospy.Time())
+                rospy.loginfo("Coke detected")
             except:
                 t.waitForTransform("/ebot_base", "/object_133", rospy.Time(), rospy.Duration(4.0))
                 (coke,rotation1) = t.lookupTransform("/ebot_base", "/object_133", rospy.Time())    
+                rospy.loginfo("Coke detected")
             # Kill object detection nodes after successfull detection
             os.system("rosnode kill "+ '/find_object_3d')
             os.system("rosnode kill "+ '/tf_example')    
@@ -340,7 +344,7 @@ def bot_driver():
     rospy.sleep(1)        
     t.waitForTransform("/ebot_base", "/object_132", rospy.Time(), rospy.Duration(4.0))
     (glue,rotation2) = t.lookupTransform("/ebot_base", "/object_132", rospy.Time())
-
+    rospy.loginfo("Glue detected")
     # Kill object detection nodes after successfull detection
     os.system("rosnode kill "+ '/find_object_3d')
     os.system("rosnode kill "+ '/tf_example') 
@@ -416,7 +420,7 @@ def bot_driver():
     rospy.sleep(1)
     t.waitForTransform("/ebot_base", "/object_131", rospy.Time(), rospy.Duration(4.0))
     (fgpa,rotation3) = t.lookupTransform("/ebot_base", "/object_131", rospy.Time())
-
+    rospy.loginfo("FPGA detected")
     # Kill object detection nodes after successfull detection
     os.system("rosnode kill "+ '/find_object_3d')
     os.system("rosnode kill "+ '/tf_example') 
@@ -436,7 +440,7 @@ def bot_driver():
     armPlanner2(fgpa_target)
 
     # Move gripper to close_glue pose
-    gripperPose("close_fgpa")
+    gripperPose("close_fpga")
     rospy.sleep(0.1)
     # # Tune cordinates
     # fgpa_target[0] = fgpa[0] - 0.008
