@@ -39,7 +39,7 @@ class cvBridgeDemo():
                     if np.amax(result)>threshold:
                         cv2.rectangle(main_image,top_left, bottom_right,255, 2)
                         cv2.putText(main_image ,file_name,top_left,cv2.FONT_HERSHEY_SIMPLEX,0.75,(255,0,0),2,cv2.LINE_AA)
-                        print("{} detected".format(file_name))
+                        print("{} identified".format(file_name))
                         break
          cv2.imshow('Result',main_image)
          self.keystroke = cv2.waitKey(5)
