@@ -77,6 +77,7 @@ def handle_result(result,position):
         rospy.loginfo("The base failed to reach the desired pose")
 
 def getObjCordinates(obj):
+    t=TransformListener()
     t.waitForTransform("/ebot_base", obj, rospy.Time(), rospy.Duration(4.0))
     (objCordinates,rotation1) = t.lookupTransform("/ebot_base", obj, rospy.Time())
     # Kill object detection nodes after successfull detection
@@ -84,23 +85,24 @@ def getObjCordinates(obj):
     os.system("rosnode kill "+ '/tf_example')
     return objCordinates
 
-# def detection(obj):
-#     try:
-#         t.waitForTransform("/ebot_base", obj, rospy.Time(), rospy.Duration(2.0))
-#         (objCordinates,rotation1) = t.lookupTransform("/ebot_base", obj, rospy.Time())
+def detection(obj):
+    t= TransformListener()
+    try:
+        t.waitForTransform("/ebot_base", obj, rospy.Time(), rospy.Duration(2.0))
+        (objCordinates,rotation1) = t.lookupTransform("/ebot_base", obj, rospy.Time())
 
-#         if(obj=="/object_151" or obj=="/object_144"):
-#             rospy.loginfo("Battery Detected")
-#         elif(obj=="/object_145"):
-#             rospy.loginfo("Adhesive Detected")
-#         elif(obj=="/object_146"):
-#             rospy.loginfo("Glass Detected")
-#         elif(obj=="/object_149"):
-#             rospy.loginfo("eYFI Board Detected")
-#         elif(obj=="/object_150" or obj=="/object_152"):
-#             rospy.loginfo("Pair of Wheels Package Detected")
-#     except:
-#         pass
+        if(obj=="/object_151" or obj=="/object_144"):
+            rospy.loginfo("Battery Detected")
+        elif(obj=="/object_145"):
+            rospy.loginfo("Adhesive Detected")
+        elif(obj=="/object_146"):
+            rospy.loginfo("Glass Detected")
+        elif(obj=="/object_149"):
+            rospy.loginfo("eYFI Board Detected")
+        elif(obj=="/object_150" or obj=="/object_152"):
+            rospy.loginfo("Pair of Wheels Package Detected")
+    except:
+        pass
 
 def cokeArm(coke):
     # Move arm in front of coke
@@ -185,9 +187,9 @@ def bot_driver():
     armPose("photo")
 
     os.system("gnome-terminal -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")      
-    rospy.sleep(3)    
+    rospy.sleep(1)    
     rospy.loginfo("Pantry Reached")
-    # detection("/object_146")
+    detection("/object_146")
     try: 
         cokeArm(getObjCordinates("/object_139"))
         rospy.loginfo("Coke Detected")
@@ -211,10 +213,10 @@ def bot_driver():
 
             armPose("photo")
             os.system("gnome-terminal -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")    
-            rospy.sleep(3)
+            rospy.sleep(1)
 
             #Detect and assign coke cordinates using two possible object orientations
-            #detection("/object_146")
+            detection("/object_146")
             try:
                 coke = getObjCordinates("/object_139") 
                 rospy.loginfo("Coke Detected")
@@ -253,10 +255,10 @@ def bot_driver():
 
     armPose("photo")
     os.system("gnome-terminal -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")    
-    rospy.sleep(3)        
-    # detection("/object_151")
-    # detection("/object_144")
-    # detection("/object_145")
+    rospy.sleep(1)        
+    detection("/object_151")
+    detection("/object_144")
+    detection("/object_145")
     try:
         glue = getObjCordinates("/object_132")
         rospy.loginfo("Glue Detected")
@@ -307,13 +309,13 @@ def bot_driver():
 
     armPose("photo6")
     os.system("gnome-terminal -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")    
-    rospy.sleep(3)
-    # detection("/object_150")
-    # detection("/object_152")
-    # detection("/object_149")
-    # detection("/object_151")
-    # detection("/object_144")
-    # detection("/object_145")
+    rospy.sleep(1)
+    detection("/object_150")
+    detection("/object_152")
+    detection("/object_149")
+    detection("/object_151")
+    detection("/object_144")
+    detection("/object_145")
     try:
         fgpa = getObjCordinates("/object_131")
         rospy.loginfo("FPGA Detected")
