@@ -22,7 +22,7 @@ TrajectoryPlannerROS:
 
   
   # Forward Simulation Parameters
-  sim_time: 3.7
+  sim_time: 3.6
   sim_granularity: 0.025
   angular_sim_granularity: 0.03
   vx_samples: 20
