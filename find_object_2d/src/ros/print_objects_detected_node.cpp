@@ -35,6 +35,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <opencv2/opencv.hpp>
 #include <QTransform>
 #include <QColor>
+#include <sstream>
+#include <find_object_2d/custom.h>
 
 image_transport::Publisher imagePub;
 
@@ -46,6 +48,8 @@ image_transport::Publisher imagePub;
 void objectsDetectedCallback(
 		const std_msgs::Float32MultiArrayConstPtr & msg)
 {
+	ros::NodeHandle nh;
+	ros::Publisher pub = nh.advertise<find_object_2d::custom>("box_coordinates", 1000);
 	printf("---\n");
 	const std::vector<float> & data = msg->data;
 	if(data.size())
@@ -73,6 +77,17 @@ void objectsDetectedCallback(
 					qtTopRight.x(), qtTopRight.y(),
 					qtBottomLeft.x(), qtBottomLeft.y(),
 					qtBottomRight.x(), qtBottomRight.y());
+			find_object_2d::custom msg2;
+			msg2.id = id;
+			msg2.top_left_x = qtTopLeft.x();
+			msg2.top_left_y = qtTopLeft.y();	
+			msg2.bottom_left_x = qtBottomLeft.x();
+			msg2.bottom_left_y = qtBottomLeft.y();
+			msg2.top_right_x = qtTopRight.x();
+			msg2.top_right_y = qtTopRight.y();
+			msg2.bottom_right_x = qtBottomRight.x();
+			msg2.bottom_left_y = qtBottomRight.y();
+			pub.publish(msg2);	
 		}
 	}
 	else
@@ -80,10 +95,9 @@ void objectsDetectedCallback(
 		printf("No objects detected.\n");
 	}
 }
-void imageObjectsDetectedCallback(
-		const sensor_msgs::ImageConstPtr & imageMsg,
-		const find_object_2d::ObjectsStampedConstPtr & objectsMsg)
+void imageObjectsDetectedCallback(		const sensor_msgs::ImageConstPtr & imageMsg,		const find_object_2d::ObjectsStampedConstPtr & objectsMsg)
 {
+	printf("bjdcbsjbcbskxcnkxnkcnxknckxn");
 	if(imagePub.getNumSubscribers() > 0)
 	{
 		const std::vector<float> & data = objectsMsg->objects.data;
@@ -130,6 +144,7 @@ void imageObjectsDetectedCallback(
 				cv::Point2i center = outPts[4];
 				cv::putText(img.image, QString("(%1, %2)").arg(center.x).arg(center.y).toStdString(), center, cv::FONT_HERSHEY_SIMPLEX, 0.6, cvColor, 2);
 				cv::circle(img.image, center, 1, cvColor, 3);
+				printf("abc");
 				imagePub.publish(img.toImageMsg());
 			}
 		}
@@ -141,23 +156,24 @@ typedef message_filters::sync_policies::ExactTime<sensor_msgs::Image, find_objec
 int main(int argc, char** argv)
 {
     ros::init(argc, argv, "objects_detected");
-
+    printf("hi");
     ros::NodeHandle nh;
     image_transport::ImageTransport it(nh);
-
-    // Simple subscriber
+	ros::Publisher pub = nh.advertise<find_object_2d::custom>("box_coordinates", 1000);
+    imagePub = it.advertise("image_with_objects", 1000);
+	// Simple subscriber
     ros::Subscriber sub;
     sub = nh.subscribe("objects", 1, objectsDetectedCallback);
 
     // Synchronized image + objects example
     image_transport::SubscriberFilter imageSub;
-	imageSub.subscribe(it, nh.resolveName("image"), 1);
+	imageSub.subscribe(it, nh.resolveName("/camera/color/image_raw2"), 1000);
 	message_filters::Subscriber<find_object_2d::ObjectsStamped> objectsSub;
 	objectsSub.subscribe(nh, "objectsStamped", 1);
-    message_filters::Synchronizer<MyExactSyncPolicy> exactSync(MyExactSyncPolicy(10), imageSub, objectsSub);
+    message_filters::Synchronizer<MyExactSyncPolicy> exactSync(MyExactSyncPolicy(1000), imageSub, objectsSub);
     exactSync.registerCallback(boost::bind(&imageObjectsDetectedCallback, _1, _2));
 
-    imagePub = it.advertise("image_with_objects", 1);
+    
 
     ros::spin();
 

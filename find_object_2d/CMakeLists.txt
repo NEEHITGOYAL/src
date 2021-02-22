@@ -358,6 +358,7 @@ ELSE()
       FILES
       ObjectsStamped.msg
       DetectionInfo.msg
+      custom.msg
    )
 
    ## Generate added messages and services with any dependencies listed here
