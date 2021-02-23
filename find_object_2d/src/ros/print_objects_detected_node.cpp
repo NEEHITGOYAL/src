@@ -144,7 +144,11 @@ void imageObjectsDetectedCallback(		const sensor_msgs::ImageConstPtr & imageMsg,
 				cv::Point2i center = outPts[4];
 				cv::putText(img.image, QString("(%1, %2)").arg(center.x).arg(center.y).toStdString(), center, cv::FONT_HERSHEY_SIMPLEX, 0.6, cvColor, 2);
 				cv::circle(img.image, center, 1, cvColor, 3);
-				cv::imshow("img",img);
+				cv::Mat neehit =img.image;
+				cv::cvtColor(img.image,neehit,CV_BGR2RGB);
+				cv::imshow("Display",neehit);
+                
+				cv::waitKey(0);
 				printf("abc");
 				imagePub.publish(img.toImageMsg());
 			}
