@@ -165,7 +165,7 @@ def bot_driver():
         plan1 = arm_group.go()   
     os.system("gnome-terminal -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")      
     rospy.sleep(1)    
-    rospy.loginfo("Pantry Reached")
+    # rospy.loginfo("Pantry Reached")
     #t.waitForTransform("/ebot_base", "/object_139", rospy.Time(), rospy.Duration(4.0)) ###COKE
     # if t.frameExists("object_139") or t.frameExists("object_133"):
         #Detect and assign coke cordinates using two possible object orientations
@@ -323,7 +323,7 @@ def bot_driver():
         plan1 = arm_group.go()  
     gripperPose("open")
     rospy.sleep(0.1)
-    rospy.loginfo("Meeting Room Reached")  
+    # rospy.loginfo("Meeting Room Reached")  
     
     rospy.loginfo("Coke Dropped in DropBox2")  
     plan1 = False
@@ -403,7 +403,7 @@ def bot_driver():
         plan1 = arm_group.go()  
     gripperPose("open")
     rospy.sleep(0.1)
-    rospy.loginfo("Research Lab Reached")  
+    # rospy.loginfo("Research Lab Reached")  
     rospy.loginfo("Glue Dropped in DropBox3")
 
     plan1 = False
@@ -419,7 +419,7 @@ def bot_driver():
 
     #TODO//photo8,photo3,photo4
     os.system('rosservice call /move_base/clear_costmaps "{}"')
-    rospy.loginfo("Store Room Reached") 
+    # rospy.loginfo("Store Room Reached") 
     plan1 = False
     while(plan1==False):
         arm_group.set_named_target("photo8")
@@ -502,7 +502,7 @@ def bot_driver():
         arm_group.set_named_target("drop_left")
         plan1 = arm_group.go()  
     gripperPose("open")
-    rospy.loginfo("Conference Room Reached");
+    # rospy.loginfo("Conference Room Reached");
     rospy.loginfo("FPGA board dropped in Dropbox1")     
     
     plan1 = False

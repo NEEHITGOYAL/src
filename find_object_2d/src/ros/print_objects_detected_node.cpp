@@ -74,12 +74,12 @@ void objectsDetectedCallback(
 			QPointF qtBottomLeft = qtHomography.map(QPointF(0,objectHeight));
 			QPointF qtBottomRight = qtHomography.map(QPointF(objectWidth,objectHeight));
 
-			printf("Object %d detected, Qt corners at (%f,%f) (%f,%f) (%f,%f) (%f,%f)\n",
-					id,
-					qtTopLeft.x(), qtTopLeft.y(),
-					qtTopRight.x(), qtTopRight.y(),
-					qtBottomLeft.x(), qtBottomLeft.y(),
-					qtBottomRight.x(), qtBottomRight.y());
+			// printf("Object %d detected, Qt corners at (%f,%f) (%f,%f) (%f,%f) (%f,%f)\n",
+			// 		id,
+			// 		qtTopLeft.x(), qtTopLeft.y(),
+			// 		qtTopRight.x(), qtTopRight.y(),
+			// 		qtBottomLeft.x(), qtBottomLeft.y(),
+			// 		qtBottomRight.x(), qtBottomRight.y());
 			find_object_2d::custom msg2;
 			msg2.id = id;
 			msg2.top_left_x = qtTopLeft.x();
@@ -101,7 +101,7 @@ void objectsDetectedCallback(
 
 void imageObjectsDetectedCallback(		const sensor_msgs::ImageConstPtr & imageMsg,		const find_object_2d::ObjectsStampedConstPtr & objectsMsg)
 {
-	printf("Identification Started");
+	// printf("Identification Started");
 	if(imagePub.getNumSubscribers() >= 0)
 	{
 		const std::vector<float> & data = objectsMsg->objects.data;
@@ -144,15 +144,15 @@ void imageObjectsDetectedCallback(		const sensor_msgs::ImageConstPtr & imageMsg,
 				outPtsInt.push_back(outPts[3]);
 				QColor color(QColor((Qt::GlobalColor)((id % 10 + 7)==Qt::yellow?Qt::darkYellow:(id % 10 + 7))));
 				cv::Scalar cvColor(color.red(), color.green(), color.blue());
-				cv::polylines(img.image, outPtsInt, true, cvColor, 3);
+				cv::polylines(img.image, outPtsInt, true, (0,0,0), 2);
 				cv::Point2i center = outPts[4];
-				cv::putText(img.image,name(id) , outPts[0],  cv::FONT_HERSHEY_SIMPLEX, 0.9, cvColor, 2);
+				cv::putText(img.image,name(id) , outPts[3],  cv::FONT_HERSHEY_SIMPLEX, 0.8, (255,0,0), 2,cv::LINE_AA);
 				cv::circle(img.image, center, 1, cvColor, 3);
 				cv::Mat final =img.image;
 				cv::cvtColor(img.image,final,CV_BGR2RGB);
 				cv::imshow("Display",final);
                 
-				cv::waitKey(0);
+				cv::waitKey(500);
 				imagePub.publish(img.toImageMsg());
 			}
 		}
@@ -164,7 +164,7 @@ typedef message_filters::sync_policies::ExactTime<sensor_msgs::Image, find_objec
 int main(int argc, char** argv)
 {
     ros::init(argc, argv, "objects_detected");
-    printf("hi");
+    // printf("hi");
     ros::NodeHandle nh;
     image_transport::ImageTransport it(nh);
 	ros::Publisher pub = nh.advertise<find_object_2d::custom>("box_coordinates", 1000);

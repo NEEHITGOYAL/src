@@ -81,28 +81,8 @@ def getObjCordinates(obj):
     t.waitForTransform("/ebot_base", obj, rospy.Time(), rospy.Duration(4.0))
     (objCordinates,rotation1) = t.lookupTransform("/ebot_base", obj, rospy.Time())
     # Kill object detection nodes after successfull detection
-    os.system("rosnode kill "+ '/find_object_3d')
-    os.system("rosnode kill "+ '/tf_example')
+    os.system("pkill gnome-terminal")
     return objCordinates
-
-def detection(obj):
-    t= TransformListener()
-    try:
-        t.waitForTransform("/ebot_base", obj, rospy.Time(), rospy.Duration(2.0))
-        (objCordinates,rotation1) = t.lookupTransform("/ebot_base", obj, rospy.Time())
-
-        if(obj=="/object_151" or obj=="/object_144"):
-            rospy.loginfo("Battery Detected")
-        elif(obj=="/object_145"):
-            rospy.loginfo("Adhesive Detected")
-        elif(obj=="/object_146"):
-            rospy.loginfo("Glass Detected")
-        elif(obj=="/object_149"):
-            rospy.loginfo("eYFI Board Detected")
-        elif(obj=="/object_150" or obj=="/object_152"):
-            rospy.loginfo("Pair of Wheels Package Detected")
-    except:
-        pass
 
 def cokeArm(coke):
     # Move arm in front of coke
@@ -113,7 +93,6 @@ def cokeArm(coke):
         
     # Move gripper to close_coke pose
     gripperPose("close_coke") 
-    rospy.sleep(0.1)
     rospy.loginfo("Coke Picked")
 
     # Move arm back
@@ -186,21 +165,16 @@ def bot_driver():
 
     armPose("photo")
 
-    os.system("gnome-terminal -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")      
-    rospy.sleep(1)    
-    rospy.loginfo("Pantry Reached")
-    detection("/object_146")
+    os.system("gnome-terminal --tab -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")       
     try: 
-        cokeArm(getObjCordinates("/object_139"))
-        rospy.loginfo("Coke Detected")
+        coke = getObjCordinates("/object_139") 
+        cokeArm(coke)
     except:
         try:     
-            cokeArm(getObjCordinates("/object_133"))
-            rospy.loginfo("Coke Detected")
+            coke = getObjCordinates("/object_133") 
+            cokeArm(coke)
         except:   
-            os.system("rosnode kill "+ '/find_object_3d')
-            os.system("rosnode kill "+ '/tf_example')     
-   
+            os.system("pkill gnome-terminal")   
             armPose("travel2")
             # Cordinates of Waypoint 1
             position = {'x': 11.21183 , 'y' : -1.307573}
@@ -212,17 +186,13 @@ def bot_driver():
             os.system('rosservice call /move_base/clear_costmaps "{}"')
 
             armPose("photo")
-            os.system("gnome-terminal -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")    
-            rospy.sleep(1)
+            os.system("gnome-terminal --tab -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")   
 
             #Detect and assign coke cordinates using two possible object orientations
-            detection("/object_146")
             try:
                 coke = getObjCordinates("/object_139") 
-                rospy.loginfo("Coke Detected")
             except:
                 coke = getObjCordinates("/object_133")  
-                rospy.loginfo("Coke Detected")
             cokeArm(coke)   
 
     # Cordinates of Waypoint 1
@@ -237,8 +207,6 @@ def bot_driver():
     
     armPose("drop_right") 
     gripperPose("open")
-    rospy.sleep(0.1)
-    rospy.loginfo("Meeting Room Reached")  
     
     rospy.loginfo("Coke Dropped in DropBox2")  
   
@@ -254,14 +222,9 @@ def bot_driver():
     os.system('rosservice call /move_base/clear_costmaps "{}"') 
 
     armPose("photo")
-    os.system("gnome-terminal -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")    
-    rospy.sleep(1)        
-    detection("/object_151")
-    detection("/object_144")
-    detection("/object_145")
+    os.system("gnome-terminal --tab -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")         
     try:
         glue = getObjCordinates("/object_132")
-        rospy.loginfo("Glue Detected")
     except:
         pass
     # Move arm in front of glue
@@ -272,7 +235,6 @@ def bot_driver():
 
     # Move gripper to close_glue pose
     gripperPose("close_glue")
-    rospy.sleep(0.1)
     rospy.loginfo("Glue Picked")
 
     os.system('rosservice call /move_base/clear_costmaps "{}"')
@@ -291,8 +253,6 @@ def bot_driver():
 
     armPose("drop_left")
     gripperPose("open")
-    rospy.sleep(0.1)
-    rospy.loginfo("Research Lab Reached")  
     rospy.loginfo("Glue Dropped in DropBox3")
 
     armPose("travel2")   
@@ -305,20 +265,11 @@ def bot_driver():
 
 
     os.system('rosservice call /move_base/clear_costmaps "{}"')
-    rospy.loginfo("Store Room Reached") 
 
     armPose("photo6")
-    os.system("gnome-terminal -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")    
-    rospy.sleep(1)
-    detection("/object_150")
-    detection("/object_152")
-    detection("/object_149")
-    detection("/object_151")
-    detection("/object_144")
-    detection("/object_145")
+    os.system("gnome-terminal --tab -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")   
     try:
         fgpa = getObjCordinates("/object_131")
-        rospy.loginfo("FPGA Detected")
     except:
         pass
 
@@ -330,7 +281,6 @@ def bot_driver():
 
     # Move gripper to close_glue pose
     gripperPose("close_fgpa")
-    rospy.sleep(0.1) 
     rospy.loginfo("FPGA board picked")
     
     armPose("travel2")
@@ -345,7 +295,6 @@ def bot_driver():
 
     armPose("drop_left")
     gripperPose("open")
-    rospy.loginfo("Conference Room Reached");
     rospy.loginfo("FPGA board dropped in Dropbox1")     
     
     armPose("travel2")
@@ -361,7 +310,6 @@ def bot_driver():
 
 # Python Main
 if __name__ == '__main__':
-    rospy.sleep(1)
     try:
         moveit_commander.roscpp_initialize(sys.argv)
         robot = moveit_commander.RobotCommander()

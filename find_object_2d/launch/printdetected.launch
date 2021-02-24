@@ -1,0 +1,3 @@
+<launch>
+<node pkg="find_oject_2d" name="print_object_detected" type="print_object_detected" output="screen" />
+</launch>

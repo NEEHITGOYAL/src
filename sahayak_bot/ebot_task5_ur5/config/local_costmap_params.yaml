@@ -6,7 +6,7 @@
   width: 5.0
   height: 5.0
   update_frequency: 5.0
-  publish_frequency: 1.0
+  publish_frequency: 3.0
 
   plugins:
     - {name: obstacle_laser, type: "costmap_2d::ObstacleLayer"}
