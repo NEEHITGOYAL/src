@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include <ros/ros.h>
+#include<iostream>
 #include <find_object_2d/ObjectsStamped.h>
 #include <message_filters/subscriber.h>
 #include <message_filters/time_synchronizer.h>
@@ -37,7 +38,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <QColor>
 #include <sstream>
 #include <find_object_2d/custom.h>
-
+using namespace std;
 image_transport::Publisher imagePub;
 
 /**
@@ -45,6 +46,8 @@ image_transport::Publisher imagePub;
  *      Parameter General/MirrorView must be false
  *      Parameter Homography/homographyComputed must be true
  */
+string name(int myid);
+
 void objectsDetectedCallback(
 		const std_msgs::Float32MultiArrayConstPtr & msg)
 {
@@ -95,10 +98,11 @@ void objectsDetectedCallback(
 		printf("No objects detected.\n");
 	}
 }
+
 void imageObjectsDetectedCallback(		const sensor_msgs::ImageConstPtr & imageMsg,		const find_object_2d::ObjectsStampedConstPtr & objectsMsg)
 {
-	printf("bjdcbsjbcbskxcnkxnkcnxknckxn");
-	if(imagePub.getNumSubscribers() > 0)
+	printf("Identification Started");
+	if(imagePub.getNumSubscribers() >= 0)
 	{
 		const std::vector<float> & data = objectsMsg->objects.data;
 		if(data.size())
@@ -109,7 +113,7 @@ void imageObjectsDetectedCallback(		const sensor_msgs::ImageConstPtr & imageMsg,
 				int id = (int)data[i];
 				float objectWidth = data[i+1];
 				float objectHeight = data[i+2];
-
+                 
 				// Find corners OpenCV
 				cv::Mat cvHomography(3, 3, CV_32F);
 				cvHomography.at<float>(0,0) = data[i+3];
@@ -142,14 +146,13 @@ void imageObjectsDetectedCallback(		const sensor_msgs::ImageConstPtr & imageMsg,
 				cv::Scalar cvColor(color.red(), color.green(), color.blue());
 				cv::polylines(img.image, outPtsInt, true, cvColor, 3);
 				cv::Point2i center = outPts[4];
-				cv::putText(img.image, QString("(%1, %2)").arg(center.x).arg(center.y).toStdString(), center, cv::FONT_HERSHEY_SIMPLEX, 0.6, cvColor, 2);
+				cv::putText(img.image,name(id) , outPts[0],  cv::FONT_HERSHEY_SIMPLEX, 0.9, cvColor, 2);
 				cv::circle(img.image, center, 1, cvColor, 3);
-				cv::Mat neehit =img.image;
-				cv::cvtColor(img.image,neehit,CV_BGR2RGB);
-				cv::imshow("Display",neehit);
+				cv::Mat final =img.image;
+				cv::cvtColor(img.image,final,CV_BGR2RGB);
+				cv::imshow("Display",final);
                 
 				cv::waitKey(0);
-				printf("abc");
 				imagePub.publish(img.toImageMsg());
 			}
 		}
@@ -183,4 +186,89 @@ int main(int argc, char** argv)
     ros::spin();
 
     return 0;
+}
+string name(int myid)
+{
+	int number;
+	switch (myid)
+	{
+	case 139:
+	//Coke
+		number = 1;
+		break;
+	case 133:
+	//Coke
+		number = 1;
+		break;	
+	case 142:
+	//Pair of Wheels Package
+		number = 2;
+		break;
+	case 131:
+	//FPGA Board
+		number = 3;
+		break;
+	case 132:
+	//Glue
+		number = 4;
+		break;
+	case 134:
+	//Battery
+		number = 5;
+		break;
+	case 140:
+	//eYFI Board
+		number = 6;
+		break;
+	case 137:
+	//Glass
+		number = 7;
+		break;
+	case 135:
+	//Adhesive
+		number = 8;
+		break;							
+	default:
+		break;
+	}
+	string obj;
+	switch (number)
+	{
+	case 1:
+	    obj = "Coke";
+	    cout<<obj<<"identified"<<endl;
+		break;
+	case 2:
+	    obj = "Pair of Wheels Package";
+	    cout<<obj<<"identified"<<endl;
+		break;
+	case 3:
+	    obj = "FPGA Board";
+	    cout<<obj<<"identified"<<endl;
+		break;
+	case 4:
+	    obj = "Glue";
+	    cout<<obj<<"identified"<<endl;
+		break;
+	case 5:
+	    obj = "Battery";
+	    cout<<obj<<"identified"<<endl;
+		break;
+	case 6:
+	    obj = "eYFI Board";
+	    cout<<obj<<"identified"<<endl;
+		break;
+	case 7:
+	    obj = "Glass";
+	    cout<<obj<<"identified"<<endl;
+		break;
+	case 8:
+	    obj = "Adhesive";
+	    cout<<obj<<"identified"<<endl;
+		break;							
+	
+	default:
+		break;
+	}
+	return obj;
 }
