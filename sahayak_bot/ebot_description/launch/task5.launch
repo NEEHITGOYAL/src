@@ -7,12 +7,12 @@
 <!--   ur5 world -->
 	<include file="$(find ebot_gazebo)/launch/packaging_assist.launch" />
 
-<arg name="x" default="0.0"/>
-<arg name="y" default="0.0"/>
+<arg name="x" default="26.159948"/>
+<arg name="y" default="-2.820398"/>
 <arg name="z" default="0.0"/>
 <arg name="r" default="0"/>
 <arg name="p" default="0"/>
-<arg name="ya" default="0"/>		
+<arg name="ya" default="-2.236695"/>		
 <!-- Spawn the ur5 robot model -->
 	<node name="mybot_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" 
 	    args="-urdf -param robot_description -model ebot -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg r) -P $(arg p) -Y $(arg ya)" />

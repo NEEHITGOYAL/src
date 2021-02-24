@@ -8,7 +8,7 @@
     <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/> -->
 
 <!--runnning rviz node-->
-    <!-- <node name="rviz" pkg="rviz" type="rviz" /> -->
+    <node name="rviz" pkg="rviz" type="rviz" />
 
 <!--saving rviz configurations in a rviz folder-->
 
