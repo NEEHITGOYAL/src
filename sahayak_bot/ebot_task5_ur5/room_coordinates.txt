@@ -1,0 +1,50 @@
+Meeting Room( Semicircle ring):
+    Left:
+        x: 8.253483
+        y: 1.770465
+    Right:
+        x: 9.092000
+        y: 1.770462
+    ylimit: 2.459742
+
+Conference Room:
+    Left:
+        x: 5.651354
+        y: 0.345377
+    Right:
+        x: 4.802292
+        y: 0.344132
+    ylimit: -0.332767   
+
+Pantry:
+    Left:
+        x: 13.468829
+        y: 0.339018
+    Right:
+        x: 12.608207
+        y: 0.326062
+    ylimit: -0.332767
+
+Research lab:
+    Left:
+        x: 10.025547
+        y: 7.034520
+    Right:
+        x: 11.459243
+        y: 7.034520
+    ylimit: 7.8
+
+Store Room:
+    Left:
+        x: 24.975998
+        y: -1.281662
+    Right:
+        x: 23.779745
+        y: -2.782886
+Store Room 2:
+    Left:
+        x: 25.990601
+        y: -1.974535
+    Right:
+        x: 24.745441
+        y: -3.171468   
