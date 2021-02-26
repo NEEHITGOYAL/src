@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include <ros/ros.h>
+#include<iostream>
 #include <find_object_2d/ObjectsStamped.h>
 #include <message_filters/subscriber.h>
 #include <message_filters/time_synchronizer.h>
@@ -35,7 +36,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <opencv2/opencv.hpp>
 #include <QTransform>
 #include <QColor>
-
+#include <sstream>
+#include <find_object_2d/custom.h>
+using namespace std;
 image_transport::Publisher imagePub;
 
 /**
@@ -43,9 +46,13 @@ image_transport::Publisher imagePub;
  *      Parameter General/MirrorView must be false
  *      Parameter Homography/homographyComputed must be true
  */
+string name(int myid);
+
 void objectsDetectedCallback(
 		const std_msgs::Float32MultiArrayConstPtr & msg)
 {
+	ros::NodeHandle nh;
+	ros::Publisher pub = nh.advertise<find_object_2d::custom>("box_coordinates", 1000);
 	printf("---\n");
 	const std::vector<float> & data = msg->data;
 	if(data.size())
@@ -67,12 +74,23 @@ void objectsDetectedCallback(
 			QPointF qtBottomLeft = qtHomography.map(QPointF(0,objectHeight));
 			QPointF qtBottomRight = qtHomography.map(QPointF(objectWidth,objectHeight));
 
-			printf("Object %d detected, Qt corners at (%f,%f) (%f,%f) (%f,%f) (%f,%f)\n",
-					id,
-					qtTopLeft.x(), qtTopLeft.y(),
-					qtTopRight.x(), qtTopRight.y(),
-					qtBottomLeft.x(), qtBottomLeft.y(),
-					qtBottomRight.x(), qtBottomRight.y());
+			// printf("Object %d detected, Qt corners at (%f,%f) (%f,%f) (%f,%f) (%f,%f)\n",
+			// 		id,
+			// 		qtTopLeft.x(), qtTopLeft.y(),
+			// 		qtTopRight.x(), qtTopRight.y(),
+			// 		qtBottomLeft.x(), qtBottomLeft.y(),
+			// 		qtBottomRight.x(), qtBottomRight.y());
+			find_object_2d::custom msg2;
+			msg2.id = id;
+			msg2.top_left_x = qtTopLeft.x();
+			msg2.top_left_y = qtTopLeft.y();	
+			msg2.bottom_left_x = qtBottomLeft.x();
+			msg2.bottom_left_y = qtBottomLeft.y();
+			msg2.top_right_x = qtTopRight.x();
+			msg2.top_right_y = qtTopRight.y();
+			msg2.bottom_right_x = qtBottomRight.x();
+			msg2.bottom_left_y = qtBottomRight.y();
+			pub.publish(msg2);	
 		}
 	}
 	else
@@ -80,11 +98,11 @@ void objectsDetectedCallback(
 		printf("No objects detected.\n");
 	}
 }
-void imageObjectsDetectedCallback(
-		const sensor_msgs::ImageConstPtr & imageMsg,
-		const find_object_2d::ObjectsStampedConstPtr & objectsMsg)
+
+void imageObjectsDetectedCallback(		const sensor_msgs::ImageConstPtr & imageMsg,		const find_object_2d::ObjectsStampedConstPtr & objectsMsg)
 {
-	if(imagePub.getNumSubscribers() > 0)
+	// printf("Identification Started");
+	if(imagePub.getNumSubscribers() >= 0)
 	{
 		const std::vector<float> & data = objectsMsg->objects.data;
 		if(data.size())
@@ -95,7 +113,7 @@ void imageObjectsDetectedCallback(
 				int id = (int)data[i];
 				float objectWidth = data[i+1];
 				float objectHeight = data[i+2];
-
+                 
 				// Find corners OpenCV
 				cv::Mat cvHomography(3, 3, CV_32F);
 				cvHomography.at<float>(0,0) = data[i+3];
@@ -126,10 +144,15 @@ void imageObjectsDetectedCallback(
 				outPtsInt.push_back(outPts[3]);
 				QColor color(QColor((Qt::GlobalColor)((id % 10 + 7)==Qt::yellow?Qt::darkYellow:(id % 10 + 7))));
 				cv::Scalar cvColor(color.red(), color.green(), color.blue());
-				cv::polylines(img.image, outPtsInt, true, cvColor, 3);
+				cv::polylines(img.image, outPtsInt, true, (0,0,0), 2);
 				cv::Point2i center = outPts[4];
-				cv::putText(img.image, QString("(%1, %2)").arg(center.x).arg(center.y).toStdString(), center, cv::FONT_HERSHEY_SIMPLEX, 0.6, cvColor, 2);
+				cv::putText(img.image,name(id) , outPts[3],  cv::FONT_HERSHEY_SIMPLEX, 0.8, (255,0,0), 2,cv::LINE_AA);
 				cv::circle(img.image, center, 1, cvColor, 3);
+				cv::Mat final =img.image;
+				cv::cvtColor(img.image,final,CV_BGR2RGB);
+				cv::imshow("Display",final);
+                
+				cv::waitKey(500);
 				imagePub.publish(img.toImageMsg());
 			}
 		}
@@ -141,25 +164,123 @@ typedef message_filters::sync_policies::ExactTime<sensor_msgs::Image, find_objec
 int main(int argc, char** argv)
 {
     ros::init(argc, argv, "objects_detected");
-
+    // printf("hi");
     ros::NodeHandle nh;
     image_transport::ImageTransport it(nh);
-
-    // Simple subscriber
+	ros::Publisher pub = nh.advertise<find_object_2d::custom>("box_coordinates", 1000);
+    imagePub = it.advertise("image_with_objects", 1000);
+	// Simple subscriber
     ros::Subscriber sub;
     sub = nh.subscribe("objects", 1, objectsDetectedCallback);
 
     // Synchronized image + objects example
     image_transport::SubscriberFilter imageSub;
-	imageSub.subscribe(it, nh.resolveName("image"), 1);
+	imageSub.subscribe(it, nh.resolveName("/camera/color/image_raw2"), 1000);
 	message_filters::Subscriber<find_object_2d::ObjectsStamped> objectsSub;
 	objectsSub.subscribe(nh, "objectsStamped", 1);
-    message_filters::Synchronizer<MyExactSyncPolicy> exactSync(MyExactSyncPolicy(10), imageSub, objectsSub);
+    message_filters::Synchronizer<MyExactSyncPolicy> exactSync(MyExactSyncPolicy(1000), imageSub, objectsSub);
     exactSync.registerCallback(boost::bind(&imageObjectsDetectedCallback, _1, _2));
 
-    imagePub = it.advertise("image_with_objects", 1);
+    
 
     ros::spin();
 
     return 0;
+}
+string name(int myid)
+{
+	int number;
+	switch (myid)
+	{
+	case 139:
+	//Coke
+		number = 1;
+		break;
+	case 133:
+	//Coke
+		number = 1;
+		break;	
+	case 142:
+	//Pair of Wheels Package
+		number = 2;
+		break;
+	case 143:
+	//Pair of Wheels Package
+		number = 2;
+		break;	
+	case 131:
+	//FPGA Board
+		number = 3;
+		break;
+	case 132:
+	//Glue
+		number = 4;
+		break;
+	case 134:
+	//Battery
+		number = 5;
+		break;
+	case 140:
+	//eYFI Board
+		number = 6;
+		break;
+	case 137:
+	//Glass
+		number = 7;
+		break;
+	case 145:
+	//Glass
+		number = 7;
+		break;
+	case 144:
+	//Glass
+		number = 7;
+		break;		
+	case 135:
+	//Adhesive
+		number = 8;
+		break;							
+	default:
+		break;
+	}
+	string obj;
+	switch (number)
+	{
+	case 1:
+	    obj = "Coke";
+	    cout<<obj<<"identified"<<endl;
+		break;
+	case 2:
+	    obj = "Pair of Wheels Package";
+	    cout<<obj<<"identified"<<endl;
+		break;
+	case 3:
+	    obj = "FPGA Board";
+	    cout<<obj<<"identified"<<endl;
+		break;
+	case 4:
+	    obj = "Glue";
+	    cout<<obj<<"identified"<<endl;
+		break;
+	case 5:
+	    obj = "Battery";
+	    cout<<obj<<"identified"<<endl;
+		break;
+	case 6:
+	    obj = "eYFI Board";
+	    cout<<obj<<"identified"<<endl;
+		break;
+	case 7:
+	    obj = "Glass";
+	    cout<<obj<<"identified"<<endl;
+		break;
+	case 8:
+	    obj = "Adhesive";
+	    cout<<obj<<"identified"<<endl;
+		break;							
+	
+	default:
+		break;
+	}
+	return obj;
 }

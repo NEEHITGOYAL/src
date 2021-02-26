@@ -1,0 +1,9 @@
+int32 id
+float32 top_left_x
+float32 top_left_y
+float32 top_right_x
+float32 top_right_y
+float32 bottom_left_x
+float32 bottom_left_y
+float32 bottom_right_x
+float32 bottom_right_y

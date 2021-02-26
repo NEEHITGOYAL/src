@@ -1,4 +1,5 @@
 <launch>
-<node pkg="detect_open" name="image" type="publisher.py" output="screen" />
-<node pkg="ebot_task5_ur5" name="task5" type="task5.py" output="screen" />
+<!-- <include file="$(find find_object_2d)/launch/printdetected.launch" /> -->
+<node pkg="ebot_task5_ur5" name="room_reached" type="room_reached.py" output="screen" />
+<node pkg="ebot_task5_ur5" name="task5" type="sb#1223_task5.py" output="screen" />
 </launch>
