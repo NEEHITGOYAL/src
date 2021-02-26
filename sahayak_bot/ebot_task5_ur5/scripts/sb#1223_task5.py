@@ -60,7 +60,7 @@ def baseArmPlanner(object_position,object_orientation):
         # Check if planning was successfull              
         plan4 = arm_group.go()
         # print the cordinates of object
-        print("x = {},y = {},z = {},plan = {}".format(object_position[0], object_position[1], object_position[2], plan4))
+        #print("x = {},y = {},z = {},plan = {}".format(object_position[0], object_position[1], object_position[2], plan4))
 
 def armPlanner2(object_position):
     baseArmPlanner(object_position, [-0.033, 0.206, 0.940, -0.269])
