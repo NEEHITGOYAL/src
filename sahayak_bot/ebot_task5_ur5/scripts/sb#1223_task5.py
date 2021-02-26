@@ -84,6 +84,33 @@ def getObjCordinates(obj):
     os.system("pkill gnome-terminal")
     return objCordinates
 
+def fpgaArm(fgpa):
+    # Move arm in front of glue
+    armPlanner2([fgpa[0] - 0.15, fgpa[1] - 0.3, fgpa[2] + 0.2])
+    
+    # Move arm to grab glue
+    armPlanner2([fgpa[0] - 0.13, fgpa[1] - 0.18, fgpa[2] + 0.15])
+
+    # Move gripper to close_glue pose
+    gripperPose("close_fgpa")
+    os.system('rosservice call /move_base/clear_costmaps "{}"')
+    rospy.loginfo("FPGA board picked")
+
+def glueArm(glue):
+    # Move arm in front of glue
+        armPlanner([glue[0] - 0.008, glue[1] - 0.4, glue[2] + 0.1])
+
+        # Move arm to grab glue
+        armPlanner([glue[0] - 0.008, glue[1] - 0.195, glue[2] + 0.1])
+
+        # Move gripper to close_glue pose
+        gripperPose("close_glue")
+        rospy.loginfo("Glue Picked")
+
+        os.system('rosservice call /move_base/clear_costmaps "{}"')
+        # Move arm back
+        armPlanner([glue[0] - 0.008, glue[1] - 0.195, glue[2] + 0.2])
+
 def cokeArm(coke):
     # Move arm in front of coke
     armPlanner([coke[0], coke[1] - 0.4, coke[2] + 0.1])
@@ -94,7 +121,7 @@ def cokeArm(coke):
     # Move gripper to close_coke pose
     gripperPose("close_coke") 
     rospy.loginfo("Coke Picked")
-
+    os.system('rosservice call /move_base/clear_costmaps "{}"')
     # Move arm back
     armPlanner([coke[0], coke[1] - 0.4, coke[2] + 0.2])
     armPose("travel2")
@@ -166,34 +193,50 @@ def bot_driver():
     armPose("photo")
 
     os.system("gnome-terminal --tab -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")       
-    try: 
+#Detect and assign coke cordinates using two possible object orientations
+    try:
         coke = getObjCordinates("/object_139") 
-        cokeArm(coke)
     except:
-        try:     
-            coke = getObjCordinates("/object_133") 
-            cokeArm(coke)
-        except:   
-            os.system("pkill gnome-terminal")   
-            armPose("travel2")
-            # Cordinates of Waypoint 1
-            position = {'x': 11.21183 , 'y' : -1.307573}
-            quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.739, 'r4' : 0.674}
-            frequency = 60
-            # Bot reached destination or not
-            result = navigator.goto(position, quaternion, frequency)
-        
-            os.system('rosservice call /move_base/clear_costmaps "{}"')
+        print("objectnotfound")
+        try:
+            coke = getObjCordinates("/object_133")
+        except:
+           print("objectnotfound")
+        else:
+            cokeArm(coke)        
+    else:      
+        cokeArm(coke)
+    os.system('rosservice call /move_base/clear_costmaps "{}"')    
+    os.system("pkill gnome-terminal")
+    armPose("travel2")
+    # Cordinates of Waypoint 1
+    position = {'x': 11.21183 , 'y' : -1.307573}
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.739, 'r4' : 0.674}
+    frequency = 60
+    # Bot reached destination or not
+    result = navigator.goto(position, quaternion, frequency)
 
-            armPose("photo")
-            os.system("gnome-terminal --tab -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")   
+    os.system('rosservice call /move_base/clear_costmaps "{}"')
 
-            #Detect and assign coke cordinates using two possible object orientations
-            try:
-                coke = getObjCordinates("/object_139") 
-            except:
-                coke = getObjCordinates("/object_133")  
-            cokeArm(coke)   
+    armPose("photo")
+    os.system("gnome-terminal --tab -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")   
+
+    #Detect and assign coke cordinates using two possible object orientations
+    try:
+        coke = getObjCordinates("/object_139") 
+    except:
+        print("objectnotfound")
+        try:
+            coke = getObjCordinates("/object_133")
+        except:
+            print("objectnotfound")
+        else:
+            cokeArm(coke)        
+    else:      
+        cokeArm(coke)
+    os.system('rosservice call /move_base/clear_costmaps "{}"')    
+    os.system("pkill gnome-terminal")
+    armPose("travel2") 
 
     # Cordinates of Waypoint 1
     position = {'x': 7.00, 'y' : 2.55}
@@ -226,21 +269,10 @@ def bot_driver():
     try:
         glue = getObjCordinates("/object_132")
     except:
-        pass
-    # Move arm in front of glue
-    armPlanner([glue[0] - 0.008, glue[1] - 0.4, glue[2] + 0.1])
-
-    # Move arm to grab glue
-    armPlanner([glue[0] - 0.008, glue[1] - 0.195, glue[2] + 0.1])
-
-    # Move gripper to close_glue pose
-    gripperPose("close_glue")
-    rospy.loginfo("Glue Picked")
-
-    os.system('rosservice call /move_base/clear_costmaps "{}"')
-    # Move arm back
-    armPlanner([glue[0] - 0.008, glue[1] - 0.195, glue[2] + 0.2])
-
+        print("objectnotfound")
+    else:        
+        glueArm(glue)
+    os.system("pkill gnome-terminal")    
     armPose("travel2")
     
     position = {'x': 10.9, 'y' : 9.73}
@@ -266,23 +298,32 @@ def bot_driver():
 
     os.system('rosservice call /move_base/clear_costmaps "{}"')
 
-    armPose("photo6")
+    armPose("photo8")
     os.system("gnome-terminal --tab -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")   
     try:
         fgpa = getObjCordinates("/object_131")
     except:
-        pass
-
-    # Move arm in front of glue
-    armPlanner2([fgpa[0] - 0.15, fgpa[1] - 0.3, fgpa[2] + 0.2])
-    
-    # Move arm to grab glue
-    armPlanner2([fgpa[0] - 0.13, fgpa[1] - 0.18, fgpa[2] + 0.15])
-
-    # Move gripper to close_glue pose
-    gripperPose("close_fgpa")
-    rospy.loginfo("FPGA board picked")
-    
+        print("objectnotfound")
+        armPose("photo3")
+        try:
+            fgpa = getObjCordinates("/object_131")
+        except:
+            print("objectnotfound")
+            armPose("photo4")
+            try:
+                fgpa = getObjCordinates("/object_131")    
+            except:
+                print("objectnotfound")
+            else:
+                armPose("photo4")
+                fpgaArm(fgpa)        
+        else:
+            fpgaArm(fgpa) 
+    else:
+        armPose("photo3")
+        armPose("photo4")
+        fpgaArm(fgpa) 
+    os.system("pkill gnome-terminal")     
     armPose("travel2")
     # Cordinates of Waypoint 2
     position = {'x': 5.61, 'y' : -0.574539}

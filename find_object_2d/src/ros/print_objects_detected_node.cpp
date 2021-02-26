@@ -204,6 +204,10 @@ string name(int myid)
 	//Pair of Wheels Package
 		number = 2;
 		break;
+	case 143:
+	//Pair of Wheels Package
+		number = 2;
+		break;	
 	case 131:
 	//FPGA Board
 		number = 3;
@@ -224,6 +228,14 @@ string name(int myid)
 	//Glass
 		number = 7;
 		break;
+	case 145:
+	//Glass
+		number = 7;
+		break;
+	case 144:
+	//Glass
+		number = 7;
+		break;		
 	case 135:
 	//Adhesive
 		number = 8;
