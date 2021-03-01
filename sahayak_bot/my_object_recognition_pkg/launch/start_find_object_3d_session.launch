@@ -3,7 +3,7 @@
         <param name="gui" value="false" type="bool"/>
         <param name="setting_path" value="~/.ros/find_object_2d.ini" type="str" />
         <param name="subscribe_depth" value="true" type="bool" />
-        <param name="session_path" value="$(find my_object_recognition_pkg)/saved_pictures/task5_2.bin" type="str" />
+        <param name="session_path" value="$(find my_object_recognition_pkg)/saved_pictures/t5.bin" type="str" />
         <param name="objects_path" value=" " type="str" />
         <param name="object_prefix" value="object" type="str" />
 	    <param name="approx_sync" value="true" type="bool"/>
