@@ -1,5 +1,8 @@
 <launch>
 <!-- <include file="$(find find_object_2d)/launch/printdetected.launch" /> -->
+ <node pkg="ebot_task5_ur5" type="shell.sh" name="shell" output="screen">
+        <!-- <param name="cmd" value="$(find pkg_ros_basics)/launch/webpage-launch.sh"/> -->
+    </node>
 <node pkg="ebot_task5_ur5" name="room_reached" type="room_reached.py" output="screen" />
 <node pkg="ebot_task5_ur5" name="task5" type="sb#1223_task5.py" output="screen" />
 </launch>
