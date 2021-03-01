@@ -192,54 +192,58 @@ string name(int myid)
 	int number;
 	switch (myid)
 	{
-	case 139:
-	//Coke
-		number = 1;
-		break;
-	case 133:
-	//Coke
-		number = 1;
-		break;	
-	case 142:
-	//Pair of Wheels Package
-		number = 2;
-		break;
 	case 143:
+	//Coke
+		number = 1;
+		break;
+	case 145:
+	//Coke
+		number = 1;
+		break;	
+	case 156:
+	//Pair of Wheels Package
+		number = 2;
+		break;
+	case 158:
 	//Pair of Wheels Package
 		number = 2;
 		break;	
-	case 131:
+	case 155:
 	//FPGA Board
 		number = 3;
 		break;
-	case 132:
+	case 149:
 	//Glue
 		number = 4;
 		break;
-	case 134:
+	case 160:
+	//Glue
+		number = 4;
+		break;	
+	case 162:
 	//Battery
 		number = 5;
 		break;
-	case 140:
+	case 157:
+	//Battery
+		number = 5;
+		break;	
+	case 161:
 	//eYFI Board
 		number = 6;
 		break;
-	case 137:
+	case 164:
 	//Glass
 		number = 7;
 		break;
-	case 145:
-	//Glass
-		number = 7;
-		break;
-	case 144:
-	//Glass
-		number = 7;
-		break;		
-	case 135:
+	case 163:
 	//Adhesive
 		number = 8;
-		break;							
+		break;
+	case 159:
+	//Adhesive
+		number = 8;
+		break;									
 	default:
 		break;
 	}
