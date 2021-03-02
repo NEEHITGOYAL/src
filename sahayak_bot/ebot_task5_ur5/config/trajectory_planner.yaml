@@ -1,11 +1,11 @@
 controller_frequency: 5.0
-recovery_behaviour_enabled: true
+recovery_behaviour_enabled: false
 NavfnROS:
   allow_unknown: true
   default_tolerance: 0.2
 TrajectoryPlannerROS:
   max_vel_x: 2.0
-  min_vel_x: 0.001
+  min_vel_x: 0.0001
   max_vel_theta: 6.0
   min_vel_theta: -6.0
   min_in_place_vel_theta: 15.0
@@ -22,7 +22,7 @@ TrajectoryPlannerROS:
 
   
   # Forward Simulation Parameters
-  sim_time: 3.7
+  sim_time: 3.6
   sim_granularity: 0.025
   angular_sim_granularity: 0.03
   vx_samples: 20
