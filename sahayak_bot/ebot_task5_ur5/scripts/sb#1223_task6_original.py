@@ -196,7 +196,7 @@ def bot_driver():
     
     armPose("travel2")
     # Cordinates of Waypoint 1
-    position = {'x': 25.948754, 'y' : -3.002912}
+    position = {'x': 25.948754, 'y' : -3.052912}
     quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : -0.894, 'r4' : 0.449}
     frequency = 200
     # Bot reached destination or not
@@ -207,27 +207,29 @@ def bot_driver():
 
     armPose("photo8")
     os.system("gnome-terminal --tab -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")   
+    
     try:
         battery = getObjCordinates("/object_157")
     except:
-        print("objectnotfound")
+        print("objectnotfound")   
         armPose("photo3")
+        
         try:
             battery = getObjCordinates("/object_157")
         except:
-            print("objectnotfound")
-            armPose("photo4")
+            print("objectnotfound") 
+            armPose("photo4") 
             try:
                 battery = getObjCordinates("/object_157")    
             except:
                 print("objectnotfound")
             else:
-                armPose("photo4")
                 batteryArm(battery)        
         else:
+            armPose("photo4")
             batteryArm(battery) 
     else:
-        armPose("photo3")
+        armPose("photo3")   
         armPose("photo4")
         batteryArm(battery) 
     os.system("pkill gnome-terminal")     
