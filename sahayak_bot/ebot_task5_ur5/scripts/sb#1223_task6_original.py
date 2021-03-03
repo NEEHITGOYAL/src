@@ -13,10 +13,11 @@ from geometry_msgs.msg import Pose, Point, Quaternion
 from tf import TransformListener
 
 #declaring global variables
-global coke_target,fgpa_target,glue_target,arm_group,hand_group
+global coke_target,battery_target,fgpa_target,glue_target,arm_group,hand_group
 coke_target=[0.0,0.0,0.0]
 fgpa_target=[0.0,0.0,0.0]
 glue_target=[0.0,0.0,0.0]
+battery_target = [0.0,0.0,0.0]
 
 def gripperPose(config):
     plan1 = False
@@ -81,8 +82,23 @@ def getObjCordinates(obj):
     t.waitForTransform("/ebot_base", obj, rospy.Time(), rospy.Duration(4.0))
     (objCordinates,rotation1) = t.lookupTransform("/ebot_base", obj, rospy.Time())
     # Kill object detection nodes after successfull detection
-    os.system("pkill gnome-terminal")
+    # os.system("pkill gnome-terminal")
     return objCordinates
+
+def batteryArm(battery):
+     # Move arm in front of coke
+    armPlanner([battery[0] - 0.005, battery[1] - 0.40, battery[2] + 0.09])
+    
+    # Move arm to grab coke
+    armPlanner([battery[0] - 0.005, battery[1] - 0.184, battery[2] + 0.09])
+        
+    # Move gripper to close_coke pose
+    gripperPose("close_battery") 
+    print("Battery Picked")
+    os.system('rosservice call /move_base/clear_costmaps "{}"')
+    # Move arm back
+    armPlanner([battery[0] - 0.005, battery[1] - 0.40, battery[2] + 0.2])
+    armPose("travel2")
 
 def fpgaArm(fgpa):
     # Move arm in front of glue
@@ -94,7 +110,7 @@ def fpgaArm(fgpa):
     # Move gripper to close_glue pose
     gripperPose("close_fgpa")
     os.system('rosservice call /move_base/clear_costmaps "{}"')
-    rospy.loginfo("FPGA board picked")
+    print("FPGA board picked")
 
 def glueArm(glue):
     # Move arm in front of glue
@@ -105,7 +121,7 @@ def glueArm(glue):
 
         # Move gripper to close_glue pose
         gripperPose("close_glue")
-        rospy.loginfo("Glue Picked")
+        print("Glue Picked")
 
         os.system('rosservice call /move_base/clear_costmaps "{}"')
         # Move arm back
@@ -120,7 +136,7 @@ def cokeArm(coke):
         
     # Move gripper to close_coke pose
     gripperPose("close_coke") 
-    rospy.loginfo("Coke Picked")
+    print("Coke Picked")
     os.system('rosservice call /move_base/clear_costmaps "{}"')
     # Move arm back
     armPlanner([coke[0], coke[1] - 0.4, coke[2] + 0.2])
@@ -172,16 +188,78 @@ def bot_driver():
     # Make an object of GoToPose
     navigator = GoToPose()
     t = TransformListener() 
-    rospy.loginfo("Started Run!")
+    print("Started Run!")
     moveit_commander.roscpp_initialize(sys.argv)
     robot = moveit_commander.RobotCommander()
     hand_group = moveit_commander.MoveGroupCommander("grip_planning_group")
     arm_group = moveit_commander.MoveGroupCommander("arm_planning_group")
     
     armPose("travel2")
-
     # Cordinates of Waypoint 1
-    position = {'x': 14.6058803, 'y' : -0.802476}
+    position = {'x': 25.909754, 'y' : -3.202912}
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : -0.894, 'r4' : 0.449}
+    frequency = 200
+    # Bot reached destination or not
+    result = navigator.goto(position, quaternion, frequency)
+
+
+    os.system('rosservice call /move_base/clear_costmaps "{}"')
+
+    armPose("photo8")
+    os.system("gnome-terminal --tab -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")   
+    rospy.sleep(0.1)
+    try:
+        try:
+            battery = getObjCordinates("/object_162")
+        except:
+            battery = getObjCordinates("/object_157") 
+    except:
+        print("objectnotfound")   
+        armPose("photo3")
+        try:
+            try:
+                battery = getObjCordinates("/object_162")
+            except:
+                battery = getObjCordinates("/object_157") 
+        except:
+            print("objectnotfound") 
+            armPose("photo4") 
+            try:
+                try:
+                    battery = getObjCordinates("/object_162")
+                except:
+                    battery = getObjCordinates("/object_157")       
+            except:
+                print("objectnotfound")
+            else:
+                batteryArm(battery)        
+        else:
+            armPose("photo4")
+            batteryArm(battery) 
+    else:
+        armPose("photo3")   
+        armPose("photo4")
+        batteryArm(battery) 
+    os.system("pkill gnome-terminal")     
+    armPose("travel2")
+    
+    # Cordinates of Waypoint 2
+    position = {'x': 10.9, 'y' : 9.73}
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.707, 'r4' : 0.707}
+    frequency = 200
+    # Bot reached destination or not
+    result = navigator.goto(position, quaternion, frequency)
+
+    os.system('rosservice call /move_base/clear_costmaps "{}"')
+
+    armPose("drop_left")
+    gripperPose("open")
+    print("Battery Dropped in DropBox3")
+
+    armPose("travel2")   
+    
+    # Cordinates of Waypoint 3
+    position = {'x': 14.7058803, 'y' : -0.802476}
     quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : -0.707, 'r4' : 0.707}
     frequency = 200
 
@@ -193,13 +271,13 @@ def bot_driver():
     armPose("photo")
 
     os.system("gnome-terminal --tab -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")       
-#Detect and assign coke cordinates using two possible object orientations
+    #Detect and assign coke cordinates using two possible object orientations
     try:
-        coke = getObjCordinates("/object_139") 
+        coke = getObjCordinates("/object_143") 
     except:
         print("objectnotfound")
         try:
-            coke = getObjCordinates("/object_133")
+            coke = getObjCordinates("/object_145")
         except:
            print("objectnotfound")
         else:
@@ -209,7 +287,7 @@ def bot_driver():
     os.system('rosservice call /move_base/clear_costmaps "{}"')    
     os.system("pkill gnome-terminal")
     armPose("travel2")
-    # Cordinates of Waypoint 1
+    # Cordinates of Waypoint 4
     position = {'x': 11.21183 , 'y' : -1.307573}
     quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.739, 'r4' : 0.674}
     frequency = 60
@@ -223,11 +301,11 @@ def bot_driver():
 
     #Detect and assign coke cordinates using two possible object orientations
     try:
-        coke = getObjCordinates("/object_139") 
+        coke = getObjCordinates("/object_143") 
     except:
         print("objectnotfound")
         try:
-            coke = getObjCordinates("/object_133")
+            coke = getObjCordinates("/object_145")
         except:
             print("objectnotfound")
         else:
@@ -238,115 +316,42 @@ def bot_driver():
     os.system("pkill gnome-terminal")
     armPose("travel2") 
 
-    # Cordinates of Waypoint 1
-    position = {'x': 7.00, 'y' : 2.55}
-    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.043, 'r4' :0.999 }
+    # Cordinates of Waypoint 5
+    position = {'x': 8.75551, 'y' : 2.8}
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.723988125006, 'r4' : 0.689812434543}
     frequency = 200
-
     # Bot reached destination or not
     result = navigator.goto(position, quaternion, frequency)
 
-    os.system('rosservice call /move_base/clear_costmaps "{}"')
+    # Cordinates of Waypoint 6
+    position = {'x': 8.75551, 'y' : 2.8}
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : -0.686252207602, 'r4' : -0.686252207602}
+    frequency = 200
+    # Bot reached destination or not
+    result = navigator.goto(position, quaternion, frequency)
     
-    armPose("drop_right") 
-    gripperPose("open")
-    
-    rospy.loginfo("Coke Dropped in DropBox2")  
-  
-    armPose("travel2")  
-    # Cordinates of Waypoint 2
-    position = {'x': 7.76, 'y' : 2.4}
-    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.043, 'r4' :0.999}  
-    frequency = 200
-
-    # Bot reached destination or not
-    result = navigator.goto(position, quaternion, frequency)
-
-    os.system('rosservice call /move_base/clear_costmaps "{}"') 
-
-    armPose("photo")
-    os.system("gnome-terminal --tab -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")         
-    try:
-        glue = getObjCordinates("/object_132")
-    except:
-        print("objectnotfound")
-    else:        
-        glueArm(glue)
-    os.system("pkill gnome-terminal")    
-    armPose("travel2")
-    
-    position = {'x': 10.9, 'y' : 9.73}
-    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.707, 'r4' : 0.707}
-    frequency = 200
-    # Bot reached destination or not
-    result = navigator.goto(position, quaternion, frequency)
-
-    os.system('rosservice call /move_base/clear_costmaps "{}"')
-
-    armPose("drop_left")
-    gripperPose("open")
-    rospy.loginfo("Glue Dropped in DropBox3")
-
-    armPose("travel2")   
-    # Cordinates of Waypoint 2
-    position = {'x': 25.948754, 'y' : -3.002912}
-    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : -0.894, 'r4' : 0.449}
-    frequency = 200
-    # Bot reached destination or not
-    result = navigator.goto(position, quaternion, frequency)
-
-
-    os.system('rosservice call /move_base/clear_costmaps "{}"')
-
-    armPose("photo8")
-    os.system("gnome-terminal --tab -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")   
-    try:
-        fgpa = getObjCordinates("/object_131")
-    except:
-        print("objectnotfound")
-        armPose("photo3")
-        try:
-            fgpa = getObjCordinates("/object_131")
-        except:
-            print("objectnotfound")
-            armPose("photo4")
-            try:
-                fgpa = getObjCordinates("/object_131")    
-            except:
-                print("objectnotfound")
-            else:
-                armPose("photo4")
-                fpgaArm(fgpa)        
-        else:
-            fpgaArm(fgpa) 
-    else:
-        armPose("photo3")
-        armPose("photo4")
-        fpgaArm(fgpa) 
-    os.system("pkill gnome-terminal")     
-    armPose("travel2")
-    # Cordinates of Waypoint 2
+    # Cordinates of Waypoint 7
     position = {'x': 5.61, 'y' : -0.574539}
     quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.081, 'r4' : 0.997}
     frequency = 200
     # Bot reached destination or not
     result = navigator.goto(position, quaternion, frequency)
 
-    os.system('rosservice call /move_base/clear_costmaps "{}"')
+    # os.system('rosservice call /move_base/clear_costmaps "{}"')
 
     armPose("drop_left")
     gripperPose("open")
-    rospy.loginfo("FPGA board dropped in Dropbox1")     
+    print("Coke dropped in Dropbox1")     
     
     armPose("travel2")
-    # Cordinates of Waypoint 2
-    position = {'x': 0.01, 'y' : 0.01}
+    # Cordinates of Waypoint 8
+    position = {'x': 0.00, 'y' : 0.00}
     quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.081, 'r4' : 0.997}
     frequency = 200
     # Bot reached destination or not
     result = navigator.goto(position, quaternion, frequency)
 
-    rospy.loginfo("Mission Accomplished!");
+    print("Mission Accomplished!");
 
 
 # Python Main
@@ -359,3 +364,4 @@ if __name__ == '__main__':
         bot_driver()
     except rospy.ROSInterruptException:
         rospy.loginfo("Ctrl-C Quit")
+        

@@ -47,7 +47,7 @@
         <joint name="gripper_finger1_joint" value="0.2987" />
     </group_state>
     <group_state name="close_battery" group="grip_planning_group">
-        <joint name="gripper_finger1_joint" value="0.2964" />
+        <joint name="gripper_finger1_joint" value="0.3" />
     </group_state>
     <group_state name="close" group="grip_planning_group">
         <joint name="gripper_finger1_joint" value="0.7" />
@@ -77,10 +77,10 @@
         <joint name="wrist_3_joint" value="1.6654" />
     </group_state>
     <group_state name="photo3" group="arm_planning_group">
-        <joint name="elbow_joint" value="-3.1415" />
+        <joint name="elbow_joint" value="-2.9555" />
         <joint name="shoulder_lift_joint" value="0" />
         <joint name="shoulder_pan_joint" value="-1.5707" />
-        <joint name="wrist_1_joint" value="1.5651" />
+        <joint name="wrist_1_joint" value="1.6911" />
         <joint name="wrist_2_joint" value="-1.57" />
         <joint name="wrist_3_joint" value="0" />
     </group_state>

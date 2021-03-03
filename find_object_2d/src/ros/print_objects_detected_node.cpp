@@ -93,10 +93,10 @@ void objectsDetectedCallback(
 			pub.publish(msg2);	
 		}
 	}
-	else
-	{
-		printf("No objects detected.\n");
-	}
+	// else
+	// {
+	// 	printf("No objects detected.\n");
+	// }
 }
 
 void imageObjectsDetectedCallback(		const sensor_msgs::ImageConstPtr & imageMsg,		const find_object_2d::ObjectsStampedConstPtr & objectsMsg)
@@ -152,7 +152,7 @@ void imageObjectsDetectedCallback(		const sensor_msgs::ImageConstPtr & imageMsg,
 				cv::cvtColor(img.image,final,CV_BGR2RGB);
 				cv::imshow("Display",final);
                 
-				cv::waitKey(500);
+				cv::waitKey(600);
 				imagePub.publish(img.toImageMsg());
 			}
 		}
@@ -204,6 +204,10 @@ string name(int myid)
 	//Pair of Wheels Package
 		number = 2;
 		break;
+	case 168:
+	//Pair of Wheels Package
+		number = 2;
+		break;	
 	case 158:
 	//Pair of Wheels Package
 		number = 2;
@@ -212,10 +216,18 @@ string name(int myid)
 	//FPGA Board
 		number = 3;
 		break;
+	case 167:
+	//FPGA Board
+		number = 3;
+		break;	
 	case 149:
 	//Glue
 		number = 4;
 		break;
+	case 169:
+	//Glue
+		number = 4;
+		break;	
 	case 160:
 	//Glue
 		number = 4;
@@ -232,6 +244,10 @@ string name(int myid)
 	//eYFI Board
 		number = 6;
 		break;
+	case 165:
+	//eYFI Board
+		number = 6;
+		break;	
 	case 164:
 	//Glass
 		number = 7;
@@ -243,7 +259,11 @@ string name(int myid)
 	case 159:
 	//Adhesive
 		number = 8;
-		break;									
+		break;
+	case 166:
+	//Adhesive
+		number = 8;
+		break;											
 	default:
 		break;
 	}
