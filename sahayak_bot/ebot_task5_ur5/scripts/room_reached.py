@@ -14,7 +14,7 @@ storeRoomToBePrinted  = True
 
 # function to print with
 def myPrint(string):
-    print(Fore.GREEN + Back.WHITE + string + Style.RESET_ALL)
+    print(Fore.WHITE + Back.GREEN + string + Style.RESET_ALL)
 
 def func_callback_topic_my_topic(myMsg):
 

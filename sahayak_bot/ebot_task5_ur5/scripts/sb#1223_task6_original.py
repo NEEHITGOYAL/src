@@ -175,7 +175,7 @@ class GoToPose():
 
 # function to print with different colour
 def myPrint(string):
-    print(Fore.GREEN + Back.WHITE + string + Style.RESET_ALL)
+    print(Fore.WHITE + Back.GREEN + string + Style.RESET_ALL)
 
 def bot_driver():
     # Initializes the ROS node for the process.
