@@ -196,7 +196,7 @@ def bot_driver():
     
     armPose("travel2")
     # Cordinates of Waypoint 1
-    position = {'x': 25.909754, 'y' : -3.202912}
+    position = {'x': 25.9509754, 'y' : -3.202912}
     quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : -0.894, 'r4' : 0.449}
     frequency = 200
     # Bot reached destination or not
