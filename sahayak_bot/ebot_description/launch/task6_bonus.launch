@@ -20,7 +20,9 @@
 
 		
 <!-- include the navigation, moveit launch file and node for pick and place -->
-	
+	<include file="$(find ebot_ur5)/launch/ur5_bringup_moveit.launch" />
+    <!-- <include file="$(find my_object_recognition_pkg)/launch/start_find_object_3d_session.launch" /> -->
+    <include file="$(find ebot_task5_ur5)/launch/test.launch" />
 
 
 

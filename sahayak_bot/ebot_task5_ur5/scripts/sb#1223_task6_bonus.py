@@ -91,6 +91,21 @@ def batteryArm(battery):
     armPlanner([battery[0] - 0.005, battery[1] - 0.40, battery[2] + 0.2])
     armPose("travel2")
 
+def adhesiveArm(adhesive):
+     # Move arm in front of battery
+    armPlanner([adhesive[0] - 0.005, adhesive[1] - 0.40, adhesive[2] + 0.09])
+    
+    # Move arm to grab battery
+    armPlanner([adhesive[0] - 0.005, adhesive[1] - 0.184, adhesive[2] + 0.09])
+        
+    # Move gripper to close_battery pose
+    gripperPose("close_adhesive") 
+    myPrint("Adhesive Picked")
+    os.system('rosservice call /move_base/clear_costmaps "{}"')
+    # Move arm back
+    armPlanner([adhesive[0] - 0.005, adhesive[1] - 0.40, adhesive[2] + 0.2])
+    armPose("test")
+
 def fpgaArm(fgpa):
     # Move arm in front of fgpa
     armPlanner2([fgpa[0] - 0.15, fgpa[1] - 0.3, fgpa[2] + 0.2])
@@ -191,16 +206,17 @@ def bot_driver():
     arm_group = moveit_commander.MoveGroupCommander("arm_planning_group")
     
     # Move arm to travel2 pose
-    armPose("travel2")
+    armPose("test")
     # Cordinates of Waypoint 1
-    position = {'x': 25.9509754, 'y' : -3.202912}
-    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : -0.894, 'r4' : 0.449}
+    position = {'x': 5.603923, 'y' : 5.035788}
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.9999619694705243, 'r4' : 0.008721216235724293}
     frequency = 200
     # Bot reached destination or not
     result = navigator.goto(position, quaternion, frequency)
     
     # Clear costmaps
     os.system('rosservice call /move_base/clear_costmaps "{}"')
+    armPose("travel2")
     # Move arm to photo8 pose
     armPose("photo8")
     # open find_object_3d_session in new terminal tab
@@ -209,10 +225,10 @@ def bot_driver():
     try:
         try:
             # Get battery cordinates
-            battery = getObjCordinates("/object_162")
+            adhesive = getObjCordinates("/object_159")
         except:
             # Get battery cordinates 
-            battery = getObjCordinates("/object_157") 
+            adhesive = getObjCordinates("/object_163") 
     except:
         print("objectnotfound")  
         # Move arm to photo3 pose 
@@ -220,10 +236,10 @@ def bot_driver():
         try:
             try:
                 # Get battery cordinates
-                battery = getObjCordinates("/object_162")
+                adhesive = getObjCordinates("/object_159")
             except:
                 # Get battery cordinates
-                battery = getObjCordinates("/object_157") 
+                adhesive = getObjCordinates("/object_163") 
         except:
             print("objectnotfound") 
             # Move arm to photo4 pose
@@ -231,160 +247,30 @@ def bot_driver():
             try:
                 try:
                     # Get battery cordinates
-                    battery = getObjCordinates("/object_162")
+                    adhesive = getObjCordinates("/object_159")
                 except:
                     # Get battery cordinates
-                    battery = getObjCordinates("/object_157")       
+                    adhesive = getObjCordinates("/object_163")       
             except:
                 print("objectnotfound")
             else:
-                batteryArm(battery)        
+                adhesiveArm(adhesive)        
         else:
             # Move arm to photo4 pose
             armPose("photo4")
-            batteryArm(battery) 
+            adhesiveArm(adhesive) 
     else:
         # Move arm to photo3 pose to detect middle objects
         armPose("photo3")
         # Move arm to photo4 pose to detect all objects 
         armPose("photo4")
-        batteryArm(battery) 
+        adhesiveArm(adhesive) 
     # shutdown all terminal instances to close find_object_3d_session gui
     os.system("pkill gnome-terminal")
     # Move arm to travel2 pose     
-    armPose("travel2")
-    
-    # Cordinates of Waypoint 2
-    position = {'x': 10.9, 'y' : 9.73}
-    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.707, 'r4' : 0.707}
-    frequency = 200
-    # Bot reached destination or not
-    result = navigator.goto(position, quaternion, frequency)
-
-    os.system('rosservice call /move_base/clear_costmaps "{}"')
-    # Move arm to drop_left pose
-    armPose("drop_left")
-    # Move gripper to open pose
+    armPose("test")
     gripperPose("open")
-    myPrint("Battery Dropped in DropBox3")
-    
-    # Move arm to travel2 pose
-    armPose("travel2")   
-    
-    # Cordinates of Waypoint 3
-    position = {'x': 14.7058803, 'y' : -0.802476}
-    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : -0.707, 'r4' : 0.707}
-    frequency = 200
 
-    # Bot reached destination or not
-    result = navigator.goto(position, quaternion, frequency)
-    # Clear costmaps
-    os.system('rosservice call /move_base/clear_costmaps "{}"')
-    # Move arm to photo pose
-    armPose("photo")
-
-    # open find_object_3d_session in new terminal tab
-    os.system("gnome-terminal --tab -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")  
-
-    #Detect and assign coke cordinates using two possible object orientations
-    try:
-        coke = getObjCordinates("/object_143") 
-    except:
-        print("objectnotfound")
-        try:
-            coke = getObjCordinates("/object_145")
-        except:
-           print("objectnotfound")
-        else:
-            cokeArm(coke)        
-    else:      
-        cokeArm(coke)
-    os.system('rosservice call /move_base/clear_costmaps "{}"')    
-    # shutdown all terminal instances to close find_object_3d_session gui
-    os.system("pkill gnome-terminal")
-    # Move arm to travel2 pose
-    armPose("travel2")
-    # Cordinates of Waypoint 4
-    position = {'x': 11.21183 , 'y' : -1.307573}
-    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.739, 'r4' : 0.674}
-    frequency = 60
-    # Bot reached destination or not
-    result = navigator.goto(position, quaternion, frequency)
-
-    # Clear costmaps
-    os.system('rosservice call /move_base/clear_costmaps "{}"')
-    # Move arm to photo pose
-    armPose("photo")
-    # open find_object_3d_session in new terminal tab
-    os.system("gnome-terminal --tab -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")   
-
-    #Detect and assign coke cordinates using two possible object orientations
-    try:
-        # Get coke cordinates
-        coke = getObjCordinates("/object_143") 
-    except:
-        print("objectnotfound")
-        try:
-            # Get coke cordinates
-            coke = getObjCordinates("/object_145")
-        except:
-            print("objectnotfound")
-        else:
-            cokeArm(coke)        
-    else:      
-        cokeArm(coke)
-    
-    # shutdown all terminal instances to close find_object_3d_session gui
-    os.system("pkill gnome-terminal")
-    # Move arm to travel2 pose
-    armPose("travel2") 
-
-    # Cordinates of Waypoint 5
-    position = {'x': 8.75551, 'y' : 2.8}
-    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.723988125006, 'r4' : 0.689812434543}
-    frequency = 200
-    # Bot reached destination or not
-    result = navigator.goto(position, quaternion, frequency)
-    os.system('rosservice call /move_base/clear_costmaps "{}"')
-    # Cordinates of Waypoint 6
-    position = {'x': 8.75551, 'y' : 2.8}
-    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : -0.686252207602, 'r4' : -0.686252207602}
-    frequency = 200
-    # Bot reached destination or not
-    result = navigator.goto(position, quaternion, frequency)
-    os.system('rosservice call /move_base/clear_costmaps "{}"')
-    # Cordinates of Waypoint 7
-    position = {'x': 5.61, 'y' : -0.574539}
-    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.081, 'r4' : 0.997}
-    frequency = 200
-    # Bot reached destination or not
-    result = navigator.goto(position, quaternion, frequency)
-    os.system('rosservice call /move_base/clear_costmaps "{}"')
-    # Move arm to drop_left pose
-    armPose("drop_left")
-    # Move gripper to open pose
-    gripperPose("open")
-    myPrint("Coke dropped in Dropbox1")  
-
-    # Move arm to travel2 pose
-    armPose("travel2")
-
-    # Cordinates of Waypoint 8
-    position = {'x': 5.61, 'y' : -0.574539}
-    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.723988125006, 'r4' : 0.689812434543}
-    frequency = 200
-
-    # Bot reached destination or not
-    result = navigator.goto(position, quaternion, frequency)
-    # Cordinates of Waypoint 9
-    position = {'x': 0.00, 'y' : 0.00}
-    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 1.00, 'r4' : 0.0}
-    frequency = 200
-    # Bot reached destination or not
-    result = navigator.goto(position, quaternion, frequency)
-    os.system('rosservice call /move_base/clear_costmaps "{}"')
-
-    myPrint("Mission Accomplished!");
 
 
 # Python Main
