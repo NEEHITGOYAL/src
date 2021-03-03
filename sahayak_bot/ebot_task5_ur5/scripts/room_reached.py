@@ -3,13 +3,22 @@
 import rospy
 from geometry_msgs.msg import Pose, Point, Quaternion
 from nav_msgs.msg import Odometry
+from colorama import Fore, Back, Style
+
+# Declaring and initializing variables used to print only once
 pantryToBePrinted  = True
 meetingRoomToBePrinted  = True
 conferenceRoomToBePrinted  = True
 researchLabToBePrinted  = True
 storeRoomToBePrinted  = True
 
+# function to print with
+def myPrint(string):
+    print(Fore.WHITE + Back.GREEN + string + Style.RESET_ALL)
+
 def func_callback_topic_my_topic(myMsg):
+
+    # Storing x and y cordinates of bot
     x = myMsg.pose.pose.position.x
     y = myMsg.pose.pose.position.y
     global pantryToBePrinted
@@ -18,34 +27,29 @@ def func_callback_topic_my_topic(myMsg):
     global researchLabToBePrinted
     global storeRoomToBePrinted
 
+    # Check if bot has reached pantry for first time
     if(pantryToBePrinted and 12.608207 < x < 13.268829 and -0.332767 < y < 0):
-        # print('x is ',x)
-        # print('y is ', y)
-        print('Pantry Reached')
+        myPrint('Pantry Reached')
         pantryToBePrinted = False
     
+    # Check if bot has reached Meeting Room for first time
     elif(meetingRoomToBePrinted and 8.253483 < x < 9.092000 and 2.070465 < y < 2.459742):
-        # print('x is ',x)
-        # print('y is ', y)
-        print('Meeting Room Reached')
+        myPrint('Meeting Room Reached')
         meetingRoomToBePrinted = False
 
+    # Check if bot has reached Conference Room for first time
     elif(conferenceRoomToBePrinted and 4.802292 < x < 5.651354 and -0.332767 < y < 0):
-        # print('x is ',x)
-        # print('y is ', y)
-        print('Conference Room Reached')
+        myPrint('Conference Room Reached')
         conferenceRoomToBePrinted = False
     
+    # Check if bot has reached Research Lab for first time
     elif(researchLabToBePrinted and 10.025547 < x < 11.459243 and 7.34520 < y < 7.8):
-        # print('x is ',x)
-        # print('y is ', y)
-        print('Research Lab Reached')
+        myPrint('Research Lab Reached')
         researchLabToBePrinted = False
     
+    # Check if bot has reached Store Room for first time
     elif(storeRoomToBePrinted and 24.975998 < x < 25.990601 and -3.171468 < y < -1.281662):
-        # print('x is ',x)
-        # print('y is ', y)
-        print('Store Room Reached')
+        myPrint('Store Room Reached')
         storeRoomToBePrinted = False
 
 def main():
@@ -66,24 +70,3 @@ if __name__ == '__main__':
         main()
     except rospy.ROSInterruptException:
         pass
-
-
-
-
-
-####################### Code for terminal
-# import os
-# import rospy    
-# os.system("gnome-terminal --tab -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")      
-# rospy.sleep(5)
-# # os.system("gnome-terminal --tab -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")      
-# # rospy.sleep(5)
-# # os.system("kill `ps -e | grep -i gnome-terminal | cut -f 1 -d \" \"`")
-# os.system("pkill gnome-terminal")  
-# os.system("gnome-terminal --tab -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")      
-# rospy.sleep(5)
-# os.system("pkill gnome-terminal")  
-
-# os.system("gnome-terminal --tab -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")      
-# rospy.sleep(5)
-# os.system("pkill gnome-terminal")  
