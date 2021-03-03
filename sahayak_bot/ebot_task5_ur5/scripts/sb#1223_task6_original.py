@@ -359,7 +359,6 @@ def bot_driver():
     frequency = 200
     # Bot reached destination or not
     result = navigator.goto(position, quaternion, frequency)
-    os.system('rosservice call /move_base/clear_costmaps "{}"')
     # Move arm to drop_left pose
     armPose("drop_left")
     # Move gripper to open pose
