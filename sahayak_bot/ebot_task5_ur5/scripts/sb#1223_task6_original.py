@@ -317,21 +317,21 @@ def bot_driver():
     frequency = 200
     # Bot reached destination or not
     result = navigator.goto(position, quaternion, frequency)
-
+    os.system('rosservice call /move_base/clear_costmaps "{}"')
     # Cordinates of Waypoint 6
     position = {'x': 8.75551, 'y' : 2.8}
     quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : -0.686252207602, 'r4' : -0.686252207602}
     frequency = 200
     # Bot reached destination or not
     result = navigator.goto(position, quaternion, frequency)
-    
+    os.system('rosservice call /move_base/clear_costmaps "{}"')
     # Cordinates of Waypoint 7
     position = {'x': 5.61, 'y' : -0.574539}
     quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.081, 'r4' : 0.997}
     frequency = 200
     # Bot reached destination or not
     result = navigator.goto(position, quaternion, frequency)
-
+    os.system('rosservice call /move_base/clear_costmaps "{}"')
     # os.system('rosservice call /move_base/clear_costmaps "{}"')
 
     armPose("drop_left")
@@ -352,6 +352,7 @@ def bot_driver():
     frequency = 200
     # Bot reached destination or not
     result = navigator.goto(position, quaternion, frequency)
+    os.system('rosservice call /move_base/clear_costmaps "{}"')
 
     myPrint("Mission Accomplished!");
 
