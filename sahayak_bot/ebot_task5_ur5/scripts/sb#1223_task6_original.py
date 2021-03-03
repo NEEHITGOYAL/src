@@ -201,7 +201,7 @@ def bot_driver():
     
     # Clear costmaps
     os.system('rosservice call /move_base/clear_costmaps "{}"')
-    # Move arm to phot8 pose
+    # Move arm to photo8 pose
     armPose("photo8")
     # open find_object_3d_session in new terminal tab
     os.system("gnome-terminal --tab -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")   
