@@ -337,11 +337,18 @@ def bot_driver():
     armPose("drop_left")
     gripperPose("open")
     myPrint("Coke dropped in Dropbox1")     
-    
     armPose("travel2")
+
     # Cordinates of Waypoint 8
+    position = {'x': 5.61, 'y' : -0.574539}
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.723988125006, 'r4' : 0.689812434543}
+    frequency = 200
+
+    # Bot reached destination or not
+    result = navigator.goto(position, quaternion, frequency)
+    # Cordinates of Waypoint 9
     position = {'x': 0.00, 'y' : 0.00}
-    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.081, 'r4' : 0.997}
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 1.00, 'r4' : 0.0}
     frequency = 200
     # Bot reached destination or not
     result = navigator.goto(position, quaternion, frequency)
