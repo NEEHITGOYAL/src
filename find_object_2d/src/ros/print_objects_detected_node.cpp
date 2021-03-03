@@ -224,6 +224,10 @@ string name(int myid)
 	//Glue
 		number = 4;
 		break;
+	case 171:
+	//Glue
+		number = 4;
+		break;	
 	case 169:
 	//Glue
 		number = 4;
@@ -239,7 +243,11 @@ string name(int myid)
 	case 157:
 	//Battery
 		number = 5;
-		break;	
+		break;
+	case 170:
+	//Battery
+		number = 5;
+		break;		
 	case 161:
 	//eYFI Board
 		number = 6;
@@ -261,6 +269,10 @@ string name(int myid)
 		number = 8;
 		break;
 	case 166:
+	//Adhesive
+		number = 8;
+		break;	
+	case 172:
 	//Adhesive
 		number = 8;
 		break;											

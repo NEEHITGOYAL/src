@@ -1,9 +1,9 @@
 <launch>
     <node name="find_object_3d" pkg="find_object_2d" type="find_object_2d" output="screen" >
-        <param name="gui" value="true" type="bool"/>
+        <param name="gui" value="false" type="bool"/>
         <param name="setting_path" value="~/.ros/find_object_2d.ini" type="str" />
         <param name="subscribe_depth" value="true" type="bool" />
-        <param name="session_path" value="$(find my_object_recognition_pkg)/saved_pictures/t6.bin" type="str" />
+        <param name="session_path" value="$(find my_object_recognition_pkg)/saved_pictures/t9.bin" type="str" />
         <param name="objects_path" value=" " type="str" />
         <param name="object_prefix" value="object" type="str" />
 	    <param name="approx_sync" value="true" type="bool"/>
