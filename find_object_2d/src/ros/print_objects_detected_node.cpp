@@ -272,35 +272,35 @@ string name(int myid)
 	{
 	case 1:
 	    obj = "Coke";
-	    cout<<obj<<"identified"<<endl;
+		cout << "\033[37;42m"<< obj<<" identified " <<"\033[0m\n";
 		break;
 	case 2:
 	    obj = "Pair of Wheels Package";
-	    cout<<obj<<"identified"<<endl;
+	    cout << "\033[37;42m"<< obj<<" identified " <<"\033[0m\n";
 		break;
 	case 3:
 	    obj = "FPGA Board";
-	    cout<<obj<<"identified"<<endl;
+	    cout << "\033[37;42m"<< obj<<" identified " <<"\033[0m\n";
 		break;
 	case 4:
 	    obj = "Glue";
-	    cout<<obj<<"identified"<<endl;
+	    cout << "\033[37;42m"<< obj<<" identified " <<"\033[0m\n";
 		break;
 	case 5:
 	    obj = "Battery";
-	    cout<<obj<<"identified"<<endl;
+	    cout << "\033[37;42m"<< obj<<" identified " <<"\033[0m\n";
 		break;
 	case 6:
 	    obj = "eYFI Board";
-	    cout<<obj<<"identified"<<endl;
+	    cout << "\033[37;42m"<< obj<<" identified " <<"\033[0m\n";
 		break;
 	case 7:
 	    obj = "Glass";
-	    cout<<obj<<"identified"<<endl;
+	    cout << "\033[37;42m"<< obj<<" identified " <<"\033[0m\n";
 		break;
 	case 8:
 	    obj = "Adhesive";
-	    cout<<obj<<"identified"<<endl;
+	    cout << "\033[37;42m"<< obj<<" identified " <<"\033[0m\n";
 		break;							
 	
 	default:

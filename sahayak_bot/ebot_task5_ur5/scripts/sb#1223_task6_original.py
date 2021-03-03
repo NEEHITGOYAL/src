@@ -175,7 +175,7 @@ class GoToPose():
 
 # function to print with different colour
 def myPrint(string):
-    print(Fore.GREEN + Back.WHITE + string + Style.RESET_ALL)
+    print(Fore.WHITE + Back.GREEN + string + Style.RESET_ALL)
 
 def bot_driver():
     # Initializes the ROS node for the process.
@@ -193,11 +193,12 @@ def bot_driver():
     # Move arm to travel2 pose
     armPose("travel2")
     # Cordinates of Waypoint 1
-    position = {'x': 25.909754, 'y' : -3.202912}
+    position = {'x': 25.9509754, 'y' : -3.202912}
     quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : -0.894, 'r4' : 0.449}
     frequency = 200
     # Bot reached destination or not
     result = navigator.goto(position, quaternion, frequency)
+    
     # Clear costmaps
     os.system('rosservice call /move_base/clear_costmaps "{}"')
     # Move arm to phot8 pose
@@ -266,6 +267,7 @@ def bot_driver():
     # Move gripper to open pose
     gripperPose("open")
     myPrint("Battery Dropped in DropBox3")
+    
     # Move arm to travel2 pose
     armPose("travel2")   
     
@@ -362,13 +364,21 @@ def bot_driver():
     armPose("drop_left")
     # Move gripper to open pose
     gripperPose("open")
-    myPrint("Coke dropped in Dropbox1")     
-    
+    myPrint("Coke dropped in Dropbox1")  
+
     # Move arm to travel2 pose
     armPose("travel2")
+
     # Cordinates of Waypoint 8
+    position = {'x': 5.61, 'y' : -0.574539}
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.723988125006, 'r4' : 0.689812434543}
+    frequency = 200
+
+    # Bot reached destination or not
+    result = navigator.goto(position, quaternion, frequency)
+    # Cordinates of Waypoint 9
     position = {'x': 0.00, 'y' : 0.00}
-    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.081, 'r4' : 0.997}
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 1.00, 'r4' : 0.0}
     frequency = 200
     # Bot reached destination or not
     result = navigator.goto(position, quaternion, frequency)
