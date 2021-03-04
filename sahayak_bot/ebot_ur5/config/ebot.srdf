@@ -47,7 +47,7 @@
         <joint name="gripper_finger1_joint" value="0.2987" />
     </group_state>
     <group_state name="close_battery" group="grip_planning_group">
-        <joint name="gripper_finger1_joint" value="0.32" />
+        <joint name="gripper_finger1_joint" value="0.33" />
     </group_state>
     <group_state name="close" group="grip_planning_group">
         <joint name="gripper_finger1_joint" value="0.7" />

@@ -236,6 +236,10 @@ string name(int myid)
 	//FPGA Board
 		number = 3;
 		break;	
+	case 181:
+	//Glue
+		number = 4;
+		break;
 	case 149:
 	//Glue
 		number = 4;
@@ -284,10 +288,10 @@ string name(int myid)
 	//eYFI Board
 		number = 6;
 		break;	
-	// case 173:
-	//     //eYFI Board
-	// 	number = 6;
-	// 	break;
+	case 173:
+	    //eYFI Board
+		number = 6;
+		break;
 	case 164:
 	//Glass
 		number = 7;
@@ -300,6 +304,10 @@ string name(int myid)
 	//Adhesive
 		number = 8;
 		break;
+	case 182:
+	//Adhesive
+		number = 8;
+		break;	
 	case 166:
 	//Adhesive
 		number = 8;

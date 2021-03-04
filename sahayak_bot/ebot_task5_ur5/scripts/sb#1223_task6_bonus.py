@@ -379,80 +379,96 @@ def bot_driver():
     armPose("photo")
     # open find_object_3d_session in new terminal tab
     os.system("gnome-terminal --tab -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")   
-    rospy.sleep(0.1)
+    rospy.sleep(0.5)
     glue_pick = True
     try:
-        glue = getObjCordinates("/object_179")
+        glue = getObjCordinates("/object_181")
     except:
-        print("objectnotfound")
-        try:
-            glue = getObjCordinates("/object_171")
-        except:
-            print("objectnotfound")
-            try:
-                glue = getObjCordinates("/object_169")
-            except:
-                print("objectnotfound")
-                try:
-                    glue = getObjCordinates("/object_160")
-                except:
-                    print("objectnotfound")
-                    try:
-                        glue = getObjCordinates("/object_149")
-                    except:
-                        print("objectnotfound")
-                        glue_pick = False
-                    else:        
-                        glueArm(glue)
-                else:        
-                    glueArm(glue)
-            else:        
-                glueArm(glue)
-        else:        
-            glueArm(glue)            
-    else:        
+        print("objectnotfound") 
+        glue_pick = False  
+    else:
         glueArm(glue)
-        
     if (glue_pick == False):
         armPose("photo3")
-        rospy.sleep(0.1)
         try:
-            glue = getObjCordinates("/object_179")
+            glue = getObjCordinates("/object_181")
         except:
-            print("objectnotfound")
-            try:
-                glue = getObjCordinates("/object_171")
-            except:
-                print("objectnotfound")
-                try:
-                    glue = getObjCordinates("/object_169")
-                except:
-                    print("objectnotfound")
-                    try:
-                        glue = getObjCordinates("/object_160")
-                    except:
-                        print("objectnotfound")
-                        try:
-                            glue = getObjCordinates("/object_149")
-                        except:
-                            print("objectnotfound")
-                            glue_pick = False
-                        else:        
-                            glueArm(glue)
-                    else:        
-                        glueArm(glue)
-                else:        
-                    glueArm(glue)
-            else:        
-                glueArm(glue)            
-        else:        
-            glueArm(glue)           
+            print("objectnotfound") 
+            glue_pick = False  
+        else:
+            glueArm(glue)          
+    # try:
+    #     glue = getObjCordinates("/object_181")
+    # except:
+    #     print("objectnotfound")
+    #     try:
+    #         glue = getObjCordinates("/object_171")
+    #     except:
+    #         print("objectnotfound")
+    #         try:
+    #             glue = getObjCordinates("/object_169")
+    #         except:
+    #             print("objectnotfound")
+    #             try:
+    #                 glue = getObjCordinates("/object_160")
+    #             except:
+    #                 print("objectnotfound")
+    #                 try:
+    #                     glue = getObjCordinates("/object_149")
+    #                 except:
+    #                     print("objectnotfound")
+    #                     glue_pick = False
+    #                 else:        
+    #                     glueArm(glue)
+    #             else:        
+    #                 glueArm(glue)
+    #         else:        
+    #             glueArm(glue)
+    #     else:        
+    #         glueArm(glue)            
+    # else:        
+    #     glueArm(glue)
+        
+    # if (glue_pick == False):
+    #     armPose("photo3")
+    #     rospy.sleep(0.1)
+    #     try:
+    #         glue = getObjCordinates("/object_181")
+    #     except:
+    #         print("objectnotfound")
+    #         try:
+    #             glue = getObjCordinates("/object_171")
+    #         except:
+    #             print("objectnotfound")
+    #             try:
+    #                 glue = getObjCordinates("/object_169")
+    #             except:
+    #                 print("objectnotfound")
+    #                 try:
+    #                     glue = getObjCordinates("/object_160")
+    #                 except:
+    #                     print("objectnotfound")
+    #                     try:
+    #                         glue = getObjCordinates("/object_149")
+    #                     except:
+    #                         print("objectnotfound")
+    #                         glue_pick = False
+    #                     else:        
+    #                         glueArm(glue)
+    #                 else:        
+    #                     glueArm(glue)
+    #             else:        
+    #                 glueArm(glue)
+    #         else:        
+    #             glueArm(glue)            
+    #     else:        
+    #         glueArm(glue)           
 
     os.system("pkill gnome-terminal")    
     armPose("test")
 
     # Cordinates of Waypoint 1
-    position = {'x': 7.10, 'y' : 2.35}
+    position = {'x': 7.10, 'y' : 2.39}
     quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.043, 'r4' :0.999 }
     frequency = 200
 
@@ -464,12 +480,12 @@ def bot_driver():
     armPose("drop_right") 
     gripperPose("open")
     myPrint("Glue dropped in Dropbox2") 
-
-    # Move arm to travel2 pose
+    os.system('rosservice call /move_base/clear_costmaps "{}"')
+    #Move arm to travel2 pose
     armPose("test") 
     
     # Cordinates of Waypoint 1
-    position = {'x': 7.10, 'y' : 2.35}
+    position = {'x': 7.10, 'y' : 2.39}
     quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.739, 'r4' : 0.674}
     frequency = 200
 
@@ -489,48 +505,67 @@ def bot_driver():
     armPose("photo")
     # open find_object_3d_session in new terminal tab
     os.system("gnome-terminal --tab -- roslaunch my_object_recognition_pkg start_find_object_3d_session.launch")   
-    rospy.sleep(0.1)
+    rospy.sleep(2)
     #Detect and assign coke cordinates using two possible object orientations
     adhesivePick = True
     try:
-        adhesive = getObjCordinates("/object_180") 
+        adhesive = getObjCordinates("/object_182") 
     except:
         print("objectnotfound")
-        try:
-            adhesive = getObjCordinates("/object_159")
-        except:
-            print("objectnotfound")
-            try:
-                adhesive = getObjCordinates("/object_163")
-            except:
-                print("objectnotfound")
-                adhesivePick = False
-            else:
-                adhesiveArm(adhesive) 
-        else:
-            adhesiveArm(adhesive)              
-    else:      
+        adhesivePick = False
+    else:    
         adhesiveArm(adhesive)
-    if (adhesivePick == False): 
+    if (adhesivePick==False):
+        armPose("photo3")
         try:
-            adhesive = getObjCordinates("/object_180") 
+            adhesive = getObjCordinates("/object_182") 
         except:
             print("objectnotfound")
-            try:
-                adhesive = getObjCordinates("/object_159")
-            except:
-                print("objectnotfound")
-                try:
-                    adhesive = getObjCordinates("/object_163")
-                except:
-                    print("objectnotfound")
-                    adhesivePick = False
-                else:
-                    adhesiveArm(adhesive) 
-            else:
-                adhesiveArm(adhesive)              
-        else:      
-            adhesiveArm(adhesive)        
+            adhesivePick = False
+        else:    
+            adhesiveArm(adhesive)
+
+    # try:
+    #     adhesive = getObjCordinates("/object_180") 
+    # except:
+    #     print("objectnotfound")
+    #     try:
+    #         adhesive = getObjCordinates("/object_159")
+    #     except:
+    #         print("objectnotfound")
+    #         try:
+    #             adhesive = getObjCordinates("/object_163")
+    #         except:
+    #             print("objectnotfound")
+    #             adhesivePick = False
+    #         else:
+    #             adhesiveArm(adhesive) 
+    #     else:
+    #         adhesiveArm(adhesive)              
+    # else:      
+    #     adhesiveArm(adhesive)
+    # if (adhesivePick == False): 
+    #     armPose("photo")
+    #     rospy.sleep(100)
+    #     try:
+    #         adhesive = getObjCordinates("/object_180") 
+    #     except:
+    #         print("objectnotfound")
+    #         try:
+    #             adhesive = getObjCordinates("/object_159")
+    #         except:
+    #             print("objectnotfound")
+    #             try:
+    #                 adhesive = getObjCordinates("/object_163")
+    #             except:
+    #                 print("objectnotfound")
+    #                 adhesivePick = False
+    #             else:
+    #                 adhesiveArm(adhesive) 
+    #         else:
+    #             adhesiveArm(adhesive)              
+    #     else:      
+    #         adhesiveArm(adhesive)        
     os.system("pkill gnome-terminal")
     # Move arm to travel2 pose     
     armPose("test")
@@ -539,16 +574,16 @@ def bot_driver():
     quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : -0.894, 'r4' : 0.449}
     frequency = 200
     result = navigator.goto(position, quaternion, frequency)
-    armPose("travel2")
+    # armPose("travel2")
     # Cordinates of Waypoint 7
-    position = {'x': 5.61, 'y' : -0.574539}
-    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.081, 'r4' : 0.997}
+    position = {'x': 4.71023273468, 'y' : -1.245}
+    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : -0.695103334218, 'r4' :  0.718909837712}
     frequency = 200
     # Bot reached destination or not
     result = navigator.goto(position, quaternion, frequency)
     os.system('rosservice call /move_base/clear_costmaps "{}"')
     # Move arm to drop_left pose
-    armPose("drop_left")
+    armPose("drop_right")
     # Move gripper to open pose
     gripperPose("open")
     myPrint("Adhesive dropped in Dropbox1")  
@@ -556,13 +591,7 @@ def bot_driver():
     # Move arm to travel2 pose
     armPose("travel2")
 
-    # Cordinates of Waypoint 8
-    position = {'x': 5.61, 'y' : -0.574539}
-    quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 0.723988125006, 'r4' : 0.689812434543}
-    frequency = 20
 
-    # Bot reached destination or not
-    result = navigator.goto(position, quaternion, frequency)
     # Cordinates of Waypoint 9
     position = {'x': 0.00, 'y' : 0.00}
     quaternion = {'r1' : 0.0, 'r2' : 0.0, 'r3' : 1.00, 'r4' : 0.0}
