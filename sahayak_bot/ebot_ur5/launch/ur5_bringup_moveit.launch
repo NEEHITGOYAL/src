@@ -31,7 +31,7 @@ args="spawn arm_controller gripper_controller" respawn="false" output="screen"/>
   <arg name="debug" value="false"/>
 </include>   -->
 
-<arg name ="scene_file" default="$(find ebot_description)/scenes/task5jugaad.scene"/>
+<arg name ="scene_file" default="$(find ebot_description)/scenes/task6jugaad.scene"/>
 <node name="moveit_publish_scene_from_text" pkg="moveit_ros_planning" type="moveit_publish_scene_from_text" args="$(arg scene_file)" />
 
 </launch>
