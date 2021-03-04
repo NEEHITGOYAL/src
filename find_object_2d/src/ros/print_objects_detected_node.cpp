@@ -212,11 +212,27 @@ string name(int myid)
 	//Pair of Wheels Package
 		number = 2;
 		break;	
+	case 172:
+	//Pair of Wheels Package
+		number = 2;
+		break;		
 	case 155:
 	//FPGA Board
 		number = 3;
 		break;
+	case 178:
+	//FPGA Board
+		number = 3;
+		break;	
 	case 167:
+	//FPGA Board
+		number = 3;
+		break;
+	case 174:
+	//FPGA Board
+		number = 3;
+		break;		
+	case 176:
 	//FPGA Board
 		number = 3;
 		break;	
@@ -233,6 +249,10 @@ string name(int myid)
 		number = 4;
 		break;	
 	case 160:
+	//Glue
+		number = 4;
+		break;	
+	case 179:
 	//Glue
 		number = 4;
 		break;	
@@ -255,7 +275,19 @@ string name(int myid)
 	case 165:
 	//eYFI Board
 		number = 6;
+		break;
+	case 175:
+	//eYFI Board
+		number = 6;
 		break;	
+	case 177:
+	//eYFI Board
+		number = 6;
+		break;	
+	// case 173:
+	//     //eYFI Board
+	// 	number = 6;
+	// 	break;
 	case 164:
 	//Glass
 		number = 7;
@@ -272,7 +304,7 @@ string name(int myid)
 	//Adhesive
 		number = 8;
 		break;	
-	case 172:
+	case 180:
 	//Adhesive
 		number = 8;
 		break;											
