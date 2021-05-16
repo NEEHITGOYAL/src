@@ -10,3 +10,8 @@ Challenges in this theme include: 2D mapping, 3D mapping, Autonomous Navigation,
 After simulating the robot, we need to navigate it in the lab and move objects from their initial position to the goal location which is a box. The team that performs the task fastest with minimal penalties as per rules will be the winner. We believe this theme to be a novel way to get e-Yantra students to explore the field of mobile robotics and robotic manipulators.
 
 ![alt text](https://github.com/NEEHITGOYAL/Sahayak-Bot/blob/main/theme_sb.png?raw=true)
+# YouTube Link for working video
+Task-2 - https://youtu.be/s1q0wXMrji8
+Task-3 - https://youtu.be/h0XT74TQ1kQ
+Task-4 - https://youtu.be/H3nSmFx3NMo
+Final Task - https://youtu.be/M_851eqFwb8
